@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Eran Chinthaka (Indiana University) -->
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                  xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tns="http://extreme.indiana.edu/sigiri"
+                  targetNamespace="http://extreme.indiana.edu/sigiri">
+    <wsdl:types>
+        <xs:schema targetNamespace="http://extreme.indiana.edu/sigiri" elementFormDefault="qualified">
+
+            <xs:element name="JobSubmissionParameters">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="jobDescriptionXML" type="tns:XMLContent" minOccurs="1" maxOccurs="1"/>
+                        <xs:element name="hpcResource" type="tns:hpcResourceName" minOccurs="1" maxOccurs="1"/>
+                        <xs:element name="callbackURL" type="xs:string" minOccurs="0" maxOccurs="1"/>
+                        <xs:element name="QOSParameters" type="tns:QOSParameter" minOccurs="0" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+
+            <xs:complexType name="T_Movement">
+                <xs:sequence>
+                    <xs:element name="TargetLocation" type="xs:string"/>
+                    <xs:element name="TargetLocationType" type="tns:FileLocationType"/>
+                    <xs:element name="SourceLocation" type="xs:string"/>
+                    <xs:element name="SourceLocationType" type="tns:FileLocationType"/>
+                    <xs:element name="FileNameFilter" type="xs:string" minOccurs="0"/>
+                    <xs:element name="IsCopy" type="xs:boolean" minOccurs="0" default="false"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="T_MoveFileParameters">
+                <xs:sequence>
+                    <xs:element name="username" type="xs:string" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="hpcResource" type="tns:hpcResourceName" minOccurs="1" maxOccurs="1"/>
+                    <xs:element ref="tns:Movement" maxOccurs="unbounded"/>
+                    <xs:element name="QOSParameters" type="tns:QOSParameter" minOccurs="0" maxOccurs="unbounded"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:element name="Movement" type="tns:T_Movement"/>
+            <xs:element name="MoveFileParameters" type="tns:T_MoveFileParameters"/>
+
+            <xs:simpleType name="FileLocationType">
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="AzureBlob"/>
+                    <xs:enumeration value="Local"/>
+                    <xs:enumeration value="Web"/>
+                </xs:restriction>
+            </xs:simpleType>
+
+            <xs:simpleType name="hpcResourceName">
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="BigRed"/>
+                    <xs:enumeration value="NCSA"/>
+                    <xs:enumeration value="Quarry"/>
+                    <xs:enumeration value="WindowsLocal"/>
+                    <xs:enumeration value="Pragma"/>
+                    <xs:enumeration value="MicrosoftAzure"/>
+                </xs:restriction>
+            </xs:simpleType>
+
+            <xs:complexType name="XMLContent">
+                <xs:sequence>
+                    <xs:any minOccurs="1" maxOccurs="1"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="JobStatusType">
+                <xs:sequence>
+                    <xs:element name="status">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:enumeration value="SUBMISSION_FAILED"/>
+                                <xs:enumeration value="SUBMISSION_ACCEPTED"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="jobId" type="xs:string"/>
+                    <xs:element name="description" type="xs:string" minOccurs="0"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:element name="JobStatusCollection">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="JobStatus" type="tns:JobStatusType" minOccurs="1" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+
+            <xs:element name="JobStatus">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="status">
+                            <xs:simpleType>
+                                <xs:restriction base="xs:string">
+                                    <xs:enumeration value="SUBMISSION_FAILED"/>
+                                    <xs:enumeration value="SUBMISSION_ACCEPTED"/>
+                                </xs:restriction>
+                            </xs:simpleType>
+                        </xs:element>
+                        <xs:element name="jobId" type="xs:string"/>
+                        <xs:element name="description" type="xs:string" minOccurs="0"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+
+
+            <xs:complexType name="QOSParameter">
+                <xs:sequence>
+                    <xs:element name="Name" type="xs:string"/>
+                    <xs:element name="Value" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:element name="JobId" type="xs:string"/>
+
+            <xs:element name="JobIdCollection">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="Id" type="xs:string" minOccurs="1" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+
+            <!--<xs:element name="SigiriFault">-->
+            <!--<xs:complexType>-->
+            <!--<xs:sequence>-->
+            <!--<xs:element name="description" type="xs:string"/>-->
+            <!--<xs:element name="jobId" type="xs:string"/>-->
+            <!--<xs:element name="jobStatus" type="xs:string"/>-->
+            <!--</xs:sequence>-->
+            <!--</xs:complexType>-->
+            <!--</xs:element>-->
+
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="SubmitJobRequest">
+        <wsdl:part name="JobSubmissionParameters" element="tns:JobSubmissionParameters"/>
+    </wsdl:message>
+    <wsdl:message name="SubmitJobResponse">
+        <wsdl:part name="JobStatus" element="tns:JobStatus"/>
+    </wsdl:message>
+    <wsdl:message name="MoveFileRequest">
+        <wsdl:part name="MoveFileParameters" element="tns:MoveFileParameters"/>
+    </wsdl:message>
+    <wsdl:message name="MoveFileResponse">
+        <wsdl:part name="JobStatus" element="tns:JobStatus"/>
+    </wsdl:message>
+    <wsdl:message name="checkStatusRequest">
+        <wsdl:part name="JobId" element="tns:JobId"/>
+    </wsdl:message>
+    <wsdl:message name="checkStatusResponse">
+        <wsdl:part name="JobStatus" element="tns:JobStatus"/>
+    </wsdl:message>
+    <wsdl:message name="checkMultipleJobStatusRequest">
+        <wsdl:part name="JobIdCollection" element="tns:JobIdCollection"/>
+    </wsdl:message>
+    <wsdl:message name="checkMultipleJobStatusResponse">
+        <wsdl:part name="JobStatusCollection" element="tns:JobStatusCollection"/>
+    </wsdl:message>
+    <wsdl:message name="killJobRequest">
+        <wsdl:part name="JobId" element="tns:JobId"/>
+    </wsdl:message>
+    <wsdl:message name="killJobResponse">
+        <wsdl:part name="JobStatus" element="tns:JobStatus"/>
+    </wsdl:message>
+    <!--<wsdl:message name="SigiriFault">-->
+    <!--<wsdl:part element="tns:SigiriFault" name="SigiriFault"/>-->
+    <!--</wsdl:message>-->
+
+    <wsdl:portType name="SigiriPortType">
+        <wsdl:operation name="submitJob">
+            <wsdl:input message="tns:SubmitJobRequest"/>
+            <wsdl:output message="tns:SubmitJobResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="moveFiles">
+            <wsdl:input message="tns:MoveFileRequest"/>
+            <wsdl:output message="tns:MoveFileResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="checkStatus">
+            <wsdl:input message="tns:checkStatusRequest"/>
+            <wsdl:output message="tns:checkStatusResponse"/>
+            <!--<wsdl:fault message="tns:SigiriFault" name="SigiriFault"/>-->
+        </wsdl:operation>
+        <wsdl:operation name="checkMultipleJobStatus">
+            <wsdl:input message="tns:checkMultipleJobStatusRequest"/>
+            <wsdl:output message="tns:checkMultipleJobStatusResponse"/>
+            <!--<wsdl:fault message="tns:SigiriFault" name="SigiriFault"/>-->
+        </wsdl:operation>
+        <wsdl:operation name="killJob">
+            <wsdl:input message="tns:killJobRequest"/>
+            <wsdl:output message="tns:killJobResponse"/>
+            <!--<wsdl:fault message="tns:SigiriFault" name="SigiriFault"/>-->
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="SigiriBinding" type="tns:SigiriPortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="submitJob">
+            <soap:operation soapAction="urn:submitJob"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <!--<wsdl:fault name="SigiriFault">-->
+            <!--<wsdlsoap:fault name="SigiriFault" use="literal"/>-->
+            <!--</wsdl:fault>-->
+        </wsdl:operation>
+
+        <wsdl:operation name="moveFiles">
+            <soap:operation soapAction="urn:moveFiles"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <!--<wsdl:fault name="SigiriFault">-->
+            <!--<wsdlsoap:fault name="SigiriFault" use="literal"/>-->
+            <!--</wsdl:fault>-->
+        </wsdl:operation>
+        <wsdl:operation name="checkStatus">
+            <soap:operation soapAction="urn:checkStatus"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <!--<wsdl:fault name="SigiriFault">-->
+            <!--<wsdlsoap:fault name="SigiriFault" use="literal"/>-->
+            <!--</wsdl:fault>-->
+        </wsdl:operation>
+        <wsdl:operation name="checkMultipleJobStatus">
+            <soap:operation soapAction="urn:checkMultipleJobStatus"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <!--<wsdl:fault name="SigiriFault">-->
+            <!--<wsdlsoap:fault name="SigiriFault" use="literal"/>-->
+            <!--</wsdl:fault>-->
+        </wsdl:operation>
+        <wsdl:operation name="killJob">
+            <soap:operation soapAction="urn:killJob"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <!--<wsdl:fault name="SigiriFault">-->
+            <!--<wsdlsoap:fault name="SigiriFault" use="literal"/>-->
+            <!--</wsdl:fault>-->
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="SigiriService">
+        <wsdl:port name="Sigiri" binding="tns:SigiriBinding">
+            <soap:address location="http://localhost/axis2/services/SigiriService"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This file was auto-generated from WSDL -->
+<!-- by the Apache Axis2 version: 1.6.1-wso2v1  Built on : Jun 21, 2011 (03:33:25 IST) -->
+<serviceGroup>
+    <service name="SigiriService">
+        <messageReceivers>
+            <messageReceiver mep="http://www.w3.org/ns/wsdl/in-out" class="edu.indiana.d2i.sigiri.service.SigiriServiceMessageReceiverInOut"/>
+        </messageReceivers>
+        <parameter name="ServiceClass">edu.indiana.d2i.sigiri.service.SigiriServiceSkeleton</parameter>
+        <parameter name="useOriginalwsdl">true</parameter>
+        <parameter name="modifyUserWSDLPortAddress">true</parameter>
+        <operation name="checkStatus" mep="http://www.w3.org/ns/wsdl/in-out" namespace="http://extreme.indiana.edu/sigiri">
+            <actionMapping>urn:checkStatus</actionMapping>
+            <outputActionMapping>http://extreme.indiana.edu/sigiri/SigiriPortType/checkStatusResponse</outputActionMapping>
+        </operation>
+        <operation name="checkMultipleJobStatus" mep="http://www.w3.org/ns/wsdl/in-out" namespace="http://extreme.indiana.edu/sigiri">
+            <actionMapping>urn:checkMultipleJobStatus</actionMapping>
+            <outputActionMapping>http://extreme.indiana.edu/sigiri/SigiriPortType/checkMultipleJobStatusResponse</outputActionMapping>
+        </operation>
+        <operation name="moveFiles" mep="http://www.w3.org/ns/wsdl/in-out" namespace="http://extreme.indiana.edu/sigiri">
+            <actionMapping>urn:moveFiles</actionMapping>
+            <outputActionMapping>http://extreme.indiana.edu/sigiri/SigiriPortType/moveFilesResponse</outputActionMapping>
+        </operation>
+        <operation name="killJob" mep="http://www.w3.org/ns/wsdl/in-out" namespace="http://extreme.indiana.edu/sigiri">
+            <actionMapping>urn:killJob</actionMapping>
+            <outputActionMapping>http://extreme.indiana.edu/sigiri/SigiriPortType/killJobResponse</outputActionMapping>
+        </operation>
+        <operation name="submitJob" mep="http://www.w3.org/ns/wsdl/in-out" namespace="http://extreme.indiana.edu/sigiri">
+            <actionMapping>urn:submitJob</actionMapping>
+            <outputActionMapping>http://extreme.indiana.edu/sigiri/SigiriPortType/submitJobResponse</outputActionMapping>
+        </operation>
+    </service>
+</serviceGroup>
