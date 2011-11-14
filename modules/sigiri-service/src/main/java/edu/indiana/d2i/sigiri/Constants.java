@@ -8,6 +8,10 @@ public class Constants {
 
     public static final String DESC_JOB_SUBMISSION_SUCCESSFUL = "Job Submission Successful.";
 
+    public abstract class JobDescriptions {
+        public static final String JOB_DESC_EMPTY = "No description available.";
+        public static final String JOB_DESC_SUBMISSION_SUCCESSFUL = "Job Submission Successful.";
+    }
      public abstract class TableNames {
         public static final String JOBS = "Jobs";
         public static final String QOSParams = "QOSParams";

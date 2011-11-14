@@ -68,6 +68,52 @@ public class JobManager {
         }
     }
 
+    public String getJobDescription(String jobId) throws SQLException {
+        String status = "";
+        Connection connection = null;
+
+        if (isJobExist(jobId)) {
+            return Constants.JobStatus.JOB_NOT_AVAILABLE;
+        }
+
+        try {
+            connection = dbConnectionManager.getConnection();
+
+            String statusQuery = "SELECT " + Constants.ColumnNames.ERROR_DESCRIPTION + ", " + Constants.ColumnNames.ERROR_DESCRIPTION +
+                    " from " + Constants.TableNames.JOBS + " WHERE " + Constants.ColumnNames.INTERNAL_ID + "=?";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(statusQuery);
+
+            preparedStatement.setString(1, jobId);
+
+            ResultSet rs = preparedStatement.executeQuery();
+
+            if (rs.next()) {
+                status = rs.getString(1);
+
+                if (status.equals("")) {
+                    return Constants.JobStatus.JOB_NOT_AVAILABLE;
+                }
+
+            } else {
+                status = Constants.JobStatus.JOB_NOT_AVAILABLE;
+            }
+
+            return status;
+        } catch (SQLException e) {
+            log.error("Error while getting job status from the database.", e);
+            throw e;
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                log.error("Error closing database connection.", e);
+            }
+        }
+    }
+
     private boolean isJobExist(String jobId) throws SQLException {
         Connection connection = null;
         try {

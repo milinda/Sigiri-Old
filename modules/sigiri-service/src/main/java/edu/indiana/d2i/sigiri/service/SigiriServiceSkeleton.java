@@ -21,6 +21,7 @@ import edu.indiana.d2i.sigiri.Constants;
 import edu.indiana.d2i.sigiri.JobManager;
 import edu.indiana.d2i.sigiri.internal.SigiriServiceComponent;
 import edu.indiana.d2i.sigiri.service.types.*;
+import org.apache.bcel.classfile.Constant;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -45,17 +46,23 @@ public class SigiriServiceSkeleton implements SigiriServiceSkeletonInterface {
 
         JobStatusType jobStatus = new JobStatusType();
         jobStatus.setStatus(Status_type1.JOB_NOT_AVAILABLE);
+        jobStatus.setDescription(Constants.JobDescriptions.JOB_DESC_EMPTY);
 
         try {
             String status = jobManager.getJobStatus(jobId0);
+            String description = jobManager.getJobDescription(jobId0);
             jobStatus.setStatus(Status_type1.Factory.fromValue(status));
+
+            if(description != null){
+                jobStatus.setDescription(description);
+            }
 
         } catch (SQLException e) {
             log.error("Job status check failed for job " + jobId0 + ".", e);
-            //setErrorStatus(jobStatus, "Job status check failed for job " + jobId0 + ".", "Status Check Failed.");
+            setErrorStatus(jobStatus, "Job status check failed for job " + jobId0 + ".", Status_type1.JOB_STATUS_CHECK_FAILED);
         }
 
-        return null;
+        return jobStatus;
     }
 
     public JobStatusType submitJob(XMLContent jobDescriptionXML,
