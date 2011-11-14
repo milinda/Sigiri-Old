@@ -71,8 +71,15 @@
                     <xs:element name="status">
                         <xs:simpleType>
                             <xs:restriction base="xs:string">
-                                <xs:enumeration value="SUBMISSION_FAILED"/>
-                                <xs:enumeration value="SUBMISSION_ACCEPTED"/>
+                                <xs:enumeration value="JOB_SUBMISSION_FAILED"/>
+                                <xs:enumeration value="JOB_SUBMISSION_ACCEPTED"/>
+                                <xs:enumeration value="JOB_STATUS_CHECK_FAILED"/>
+                                <xs:enumeration value="JOB_NOT_AVAILABLE"/>
+                                <xs:enumeration value="JOB_PICKED_BY_MANAGEMENT_DAEMON"/>
+                                <xs:enumeration value="JOB_SUBMITTED_TO_COMPUTING_RESOURCE"/>
+                                <xs:enumeration value="JOB_SUBMISSION_TO_COMPUTING_RESOURCE_FAILED"/>
+                                <xs:enumeration value="JOB_COMPLETED_SUCCESSFULLY"/>
+                                <xs:enumeration value="JOB_FAILED"/>
                             </xs:restriction>
                         </xs:simpleType>
                     </xs:element>
@@ -89,22 +96,7 @@
                 </xs:complexType>
             </xs:element>
 
-            <xs:element name="JobStatus">
-                <xs:complexType>
-                    <xs:sequence>
-                        <xs:element name="status">
-                            <xs:simpleType>
-                                <xs:restriction base="xs:string">
-                                    <xs:enumeration value="SUBMISSION_FAILED"/>
-                                    <xs:enumeration value="SUBMISSION_ACCEPTED"/>
-                                </xs:restriction>
-                            </xs:simpleType>
-                        </xs:element>
-                        <xs:element name="jobId" type="xs:string"/>
-                        <xs:element name="description" type="xs:string" minOccurs="0"/>
-                    </xs:sequence>
-                </xs:complexType>
-            </xs:element>
+            <xs:element name="JobStatus" type="tns:JobStatusType"/>
 
 
             <xs:complexType name="QOSParameter">
@@ -123,17 +115,6 @@
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
-
-            <!--<xs:element name="SigiriFault">-->
-            <!--<xs:complexType>-->
-            <!--<xs:sequence>-->
-            <!--<xs:element name="description" type="xs:string"/>-->
-            <!--<xs:element name="jobId" type="xs:string"/>-->
-            <!--<xs:element name="jobStatus" type="xs:string"/>-->
-            <!--</xs:sequence>-->
-            <!--</xs:complexType>-->
-            <!--</xs:element>-->
-
         </xs:schema>
     </wsdl:types>
     <wsdl:message name="SubmitJobRequest">
@@ -166,9 +147,6 @@
     <wsdl:message name="killJobResponse">
         <wsdl:part name="JobStatus" element="tns:JobStatus"/>
     </wsdl:message>
-    <!--<wsdl:message name="SigiriFault">-->
-    <!--<wsdl:part element="tns:SigiriFault" name="SigiriFault"/>-->
-    <!--</wsdl:message>-->
 
     <wsdl:portType name="SigiriPortType">
         <wsdl:operation name="submitJob">
@@ -182,17 +160,14 @@
         <wsdl:operation name="checkStatus">
             <wsdl:input message="tns:checkStatusRequest"/>
             <wsdl:output message="tns:checkStatusResponse"/>
-            <!--<wsdl:fault message="tns:SigiriFault" name="SigiriFault"/>-->
         </wsdl:operation>
         <wsdl:operation name="checkMultipleJobStatus">
             <wsdl:input message="tns:checkMultipleJobStatusRequest"/>
             <wsdl:output message="tns:checkMultipleJobStatusResponse"/>
-            <!--<wsdl:fault message="tns:SigiriFault" name="SigiriFault"/>-->
         </wsdl:operation>
         <wsdl:operation name="killJob">
             <wsdl:input message="tns:killJobRequest"/>
             <wsdl:output message="tns:killJobResponse"/>
-            <!--<wsdl:fault message="tns:SigiriFault" name="SigiriFault"/>-->
         </wsdl:operation>
     </wsdl:portType>
     <wsdl:binding name="SigiriBinding" type="tns:SigiriPortType">
@@ -205,9 +180,6 @@
             <wsdl:output>
                 <soap:body use="literal"/>
             </wsdl:output>
-            <!--<wsdl:fault name="SigiriFault">-->
-            <!--<wsdlsoap:fault name="SigiriFault" use="literal"/>-->
-            <!--</wsdl:fault>-->
         </wsdl:operation>
 
         <wsdl:operation name="moveFiles">
@@ -218,9 +190,6 @@
             <wsdl:output>
                 <soap:body use="literal"/>
             </wsdl:output>
-            <!--<wsdl:fault name="SigiriFault">-->
-            <!--<wsdlsoap:fault name="SigiriFault" use="literal"/>-->
-            <!--</wsdl:fault>-->
         </wsdl:operation>
         <wsdl:operation name="checkStatus">
             <soap:operation soapAction="urn:checkStatus"/>
@@ -230,9 +199,6 @@
             <wsdl:output>
                 <soap:body use="literal"/>
             </wsdl:output>
-            <!--<wsdl:fault name="SigiriFault">-->
-            <!--<wsdlsoap:fault name="SigiriFault" use="literal"/>-->
-            <!--</wsdl:fault>-->
         </wsdl:operation>
         <wsdl:operation name="checkMultipleJobStatus">
             <soap:operation soapAction="urn:checkMultipleJobStatus"/>
@@ -242,9 +208,6 @@
             <wsdl:output>
                 <soap:body use="literal"/>
             </wsdl:output>
-            <!--<wsdl:fault name="SigiriFault">-->
-            <!--<wsdlsoap:fault name="SigiriFault" use="literal"/>-->
-            <!--</wsdl:fault>-->
         </wsdl:operation>
         <wsdl:operation name="killJob">
             <soap:operation soapAction="urn:killJob"/>
@@ -254,9 +217,6 @@
             <wsdl:output>
                 <soap:body use="literal"/>
             </wsdl:output>
-            <!--<wsdl:fault name="SigiriFault">-->
-            <!--<wsdlsoap:fault name="SigiriFault" use="literal"/>-->
-            <!--</wsdl:fault>-->
         </wsdl:operation>
     </wsdl:binding>
     <wsdl:service name="SigiriService">

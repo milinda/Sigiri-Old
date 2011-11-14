@@ -56,20 +56,15 @@ public class Constants {
     }
 
     public abstract class JobStatus {
-        public static final String ACCEPTED = "Accepted";
-        public static final String SUBMITTING_TO_JOB_MANAGER = "Submitting to Job Manager";
-        public static final String SUBMITTED_TO_JOB_MANAGER = "Submitted To Job Manager";
-        public static final String JOB_SUBMISSION_FAILED = "Job Submission Failed";
-        public static final String JOB_COMPLETED = "JOB_COMPLETED";
-        public static final String FAILED = "Failed";
-        public static final String NOTIFICATION_SENT = "Notification Sent";
-        public static final String NOT_AVAILABLE = "Job Not Available";
-        public static final String STATUS_NOT_AVAILABLE = "Status Not Available";
-        public static final String STATE_IDLE = "STATE_IDLE";
-        public static final String STATE_JOB_STARTED = "JOB_STARTED";
-        public static final String STATE_JOB_KILLED = "JOB_KILLED";
-        public static final String STATE_JOB_HELD = "JOB_HELD";
-        public static final String STATE_JOB_SCHEDULED_TO_BE_KILLED = "Job Scheduled to be killed";
+        public static final String JOB_SUBMISSION_ACCEPTED = "JOB_SUBMISSION_ACCEPTED";
+        public static final String JOB_SUBMISSION_FAILED = "JOB_SUBMISSION_FAILED";
+        public static final String JOB_STATUS_CHECK_FAILED = "JOB_STATUS_CHECK_FAILED";
+        public static final String JOB_NOT_AVAILABLE = "JOB_NOT_AVAILABLE";
+        public static final String JOB_PICKED_BY_MANAGEMENT_DAEMON = "JOB_PICKED_BY_MANAGEMENT_DAEMON";
+        public static final String JOB_SUBMITTED_TO_COMPUTING_RESOURCE = "JOB_SUBMITTED_TO_COMPUTING_RESOURCE";
+        public static final String JOB_SUBMISSION_TO_COMPUTING_RESOURCE_FAILED = "JOB_SUBMISSION_TO_COMPUTING_RESOURCE_FAILED";
+        public static final String JOB_COMPLETED_SUCCESSFULLY = "JOB_COMPLETED_SUCCESSFULLY";
+        public static final String JOB_FAILED = "JOB_FAILED";
     }
 
 }

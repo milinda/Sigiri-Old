@@ -27,7 +27,7 @@ public class JobManager {
         Connection connection = null;
 
         if (isJobExist(jobID)) {
-            return Constants.JobStatus.NOT_AVAILABLE;
+            return Constants.JobStatus.JOB_NOT_AVAILABLE;
         }
 
         try {
@@ -46,11 +46,11 @@ public class JobManager {
                 status = rs.getString(1);
 
                 if (status.equals("")) {
-                    return Constants.JobStatus.NOT_AVAILABLE;
+                    return Constants.JobStatus.JOB_NOT_AVAILABLE;
                 }
 
             } else {
-                status = Constants.JobStatus.NOT_AVAILABLE;
+                status = Constants.JobStatus.JOB_NOT_AVAILABLE;
             }
 
             return status;
@@ -122,7 +122,7 @@ public class JobManager {
             preparedStatement.setString(1, jobDescription);
             preparedStatement.setString(2, hpcResoureName);
             preparedStatement.setString(3, callbackURL == null || "".equals(callbackURL) ? "NULL" : callbackURL);
-            preparedStatement.setString(4, Constants.JobStatus.ACCEPTED);
+            preparedStatement.setString(4, Constants.JobStatus.JOB_SUBMISSION_ACCEPTED);
 
             jobKey = UUID.randomUUID().toString();
             preparedStatement.setString(5, jobKey);

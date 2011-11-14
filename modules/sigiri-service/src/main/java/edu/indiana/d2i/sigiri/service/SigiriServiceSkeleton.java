@@ -35,45 +35,33 @@ import java.util.Map;
 public class SigiriServiceSkeleton implements SigiriServiceSkeletonInterface {
     private static final Log log = LogFactory.getLog(SigiriServiceSkeleton.class);
 
-    public JobStatus checkStatus(String jobId0) {
+
+    public JobStatusType checkStatus(String jobId0) {
         if (log.isDebugEnabled()) {
             log.debug("Checking status of job " + jobId0);
         }
 
         JobManager jobManager = SigiriServiceComponent.getJobManager();
 
-        JobStatus jobStatus = new JobStatus();
-        jobStatus.setJobId(jobId0);
+        JobStatusType jobStatus = new JobStatusType();
+        jobStatus.setStatus(Status_type1.JOB_NOT_AVAILABLE);
 
         try {
             String status = jobManager.getJobStatus(jobId0);
+            jobStatus.setStatus(Status_type1.Factory.fromValue(status));
+
         } catch (SQLException e) {
             log.error("Job status check failed for job " + jobId0 + ".", e);
-            setErrorStatus(jobStatus, "Job status check failed for job " + jobId0 + ".", "Status Check Failed.");
+            //setErrorStatus(jobStatus, "Job status check failed for job " + jobId0 + ".", "Status Check Failed.");
         }
 
         return null;
     }
 
-    public JobStatusType[] checkMultipleJobStatus(String[] id) {
-        return new JobStatusType[0];
-    }
-
-    public JobStatus moveFiles(String username,
-                               HpcResourceName hpcResource,
-                               T_Movement[] movement,
-                               QOSParameter[] qOSParameters) {
-        return null;
-    }
-
-    public JobStatus killJob(String jobId8) {
-        return null;
-    }
-
-    public JobStatus submitJob(XMLContent jobDescriptionXML,
-                               HpcResourceName hpcResource13,
-                               String callbackURL,
-                               QOSParameter[] qOSParameters14) {
+    public JobStatusType submitJob(XMLContent jobDescriptionXML,
+                                   HpcResourceName hpcResource13,
+                                   String callbackURL,
+                                   QOSParameter[] qOSParameters14) {
         if (log.isDebugEnabled()) {
             log.debug("Submitting new job to queue..");
         }
@@ -81,34 +69,40 @@ public class SigiriServiceSkeleton implements SigiriServiceSkeletonInterface {
         Date jobSubmisstionTime = new Date();
         JobManager jobManager = SigiriServiceComponent.getJobManager();
 
-        JobStatus jobStatus = new JobStatus();
-        jobStatus.setStatus(Status_type1.SUBMISSION_FAILED);
+        JobStatusType jobStatus = new JobStatusType();
+        jobStatus.setStatus(Status_type1.JOB_SUBMISSION_FAILED);
 
         try {
             String jobId = jobManager.addJobToQueue(jobDescriptionXML.getExtraElement().toStringWithConsume(),
                     hpcResource13.getValue(), callbackURL, getQOSParametersAsNameValuePairs(qOSParameters14));
 
             jobStatus.setJobId(jobId);
-            jobStatus.setStatus(Status_type1.SUBMISSION_ACCEPTED);
+            jobStatus.setStatus(Status_type1.JOB_SUBMISSION_ACCEPTED);
             jobStatus.setDescription(Constants.DESC_JOB_SUBMISSION_SUCCESSFUL);
         } catch (XMLStreamException e) {
             log.error("Job submission failed.", e);
-            setErrorStatus(jobStatus, "Job submission failed due XML parsing error." + e.getMessage(), Status_type1.SUBMISSION_FAILED);
+            setErrorStatus(jobStatus, "Job submission failed due XML parsing error." + e.getMessage(), Status_type1.JOB_SUBMISSION_FAILED);
         } catch (SQLException e) {
             log.error("Job submission failed.", e);
-            setErrorStatus(jobStatus, "Job submission failed due to dataase error." + e.getMessage(), Status_type1.SUBMISSION_FAILED);
+            setErrorStatus(jobStatus, "Job submission failed due to dataase error." + e.getMessage(), Status_type1.JOB_SUBMISSION_FAILED);
         }
 
         return jobStatus;
     }
 
-    private void setErrorStatus(JobStatus jobStatus, String description, Status_type1 status) {
-        jobStatus.setDescription(description);
-        jobStatus.setJobId("NO_ID");
-        jobStatus.setStatus(status);
+    public JobStatusType[] checkMultipleJobStatus(String[] id) {
+        return new JobStatusType[0];
     }
 
-    private void setErrorStatus(JobStatus jobStatus, String description, String status) {
+    public JobStatusType moveFiles(String username, HpcResourceName hpcResource, T_Movement[] movement, QOSParameter[] qOSParameters) {
+        return null;
+    }
+
+    public JobStatusType killJob(String jobId8) {
+        return null;
+    }
+
+    private void setErrorStatus(JobStatusType jobStatus, String description, Status_type1 status) {
         jobStatus.setDescription(description);
         jobStatus.setJobId("NO_ID");
         jobStatus.setStatus(status);
