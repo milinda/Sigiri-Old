@@ -2,14 +2,12 @@ package edu.indiana.d2i.sigiri;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.quartz.Job;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -23,7 +21,7 @@ public class JobManager {
     }
 
     public String getJobStatus(String jobID) throws SQLException {
-        String status = "";
+        String status;
         Connection connection = null;
 
         if (isJobExist(jobID)) {
@@ -69,7 +67,7 @@ public class JobManager {
     }
 
     public String getJobDescription(String jobId) throws SQLException {
-        String status = "";
+        String status;
         Connection connection = null;
 
         if (isJobExist(jobId)) {
@@ -148,8 +146,8 @@ public class JobManager {
         return false;
     }
 
-    public String addJobToQueue(String jobDescription, String hpcResoureName, String callbackURL, Map<String, String> qosParams) throws SQLException {
-        String jobKey = "";
+    public String addJobToQueue(String jobDescription, String hpcResourceName, String callbackURL, Map<String, String> qosParams) throws SQLException {
+        String jobKey;
         Connection connection = null;
         try {
             connection = dbConnectionManager.getConnection();
@@ -166,7 +164,7 @@ public class JobManager {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
             preparedStatement.setString(1, jobDescription);
-            preparedStatement.setString(2, hpcResoureName);
+            preparedStatement.setString(2, hpcResourceName);
             preparedStatement.setString(3, callbackURL == null || "".equals(callbackURL) ? "NULL" : callbackURL);
             preparedStatement.setString(4, Constants.JobStatus.JOB_SUBMISSION_ACCEPTED);
 
