@@ -1,0 +1,5 @@
+<SigiriExecutableConfiguration>
+  <Id>MatrixMul</Id>
+  <WorkingDirectory>MatrixMultiplier</WorkingDirectory>
+  <ExecutableName>MatrixMultiplier.exe</ExecutableName>
+</SigiriExecutableConfiguration>
