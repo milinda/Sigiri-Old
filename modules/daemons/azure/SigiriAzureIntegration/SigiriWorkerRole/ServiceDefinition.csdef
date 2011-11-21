@@ -9,5 +9,8 @@
       <Setting name="ApplicationId" />
       <Setting name="ApplicationStorage" />
     </ConfigurationSettings>
+    <LocalResources>
+      <LocalStorage name="ApplicationsStorage" cleanOnRoleRecycle="false" sizeInMB="20480" />
+    </LocalResources>
   </WorkerRole>
 </ServiceDefinition>
