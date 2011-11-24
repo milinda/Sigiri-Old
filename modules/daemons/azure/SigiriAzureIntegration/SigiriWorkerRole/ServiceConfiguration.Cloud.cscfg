@@ -6,7 +6,7 @@
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=true" />
       <Setting name="DataConnectionString" value="UseDevelopmentStorage=true" />
       <Setting name="ApplicationId" value="MatrixMul" />
-      <Setting name="ApplicationStorage" value="SigiriApplications" />
+      <Setting name="ApplicationStorage" value="sigiriapplications" />
     </ConfigurationSettings>
   </Role>
 </ServiceConfiguration>

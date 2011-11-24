@@ -2,93 +2,97 @@
   <RecentFiles>
     <RecentFiles>
       <File id="3AD2B869-C181-40E0-A7B5-B0FC910F1258/f:ServiceConfiguration.Cloud.cscfg" caret="0" fromTop="0" />
-      <File id="3AD2B869-C181-40E0-A7B5-B0FC910F1258/f:ServiceConfiguration.Local.cscfg" caret="0" fromTop="0" />
       <File id="E943E58B-0835-4788-B3C0-97E317BC964F/f:app.config" caret="0" fromTop="0" />
-      <File id="9D5670E0-AB88-4253-93AA-41D8410893C2/f:app.config" caret="293" fromTop="8" />
-      <File id="3AD2B869-C181-40E0-A7B5-B0FC910F1258/f:ServiceDefinition.csdef" caret="526" fromTop="12" />
+      <File id="3AD2B869-C181-40E0-A7B5-B0FC910F1258/f:ServiceDefinition.csdef" caret="661" fromTop="12" />
+      <File id="E943E58B-0835-4788-B3C0-97E317BC964F/f:AppRunner.cs" caret="374" fromTop="10" />
+      <File id="9D5670E0-AB88-4253-93AA-41D8410893C2/f:ApplicationManager.cs" caret="2705" fromTop="17" />
+      <File id="9D5670E0-AB88-4253-93AA-41D8410893C2/f:app.config" caret="296" fromTop="8" />
+      <File id="E943E58B-0835-4788-B3C0-97E317BC964F/f:SigiriAzureInMessage.cs" caret="383" fromTop="14" />
       <File id="9D5670E0-AB88-4253-93AA-41D8410893C2/f:SigiriAzureDaemon.cs" caret="1659" fromTop="15" />
-      <File id="E943E58B-0835-4788-B3C0-97E317BC964F/f:SigiriApplicationConfiguration.cs" caret="258" fromTop="12" />
-      <File id="E943E58B-0835-4788-B3C0-97E317BC964F/f:WorkerRole.cs" caret="3125" fromTop="68" />
-      <File id="9D5670E0-AB88-4253-93AA-41D8410893C2/f:ApplicationManager.cs" caret="2705" fromTop="44" />
-      <File id="E943E58B-0835-4788-B3C0-97E317BC964F/f:AppRunner.cs" caret="291" fromTop="9" />
+      <File id="8DF79254-4F9E-47EA-9176-052E13B5CF3E/f:Program.cs" caret="872" fromTop="8" />
+      <File id="3AD2B869-C181-40E0-A7B5-B0FC910F1258/f:ServiceConfiguration.Local.cscfg" caret="693" fromTop="8" />
+      <File id="8DF79254-4F9E-47EA-9176-052E13B5CF3E/f:App.config" caret="190" fromTop="4" />
+      <File id="8DF79254-4F9E-47EA-9176-052E13B5CF3E/f:Utils.cs" caret="2278" fromTop="13" />
+      <File id="E943E58B-0835-4788-B3C0-97E317BC964F/f:SigiriApplicationConfiguration.cs" caret="943" fromTop="4" />
+      <File id="E943E58B-0835-4788-B3C0-97E317BC964F/f:WorkerRole.cs" caret="4540" fromTop="0" />
     </RecentFiles>
     <RecentEdits>
-      <File id="9D5670E0-AB88-4253-93AA-41D8410893C2/f:ApplicationManager.cs" caret="716" fromTop="16" />
-      <File id="9D5670E0-AB88-4253-93AA-41D8410893C2/f:SigiriAzureDaemon.cs" caret="1941" fromTop="28" />
-      <File id="9D5670E0-AB88-4253-93AA-41D8410893C2/f:SigiriAzureDaemon.cs" caret="497" fromTop="11" />
-      <File id="9D5670E0-AB88-4253-93AA-41D8410893C2/f:SigiriAzureDaemon.cs" caret="794" fromTop="15" />
-      <File id="9D5670E0-AB88-4253-93AA-41D8410893C2/f:SigiriAzureDaemon.cs" caret="1079" fromTop="25" />
-      <File id="9D5670E0-AB88-4253-93AA-41D8410893C2/f:SigiriAzureDaemon.cs" caret="1439" fromTop="23" />
-      <File id="9D5670E0-AB88-4253-93AA-41D8410893C2/f:SigiriAzureDaemon.cs" caret="716" fromTop="11" />
-      <File id="3AD2B869-C181-40E0-A7B5-B0FC910F1258/f:ServiceDefinition.csdef" caret="0" fromTop="0" />
-      <File id="9D5670E0-AB88-4253-93AA-41D8410893C2/f:ApplicationManager.cs" caret="3262" fromTop="52" />
-      <File id="E943E58B-0835-4788-B3C0-97E317BC964F/f:app.config" caret="0" fromTop="0" />
-      <File id="9D5670E0-AB88-4253-93AA-41D8410893C2/f:SigiriAzureDaemon.cs" caret="1659" fromTop="11" />
-      <File id="E943E58B-0835-4788-B3C0-97E317BC964F/f:WorkerRole.cs" caret="1756" fromTop="23" />
-      <File id="9D5670E0-AB88-4253-93AA-41D8410893C2/f:ApplicationManager.cs" caret="2858" fromTop="56" />
-      <File id="9D5670E0-AB88-4253-93AA-41D8410893C2/f:app.config" caret="332" fromTop="8" />
-      <File id="E943E58B-0835-4788-B3C0-97E317BC964F/f:WorkerRole.cs" caret="2634" fromTop="25" />
-      <File id="E943E58B-0835-4788-B3C0-97E317BC964F/f:WorkerRole.cs" caret="3360" fromTop="3" />
-      <File id="E943E58B-0835-4788-B3C0-97E317BC964F/f:WorkerRole.cs" caret="6004" fromTop="31" />
-      <File id="E943E58B-0835-4788-B3C0-97E317BC964F/f:WorkerRole.cs" caret="2632" fromTop="28" />
-      <File id="E943E58B-0835-4788-B3C0-97E317BC964F/f:WorkerRole.cs" caret="1590" fromTop="37" />
-      <File id="E943E58B-0835-4788-B3C0-97E317BC964F/f:WorkerRole.cs" caret="1331" fromTop="30" />
-      <File id="E943E58B-0835-4788-B3C0-97E317BC964F/f:WorkerRole.cs" caret="1225" fromTop="26" />
-      <File id="E943E58B-0835-4788-B3C0-97E317BC964F/f:SigiriApplicationConfiguration.cs" caret="1681" fromTop="29" />
-      <File id="E943E58B-0835-4788-B3C0-97E317BC964F/f:SigiriApplicationConfiguration.cs" caret="1107" fromTop="20" />
-      <File id="E943E58B-0835-4788-B3C0-97E317BC964F/f:SigiriApplicationConfiguration.cs" caret="1432" fromTop="27" />
-      <File id="E943E58B-0835-4788-B3C0-97E317BC964F/f:WorkerRole.cs" caret="3317" fromTop="25" />
-      <File id="E943E58B-0835-4788-B3C0-97E317BC964F/f:WorkerRole.cs" caret="679" fromTop="19" />
-      <File id="E943E58B-0835-4788-B3C0-97E317BC964F/f:SigiriApplicationConfiguration.cs" caret="764" fromTop="24" />
-      <File id="E943E58B-0835-4788-B3C0-97E317BC964F/f:SigiriApplicationConfiguration.cs" caret="258" fromTop="12" />
-      <File id="E943E58B-0835-4788-B3C0-97E317BC964F/f:WorkerRole.cs" caret="3134" fromTop="68" />
-      <File id="E943E58B-0835-4788-B3C0-97E317BC964F/f:AppRunner.cs" caret="291" fromTop="9" />
+      <File id="E943E58B-0835-4788-B3C0-97E317BC964F/f:SigiriAzureInMessage.cs" caret="879" fromTop="25" />
+      <File id="E943E58B-0835-4788-B3C0-97E317BC964F/f:SigiriApplicationConfiguration.cs" caret="1652" fromTop="30" />
+      <File id="E943E58B-0835-4788-B3C0-97E317BC964F/f:AppRunner.cs" caret="1083" fromTop="20" />
+      <File id="E943E58B-0835-4788-B3C0-97E317BC964F/f:AppRunner.cs" caret="1513" fromTop="28" />
+      <File id="E943E58B-0835-4788-B3C0-97E317BC964F/f:AppRunner.cs" caret="2713" fromTop="40" />
+      <File id="E943E58B-0835-4788-B3C0-97E317BC964F/f:AppRunner.cs" caret="2351" fromTop="38" />
+      <File id="E943E58B-0835-4788-B3C0-97E317BC964F/f:AppRunner.cs" caret="2242" fromTop="19" />
+      <File id="E943E58B-0835-4788-B3C0-97E317BC964F/f:SigiriApplicationConfiguration.cs" caret="1185" fromTop="22" />
+      <File id="E943E58B-0835-4788-B3C0-97E317BC964F/f:WorkerRole.cs" caret="638" fromTop="22" />
+      <File id="E943E58B-0835-4788-B3C0-97E317BC964F/f:SigiriAzureInMessage.cs" caret="383" fromTop="14" />
+      <File id="E943E58B-0835-4788-B3C0-97E317BC964F/f:WorkerRole.cs" caret="2249" fromTop="26" />
+      <File id="8DF79254-4F9E-47EA-9176-052E13B5CF3E/f:Utils.cs" caret="3248" fromTop="40" />
+      <File id="8DF79254-4F9E-47EA-9176-052E13B5CF3E/f:Utils.cs" caret="3227" fromTop="26" />
+      <File id="8DF79254-4F9E-47EA-9176-052E13B5CF3E/f:Utils.cs" caret="2465" fromTop="31" />
+      <File id="8DF79254-4F9E-47EA-9176-052E13B5CF3E/f:Utils.cs" caret="1323" fromTop="22" />
+      <File id="8DF79254-4F9E-47EA-9176-052E13B5CF3E/f:Utils.cs" caret="1565" fromTop="17" />
+      <File id="8DF79254-4F9E-47EA-9176-052E13B5CF3E/f:Utils.cs" caret="2250" fromTop="16" />
+      <File id="E943E58B-0835-4788-B3C0-97E317BC964F/f:WorkerRole.cs" caret="3059" fromTop="8" />
+      <File id="8DF79254-4F9E-47EA-9176-052E13B5CF3E/f:Program.cs" caret="1414" fromTop="18" />
+      <File id="8DF79254-4F9E-47EA-9176-052E13B5CF3E/f:Program.cs" caret="403" fromTop="15" />
+      <File id="8DF79254-4F9E-47EA-9176-052E13B5CF3E/f:Program.cs" caret="1393" fromTop="10" />
+      <File id="8DF79254-4F9E-47EA-9176-052E13B5CF3E/f:Program.cs" caret="872" fromTop="14" />
+      <File id="E943E58B-0835-4788-B3C0-97E317BC964F/f:WorkerRole.cs" caret="3990" fromTop="12" />
+      <File id="3AD2B869-C181-40E0-A7B5-B0FC910F1258/f:ServiceConfiguration.Local.cscfg" caret="693" fromTop="8" />
+      <File id="8DF79254-4F9E-47EA-9176-052E13B5CF3E/f:App.config" caret="317" fromTop="4" />
+      <File id="8DF79254-4F9E-47EA-9176-052E13B5CF3E/f:Utils.cs" caret="707" fromTop="13" />
+      <File id="8DF79254-4F9E-47EA-9176-052E13B5CF3E/f:Utils.cs" caret="1653" fromTop="10" />
+      <File id="8DF79254-4F9E-47EA-9176-052E13B5CF3E/f:Utils.cs" caret="2021" fromTop="6" />
+      <File id="E943E58B-0835-4788-B3C0-97E317BC964F/f:WorkerRole.cs" caret="3655" fromTop="6" />
+      <File id="E943E58B-0835-4788-B3C0-97E317BC964F/f:WorkerRole.cs" caret="4218" fromTop="23" />
     </RecentEdits>
   </RecentFiles>
   <CompletionStatisticsManager>
     <ItemStatistics item="CSharpCodeCompletionContext">
-      <Item value="static" priority="127" />
+      <Item value="static" priority="313" />
       <Item value="AppDomainManagerInitializationOptions`0" priority="31" />
-      <Item value="string" priority="287" />
-      <Item value="using" priority="156" />
+      <Item value="string" priority="639" />
+      <Item value="using" priority="188" />
       <Item value="Microsoft" priority="30" />
-      <Item value="public" priority="415" />
-      <Item value="void" priority="223" />
-      <Item value="var" priority="415" />
+      <Item value="public" priority="702" />
+      <Item value="void" priority="383" />
+      <Item value="var" priority="1054" />
       <Item value="System" priority="125" />
       <Item value="Configuration" priority="53" />
       <Item value="azureStorageAccountConnectionString" priority="31" />
       <Item value="blobStorage" priority="31" />
       <Item value="azureStorageAccount" priority="63" />
       <Item value="queueStorage" priority="31" />
-      <Item value="private" priority="447" />
-      <Item value="readonly" priority="63" />
+      <Item value="private" priority="607" />
+      <Item value="readonly" priority="127" />
       <Item value="LogManager`0" priority="31" />
-      <Item value="try" priority="95" />
-      <Item value="catch" priority="63" />
+      <Item value="try" priority="127" />
+      <Item value="catch" priority="95" />
       <Item value="Log" priority="31" />
       <Item value="throw" priority="63" />
-      <Item value="new" priority="319" />
+      <Item value="new" priority="703" />
       <Item value="WebException" priority="58" />
-      <Item value="false" priority="31" />
-      <Item value="if" priority="159" />
+      <Item value="false" priority="97" />
+      <Item value="if" priority="255" />
       <Item value="_storageInitialized" priority="63" />
-      <Item value="return" priority="127" />
-      <Item value="true" priority="31" />
+      <Item value="return" priority="223" />
+      <Item value="true" priority="97" />
       <Item value="AppDomainManager`0" priority="63" />
-      <Item value="CloudBlobClient`0" priority="95" />
-      <Item value="_blobClient" priority="322" />
-      <Item value="blobClient" priority="96" />
+      <Item value="CloudBlobClient`0" priority="127" />
+      <Item value="_blobClient" priority="354" />
+      <Item value="blobClient" priority="226" />
       <Item value="ApplicationManager`0" priority="58" />
       <Item value="CloudBlobContainer`0" priority="31" />
       <Item value="applicationContainer" priority="95" />
       <Item value="MemoryStream" priority="29" />
       <Item value="ZipFile`0" priority="31" />
-      <Item value="applicationArchivePath" priority="117" />
+      <Item value="applicationArchivePath" priority="276" />
       <Item value="ZipEntry`0" priority="31" />
       <Item value="applicationArchive" priority="31" />
       <Item value="executableConfigurations" priority="31" />
-      <Item value="String`0" priority="255" />
+      <Item value="String`0" priority="576" />
       <Item value="ConfigXmlDocument`0" priority="31" />
       <Item value="Xml" priority="26" />
       <Item value="XmlDocument`0" priority="63" />
@@ -97,13 +101,13 @@
       <Item value="XmlNode`0" priority="31" />
       <Item value="idElements" priority="31" />
       <Item value="idElement" priority="31" />
-      <Item value="applicationId" priority="154" />
+      <Item value="applicationId" priority="250" />
       <Item value="ConfigurationManager`0" priority="31" />
       <Item value="CloudBlockBlob`0" priority="63" />
       <Item value="applicatiobBlobName" priority="31" />
       <Item value="applicationArchiveBlob" priority="63" />
-      <Item value="appArchive" priority="159" />
-      <Item value="FileStream" priority="28" />
+      <Item value="appArchive" priority="191" />
+      <Item value="FileStream" priority="57" />
       <Item value="File`0" priority="31" />
       <Item value="SigiriAzureDaemon" priority="28" />
       <Item value="sigiriAzureDaemon" priority="63" />
@@ -112,50 +116,102 @@
       <Item value="_blobStorage" priority="31" />
       <Item value="InitializeStorageServices`0" priority="31" />
       <Item value="InitializeApplicationManager`0" priority="31" />
-      <Item value="CloudQueueClient`0" priority="31" />
-      <Item value="CloudStorageAccount`0" priority="31" />
-      <Item value="storageAccount" priority="63" />
+      <Item value="CloudQueueClient`0" priority="95" />
+      <Item value="CloudStorageAccount`0" priority="63" />
+      <Item value="storageAccount" priority="159" />
       <Item value="_queueClient" priority="63" />
       <Item value="ApplicationLoader`0" priority="31" />
       <Item value="IEnumerable" priority="31" />
       <Item value="foreach" priority="63" />
-      <Item value="appArchiveBlob" priority="31" />
-      <Item value="in" priority="31" />
+      <Item value="appArchiveBlob" priority="127" />
+      <Item value="in" priority="63" />
       <Item value="appBlockBlob" priority="63" />
-      <Item value="appId" priority="63" />
-      <Item value="CloudQueue`0" priority="63" />
+      <Item value="appId" priority="127" />
+      <Item value="CloudQueue`0" priority="127" />
       <Item value="_messageInQueue" priority="95" />
-      <Item value="_messageOutQueue" priority="63" />
-      <Item value="RoleEnvironment`0" priority="31" />
+      <Item value="_messageOutQueue" priority="95" />
+      <Item value="RoleEnvironment`0" priority="63" />
       <Item value="applicationStorageLocation" priority="31" />
       <Item value="null" priority="31" />
       <Item value="_currentAppLocation" priority="90" />
       <Item value="_currentApp" priority="127" />
       <Item value="StorageClientException`0" priority="31" />
       <Item value="CloudQueueMessage`0" priority="31" />
-      <Item value="inMessage" priority="31" />
-      <Item value="else" priority="31" />
+      <Item value="inMessage" priority="320" />
+      <Item value="else" priority="63" />
       <Item value="Threading" priority="26" />
       <Item value="Thread`0" priority="26" />
       <Item value="SigiriApplicationConfiguration`0" priority="127" />
       <Item value="FileStyleUriParser`0" priority="31" />
       <Item value="appConfig" priority="127" />
-      <Item value="appConfigDoc" priority="63" />
+      <Item value="appConfigDoc" priority="95" />
       <Item value="appConfigFilePath" priority="31" />
       <Item value="workingDirectoryElement" priority="63" />
       <Item value="executableNameElement" priority="63" />
-      <Item value="_currentAppConfiguration" priority="31" />
+      <Item value="_currentAppConfiguration" priority="63" />
+      <Item value="cloudBlobClient" priority="64" />
+      <Item value="_cloudBlobClient" priority="64" />
+      <Item value="_cloudQueue" priority="64" />
+      <Item value="outMessageQueue" priority="31" />
+      <Item value="ApplicationId`0" priority="31" />
+      <Item value="SigiriAzureInMessage`0" priority="95" />
+      <Item value="inMessageDoc" priority="95" />
+      <Item value="inMessageXmlString" priority="31" />
+      <Item value="SigiriAzureInMessage" priority="28" />
+      <Item value="appLocation" priority="26" />
+      <Item value="WorkingDirectory" priority="31" />
+      <Item value="_sigiriApplicationConfiguration" priority="96" />
+      <Item value="UseShellExecute" priority="32" />
+      <Item value="RedirectStandardOutput" priority="32" />
+      <Item value="RedirectStandardError" priority="32" />
+      <Item value="FileName" priority="32" />
+      <Item value="Arguments" priority="32" />
+      <Item value="Process" priority="28" />
+      <Item value="EnableRaisingEvents" priority="31" />
+      <Item value="StartInfo" priority="32" />
+      <Item value="processStartInfo" priority="32" />
+      <Item value="process" priority="31" />
+      <Item value="_outMessageQueue" priority="63" />
+      <Item value="CloudQueueMessage" priority="57" />
+      <Item value="WritingJobCompletionNotificationToQueue`0" priority="31" />
+      <Item value="AppRunner`0" priority="31" />
+      <Item value="_appRunner" priority="160" />
+      <Item value="AppRunner" priority="28" />
+      <Item value="Trace`0" priority="31" />
+      <Item value="queueClient" priority="258" />
+      <Item value="for" priority="31" />
+      <Item value="zipEntry" priority="95" />
+      <Item value="applicationStorage" priority="63" />
+      <Item value="GetApplicationIdFromApplicationArchive`0" priority="31" />
+      <Item value="FileInfo`0" priority="31" />
+      <Item value="FileInfo" priority="28" />
+      <Item value="appArchiveInfo" priority="31" />
+      <Item value="GetApplicationArchiveName`0" priority="31" />
+      <Item value="FileMode`0" priority="31" />
+      <Item value="inQueue" priority="95" />
+      <Item value="message" priority="95" />
+      <Item value="outQueue" priority="63" />
+      <Item value="Console`0" priority="31" />
+      <Item value="Utils`0" priority="95" />
+      <Item value="appArchivePath" priority="31" />
+      <Item value="while" priority="31" />
+      <Item value="ThreadStaticAttribute`0" priority="31" />
+      <Item value="CloudBlobClient" priority="28" />
+      <Item value="CloudQueueClient" priority="28" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:@Microsoft.WindowsAzure.CloudStorageAccount">
-      <Item value="Parse`0" priority="26" />
+      <Item value="Parse`0" priority="76" />
       <Item value="FromConfigurationSetting`0" priority="26" />
+      <Item value="SetConfigurationSettingPublisher`0" priority="26" />
+      <Item value="DevelopmentStorageAccount" priority="27" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:@System.Configuration.ConfigurationManager">
-      <Item value="AppSettings" priority="82" />
+      <Item value="AppSettings" priority="138" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:Microsoft.WindowsAzure.CloudStorageAccount">
       <Item value="CreateCloudBlobClient`0" priority="53" />
-      <Item value="CreateCloudQueueClient`0" priority="53" />
+      <Item value="CreateCloudQueueClient`0" priority="80" />
+      <Item value="BlobEndpoint" priority="22" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:@NLog.LogManager">
       <Item value="GetCurrentClassLogger`0" priority="26" />
@@ -165,41 +221,46 @@
       <Item value="Error`1" priority="22" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:Microsoft.WindowsAzure.StorageClient.CloudBlobClient">
-      <Item value="GetContainerReference`0" priority="53" />
+      <Item value="GetContainerReference`0" priority="80" />
       <Item value="GetBlockBlobReference`0" priority="26" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:Microsoft.WindowsAzure.StorageClient.CloudBlobContainer">
-      <Item value="CreateIfNotExist`0" priority="26" />
+      <Item value="CreateIfNotExist`0" priority="53" />
       <Item value="ListBlobs`0" priority="81" />
+      <Item value="GetBlockBlobReference`0" priority="26" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:@Ionic.Zip.ZipFile">
-      <Item value="Read`0" priority="26" />
+      <Item value="Read`0" priority="53" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:Ionic.Zip.ZipEntry">
-      <Item value="Extract`0" priority="26" />
+      <Item value="Extract`0" priority="53" />
+      <Item value="FileName" priority="26" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:System.Xml.XmlDocument">
-      <Item value="Load`0" priority="53" />
-      <Item value="GetElementsByTagName`0" priority="80" />
+      <Item value="Load`0" priority="81" />
+      <Item value="GetElementsByTagName`0" priority="161" />
+      <Item value="LoadXml`0" priority="26" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:System.Xml.XmlNode">
-      <Item value="InnerText" priority="77" />
+      <Item value="InnerText" priority="158" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:@System.String">
-      <Item value="Format`0" priority="161" />
+      <Item value="Format`0" priority="324" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:System.IO.FileInfo">
       <Item value="LastAccessTime" priority="26" />
-      <Item value="Name" priority="27" />
+      <Item value="Name" priority="54" />
       <Item value="GetType`0" priority="26" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:Microsoft.WindowsAzure.StorageClient.CloudBlockBlob">
-      <Item value="Properties" priority="26" />
-      <Item value="UploadFromStream`0" priority="26" />
+      <Item value="Properties" priority="54" />
+      <Item value="UploadFromStream`0" priority="54" />
       <Item value="Name" priority="26" />
+      <Item value="Metadata" priority="26" />
+      <Item value="SetProperties`0" priority="26" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:Microsoft.WindowsAzure.StorageClient.BlobProperties">
-      <Item value="ContentType" priority="27" />
+      <Item value="ContentType" priority="54" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:@System.IO.File">
       <Item value="Create`0" priority="26" />
@@ -211,7 +272,7 @@
       <Item value="Initialize`0" priority="26" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:@Microsoft.WindowsAzure.ServiceRuntime.RoleEnvironment">
-      <Item value="GetConfigurationSettingValue`0" priority="26" />
+      <Item value="GetConfigurationSettingValue`0" priority="53" />
       <Item value="Changing" priority="26" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:System.Collections.Generic.IEnumerable`1">
@@ -219,29 +280,71 @@
     </ItemStatistics>
     <ItemStatistics item="Qualified:System.String">
       <Item value="StartsWith`0" priority="26" />
+      <Item value="Equals`0" priority="26" />
+      <Item value="ToLower`0" priority="107" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:Microsoft.WindowsAzure.StorageClient.CloudQueueClient">
-      <Item value="GetQueueReference`0" priority="53" />
+      <Item value="GetQueueReference`0" priority="107" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:Microsoft.WindowsAzure.ServiceRuntime.LocalResource">
       <Item value="RootPath" priority="26" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:Microsoft.WindowsAzure.StorageClient.CloudQueue">
-      <Item value="CreateIfNotExist`0" priority="53" />
-      <Item value="GetMessage`0" priority="26" />
+      <Item value="CreateIfNotExist`0" priority="107" />
+      <Item value="GetMessage`0" priority="53" />
+      <Item value="AddMessage`0" priority="53" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:@System.Threading.Thread">
-      <Item value="Sleep`0" priority="26" />
+      <Item value="Sleep`0" priority="54" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:System.Xml.XmlNodeList">
       <Item value="Item`0" priority="53" />
+      <Item value="Indexer" priority="26" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:Sigiri_WorkerRole.SigiriApplicationConfiguration">
-      <Item value="WorkingDirectory" priority="26" />
-      <Item value="ExecutableName" priority="26" />
+      <Item value="WorkingDirectory" priority="54" />
+      <Item value="ExecutableName" priority="53" />
+      <Item value="ApplicationId" priority="26" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:@Sigiri_WorkerRole.SigiriApplicationConfiguration">
       <Item value="CreateSigiriApplicationConfiguration`0" priority="27" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:Sigiri_WorkerRole.SigiriAzureInMessage">
+      <Item value="ApplicationId" priority="26" />
+      <Item value="JobId" priority="53" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.Diagnostics.Process">
+      <Item value="Start`0" priority="26" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:Sigiri_WorkerRole.AppRunner">
+      <Item value="RunJob`0" priority="26" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@Sigiri_WorkerRole.SigiriAzureInMessage">
+      <Item value="CreateSigiriAzureInMessageFromXml`0" priority="26" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:Microsoft.WindowsAzure.StorageClient.CloudQueueMessage">
+      <Item value="AsString" priority="53" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@System.Diagnostics.Trace">
+      <Item value="TraceError`0" priority="26" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:Ionic.Zip.ZipFile">
+      <Item value="Where`1" priority="26" />
+      <Item value="ToList`1" priority="26" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.Collections.Generic.List`1">
+      <Item value="Where`1" priority="26" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@System.IO.FileMode">
+      <Item value="Open" priority="26" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@System.Console">
+      <Item value="WriteLine`0" priority="26" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@SigiriWorkerRoleTest.Utils">
+      <Item value="SetupApplication`0" priority="26" />
+      <Item value="PutMessageToApplicationInQueue`0" priority="26" />
+      <Item value="ReadJobCompletionNotificationsFromOutQueue`0" priority="26" />
     </ItemStatistics>
   </CompletionStatisticsManager>
   <NAntValidationSettings>
