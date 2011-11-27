@@ -57,6 +57,9 @@ namespace SigiriWorkerRoleTest
             {
                 Console.WriteLine(message.AsString);
             }
+
+            // Should delete message from queue after reading. Otherwise it will reside in the queue infinitely.
+            outQueue.DeleteMessage(message);
         }
 
         private static string GetApplicationArchiveName(String applicationArchivePath)
