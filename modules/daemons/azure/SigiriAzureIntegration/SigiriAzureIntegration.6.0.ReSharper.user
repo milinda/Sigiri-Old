@@ -13,16 +13,21 @@
       <File id="3AD2B869-C181-40E0-A7B5-B0FC910F1258/f:ServiceConfiguration.Local.cscfg" caret="693" fromTop="8" />
       <File id="8DF79254-4F9E-47EA-9176-052E13B5CF3E/f:App.config" caret="190" fromTop="4" />
       <File id="8DF79254-4F9E-47EA-9176-052E13B5CF3E/f:Utils.cs" caret="2278" fromTop="13" />
+      <File id="E943E58B-0835-4788-B3C0-97E317BC964F/f:WorkerRole.cs" caret="4722" fromTop="108" />
       <File id="E943E58B-0835-4788-B3C0-97E317BC964F/f:SigiriApplicationConfiguration.cs" caret="943" fromTop="4" />
-      <File id="E943E58B-0835-4788-B3C0-97E317BC964F/f:WorkerRole.cs" caret="4540" fromTop="0" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/f:WorkerRole.cs" caret="0" fromTop="0" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/f:JobStore.cs" caret="3118" fromTop="57" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/f:JobSubmissionContext.cs" caret="0" fromTop="0" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/f:SigiriApplicationConfiguration.cs" caret="0" fromTop="0" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/f:SigiriAzureDaemonContext.cs" caret="0" fromTop="0" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/f:JobScriptConverter.cs" caret="0" fromTop="0" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/f:JobNotificationContext.cs" caret="0" fromTop="0" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/f:Job.cs" caret="839" fromTop="23" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/f:Constants.cs" caret="0" fromTop="0" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/f:ApplicationStore.cs" caret="0" fromTop="0" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/f:SigiriAzureDaemon.cs" caret="1858" fromTop="57" />
     </RecentFiles>
     <RecentEdits>
-      <File id="E943E58B-0835-4788-B3C0-97E317BC964F/f:SigiriAzureInMessage.cs" caret="879" fromTop="25" />
-      <File id="E943E58B-0835-4788-B3C0-97E317BC964F/f:SigiriApplicationConfiguration.cs" caret="1652" fromTop="30" />
-      <File id="E943E58B-0835-4788-B3C0-97E317BC964F/f:AppRunner.cs" caret="1083" fromTop="20" />
-      <File id="E943E58B-0835-4788-B3C0-97E317BC964F/f:AppRunner.cs" caret="1513" fromTop="28" />
-      <File id="E943E58B-0835-4788-B3C0-97E317BC964F/f:AppRunner.cs" caret="2713" fromTop="40" />
-      <File id="E943E58B-0835-4788-B3C0-97E317BC964F/f:AppRunner.cs" caret="2351" fromTop="38" />
       <File id="E943E58B-0835-4788-B3C0-97E317BC964F/f:AppRunner.cs" caret="2242" fromTop="19" />
       <File id="E943E58B-0835-4788-B3C0-97E317BC964F/f:SigiriApplicationConfiguration.cs" caret="1185" fromTop="22" />
       <File id="E943E58B-0835-4788-B3C0-97E317BC964F/f:WorkerRole.cs" caret="638" fromTop="22" />
@@ -47,16 +52,22 @@
       <File id="8DF79254-4F9E-47EA-9176-052E13B5CF3E/f:Utils.cs" caret="2021" fromTop="6" />
       <File id="E943E58B-0835-4788-B3C0-97E317BC964F/f:WorkerRole.cs" caret="3655" fromTop="6" />
       <File id="E943E58B-0835-4788-B3C0-97E317BC964F/f:WorkerRole.cs" caret="4218" fromTop="23" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/f:Job.cs" caret="839" fromTop="23" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/f:JobStore.cs" caret="3740" fromTop="18" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/f:JobStore.cs" caret="3930" fromTop="21" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/f:JobStore.cs" caret="3118" fromTop="22" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/f:SigiriAzureDaemon.cs" caret="149" fromTop="3" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/f:SigiriAzureDaemon.cs" caret="1893" fromTop="34" />
     </RecentEdits>
   </RecentFiles>
   <CompletionStatisticsManager>
     <ItemStatistics item="CSharpCodeCompletionContext">
       <Item value="static" priority="313" />
       <Item value="AppDomainManagerInitializationOptions`0" priority="31" />
-      <Item value="string" priority="639" />
+      <Item value="string" priority="703" />
       <Item value="using" priority="188" />
       <Item value="Microsoft" priority="30" />
-      <Item value="public" priority="702" />
+      <Item value="public" priority="798" />
       <Item value="void" priority="383" />
       <Item value="var" priority="1054" />
       <Item value="System" priority="125" />
@@ -198,6 +209,7 @@
       <Item value="ThreadStaticAttribute`0" priority="31" />
       <Item value="CloudBlobClient" priority="28" />
       <Item value="CloudQueueClient" priority="28" />
+      <Item value="long" priority="31" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:@Microsoft.WindowsAzure.CloudStorageAccount">
       <Item value="Parse`0" priority="76" />
@@ -326,7 +338,7 @@
       <Item value="AsString" priority="53" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:@System.Diagnostics.Trace">
-      <Item value="TraceError`0" priority="26" />
+      <Item value="TraceError`0" priority="49" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:Ionic.Zip.ZipFile">
       <Item value="Where`1" priority="26" />
@@ -345,6 +357,16 @@
       <Item value="SetupApplication`0" priority="26" />
       <Item value="PutMessageToApplicationInQueue`0" priority="26" />
       <Item value="ReadJobCompletionNotificationsFromOutQueue`0" priority="26" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:SigiriAzureDaemon_WorkerRole.Internal.Job">
+      <Item value="UseSameResourceUserName" priority="27" />
+      <Item value="UseSameResourceUserProvidedId" priority="27" />
+      <Item value="JobId" priority="27" />
+      <Item value="JobDescription" priority="55" />
+      <Item value="JobSubmittedTime" priority="27" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:SigiriAzureDaemon_WorkerRole.Internal.JobScriptConverter">
+      <Item value="Convert`0" priority="27" />
     </ItemStatistics>
   </CompletionStatisticsManager>
   <NAntValidationSettings>

@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ServiceDefinition name="SigiriAzureDaemonWorkerRole" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceDefinition">
+  <WorkerRole name="SigiriAzureDaemon_WorkerRole" vmsize="Small">
+    <Imports>
+      <Import moduleName="Diagnostics" />
+    </Imports>
+    <Endpoints>
+      <InputEndpoint name="MySQLClientEndpoint" protocol="tcp" port="3306" />
+    </Endpoints>
+  </WorkerRole>
+</ServiceDefinition>

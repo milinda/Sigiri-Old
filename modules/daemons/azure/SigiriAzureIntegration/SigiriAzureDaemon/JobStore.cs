@@ -34,8 +34,8 @@ namespace SigiriAzureDaemon
                          " WHERE " + Constants.ColumnNames.STATUS + " = '" +
                            Constants.JobStatus.ACCEPTED + "' AND " +
                            Constants.ColumnNames.JOBS_HPC_RESOURCE_NAME + "= '" +
-                           resourceName + "' AND (" + Constants.ColumnNames.JOBS_JOB_MANAGER_NAME +
-                           "= '" + jobManagerName + "' OR " +
+                           _computingResourceName + "' AND (" + Constants.ColumnNames.JOBS_JOB_MANAGER_NAME +
+                           "= '" + _jobManagerName + "' OR " +
                            Constants.ColumnNames.JOBS_JOB_MANAGER_NAME + "= '') AND " + Constants.TableNames.JOBS + "." +
                            Constants.ColumnNames.INTERNAL_ID + "= QOSParams1." + Constants.ColumnNames.QOSPARAMS_JOB_INTERNAL_ID +
                            " AND " + Constants.TableNames.JOBS + "." +
