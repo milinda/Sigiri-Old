@@ -13,62 +13,67 @@
       <File id="3AD2B869-C181-40E0-A7B5-B0FC910F1258/f:ServiceConfiguration.Local.cscfg" caret="693" fromTop="8" />
       <File id="8DF79254-4F9E-47EA-9176-052E13B5CF3E/f:App.config" caret="190" fromTop="4" />
       <File id="8DF79254-4F9E-47EA-9176-052E13B5CF3E/f:Utils.cs" caret="2278" fromTop="13" />
-      <File id="E943E58B-0835-4788-B3C0-97E317BC964F/f:WorkerRole.cs" caret="4722" fromTop="108" />
       <File id="E943E58B-0835-4788-B3C0-97E317BC964F/f:SigiriApplicationConfiguration.cs" caret="943" fromTop="4" />
-      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/f:WorkerRole.cs" caret="0" fromTop="0" />
-      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/f:JobStore.cs" caret="3118" fromTop="57" />
-      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/f:JobSubmissionContext.cs" caret="0" fromTop="0" />
-      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/f:SigiriApplicationConfiguration.cs" caret="0" fromTop="0" />
-      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/f:SigiriAzureDaemonContext.cs" caret="0" fromTop="0" />
       <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/f:JobScriptConverter.cs" caret="0" fromTop="0" />
-      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/f:JobNotificationContext.cs" caret="0" fromTop="0" />
       <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/f:Job.cs" caret="839" fromTop="23" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/f:HandlerDescription.cs" caret="0" fromTop="0" />
       <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/f:Constants.cs" caret="0" fromTop="0" />
-      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/f:ApplicationStore.cs" caret="0" fromTop="0" />
-      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/f:SigiriAzureDaemon.cs" caret="1858" fromTop="57" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/f:SigiriApplicationConfiguration.cs" caret="0" fromTop="0" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/f:Handler.cs" caret="373" fromTop="14" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/f:JobNotificationContext.cs" caret="0" fromTop="0" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/f:Worker.cs" caret="242" fromTop="11" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/f:SigiriAzureDaemon.cs" caret="1822" fromTop="21" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/f:JobStore.cs" caret="3118" fromTop="58" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/f:WorkerRole.cs" caret="0" fromTop="0" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/f:JobSubmissionContext.cs" caret="0" fromTop="0" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/f:SigiriAzureDaemonContext.cs" caret="0" fromTop="0" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/f:JobSubmissionManager.cs" caret="391" fromTop="15" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/f:ApplicationStore.cs" caret="1775" fromTop="31" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/f:JobNotificationManager.cs" caret="985" fromTop="34" />
+      <File id="E943E58B-0835-4788-B3C0-97E317BC964F/f:WorkerRole.cs" caret="0" fromTop="0" />
     </RecentFiles>
     <RecentEdits>
-      <File id="E943E58B-0835-4788-B3C0-97E317BC964F/f:AppRunner.cs" caret="2242" fromTop="19" />
-      <File id="E943E58B-0835-4788-B3C0-97E317BC964F/f:SigiriApplicationConfiguration.cs" caret="1185" fromTop="22" />
-      <File id="E943E58B-0835-4788-B3C0-97E317BC964F/f:WorkerRole.cs" caret="638" fromTop="22" />
-      <File id="E943E58B-0835-4788-B3C0-97E317BC964F/f:SigiriAzureInMessage.cs" caret="383" fromTop="14" />
-      <File id="E943E58B-0835-4788-B3C0-97E317BC964F/f:WorkerRole.cs" caret="2249" fromTop="26" />
-      <File id="8DF79254-4F9E-47EA-9176-052E13B5CF3E/f:Utils.cs" caret="3248" fromTop="40" />
-      <File id="8DF79254-4F9E-47EA-9176-052E13B5CF3E/f:Utils.cs" caret="3227" fromTop="26" />
-      <File id="8DF79254-4F9E-47EA-9176-052E13B5CF3E/f:Utils.cs" caret="2465" fromTop="31" />
-      <File id="8DF79254-4F9E-47EA-9176-052E13B5CF3E/f:Utils.cs" caret="1323" fromTop="22" />
-      <File id="8DF79254-4F9E-47EA-9176-052E13B5CF3E/f:Utils.cs" caret="1565" fromTop="17" />
-      <File id="8DF79254-4F9E-47EA-9176-052E13B5CF3E/f:Utils.cs" caret="2250" fromTop="16" />
-      <File id="E943E58B-0835-4788-B3C0-97E317BC964F/f:WorkerRole.cs" caret="3059" fromTop="8" />
-      <File id="8DF79254-4F9E-47EA-9176-052E13B5CF3E/f:Program.cs" caret="1414" fromTop="18" />
-      <File id="8DF79254-4F9E-47EA-9176-052E13B5CF3E/f:Program.cs" caret="403" fromTop="15" />
-      <File id="8DF79254-4F9E-47EA-9176-052E13B5CF3E/f:Program.cs" caret="1393" fromTop="10" />
-      <File id="8DF79254-4F9E-47EA-9176-052E13B5CF3E/f:Program.cs" caret="872" fromTop="14" />
-      <File id="E943E58B-0835-4788-B3C0-97E317BC964F/f:WorkerRole.cs" caret="3990" fromTop="12" />
-      <File id="3AD2B869-C181-40E0-A7B5-B0FC910F1258/f:ServiceConfiguration.Local.cscfg" caret="693" fromTop="8" />
-      <File id="8DF79254-4F9E-47EA-9176-052E13B5CF3E/f:App.config" caret="317" fromTop="4" />
-      <File id="8DF79254-4F9E-47EA-9176-052E13B5CF3E/f:Utils.cs" caret="707" fromTop="13" />
-      <File id="8DF79254-4F9E-47EA-9176-052E13B5CF3E/f:Utils.cs" caret="1653" fromTop="10" />
-      <File id="8DF79254-4F9E-47EA-9176-052E13B5CF3E/f:Utils.cs" caret="2021" fromTop="6" />
-      <File id="E943E58B-0835-4788-B3C0-97E317BC964F/f:WorkerRole.cs" caret="3655" fromTop="6" />
-      <File id="E943E58B-0835-4788-B3C0-97E317BC964F/f:WorkerRole.cs" caret="4218" fromTop="23" />
-      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/f:Job.cs" caret="839" fromTop="23" />
-      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/f:JobStore.cs" caret="3740" fromTop="18" />
-      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/f:JobStore.cs" caret="3930" fromTop="21" />
       <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/f:JobStore.cs" caret="3118" fromTop="22" />
-      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/f:SigiriAzureDaemon.cs" caret="149" fromTop="3" />
-      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/f:SigiriAzureDaemon.cs" caret="1893" fromTop="34" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/f:SigiriAzureDaemon.cs" caret="174" fromTop="3" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/f:SigiriAzureDaemon.cs" caret="3170" fromTop="34" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/f:JobSubmissionManager.cs" caret="0" fromTop="0" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/f:JobNotificationManager.cs" caret="1030" fromTop="11" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/f:Handler.cs" caret="616" fromTop="15" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/f:Handler.cs" caret="450" fromTop="12" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/f:Handler.cs" caret="306" fromTop="11" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/f:SigiriApplicationConfiguration.cs" caret="0" fromTop="0" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/f:Worker.cs" caret="242" fromTop="11" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/f:JobSubmissionManager.cs" caret="616" fromTop="12" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/f:JobSubmissionManager.cs" caret="750" fromTop="17" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/f:JobNotificationManager.cs" caret="859" fromTop="17" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/f:SigiriAzureDaemon.cs" caret="753" fromTop="17" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/f:SigiriAzureDaemon.cs" caret="2069" fromTop="37" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/f:SigiriAzureDaemon.cs" caret="1303" fromTop="18" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/f:SigiriAzureDaemon.cs" caret="653" fromTop="10" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/f:SigiriAzureDaemon.cs" caret="1849" fromTop="18" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/f:SigiriAzureDaemon.cs" caret="1183" fromTop="15" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/f:SigiriAzureDaemon.cs" caret="394" fromTop="9" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/f:SigiriAzureDaemon.cs" caret="1640" fromTop="27" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/f:JobSubmissionManager.cs" caret="484" fromTop="17" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/f:JobSubmissionManager.cs" caret="866" fromTop="35" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/f:JobSubmissionManager.cs" caret="244" fromTop="10" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/f:JobNotificationManager.cs" caret="582" fromTop="13" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/f:JobNotificationManager.cs" caret="985" fromTop="32" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/f:ApplicationStore.cs" caret="1775" fromTop="31" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/f:JobNotificationManager.cs" caret="592" fromTop="17" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/f:JobNotificationManager.cs" caret="323" fromTop="11" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/f:JobNotificationManager.cs" caret="648" fromTop="21" />
     </RecentEdits>
   </RecentFiles>
   <CompletionStatisticsManager>
     <ItemStatistics item="CSharpCodeCompletionContext">
       <Item value="static" priority="313" />
       <Item value="AppDomainManagerInitializationOptions`0" priority="31" />
-      <Item value="string" priority="703" />
+      <Item value="string" priority="927" />
       <Item value="using" priority="188" />
       <Item value="Microsoft" priority="30" />
-      <Item value="public" priority="798" />
-      <Item value="void" priority="383" />
+      <Item value="public" priority="1022" />
+      <Item value="void" priority="671" />
       <Item value="var" priority="1054" />
       <Item value="System" priority="125" />
       <Item value="Configuration" priority="53" />
@@ -76,22 +81,22 @@
       <Item value="blobStorage" priority="31" />
       <Item value="azureStorageAccount" priority="63" />
       <Item value="queueStorage" priority="31" />
-      <Item value="private" priority="607" />
-      <Item value="readonly" priority="127" />
+      <Item value="private" priority="1087" />
+      <Item value="readonly" priority="159" />
       <Item value="LogManager`0" priority="31" />
       <Item value="try" priority="127" />
       <Item value="catch" priority="95" />
       <Item value="Log" priority="31" />
       <Item value="throw" priority="63" />
-      <Item value="new" priority="703" />
+      <Item value="new" priority="959" />
       <Item value="WebException" priority="58" />
       <Item value="false" priority="97" />
-      <Item value="if" priority="255" />
+      <Item value="if" priority="319" />
       <Item value="_storageInitialized" priority="63" />
-      <Item value="return" priority="223" />
+      <Item value="return" priority="255" />
       <Item value="true" priority="97" />
       <Item value="AppDomainManager`0" priority="63" />
-      <Item value="CloudBlobClient`0" priority="127" />
+      <Item value="CloudBlobClient`0" priority="159" />
       <Item value="_blobClient" priority="354" />
       <Item value="blobClient" priority="226" />
       <Item value="ApplicationManager`0" priority="58" />
@@ -103,7 +108,7 @@
       <Item value="ZipEntry`0" priority="31" />
       <Item value="applicationArchive" priority="31" />
       <Item value="executableConfigurations" priority="31" />
-      <Item value="String`0" priority="576" />
+      <Item value="String`0" priority="608" />
       <Item value="ConfigXmlDocument`0" priority="31" />
       <Item value="Xml" priority="26" />
       <Item value="XmlDocument`0" priority="63" />
@@ -130,7 +135,7 @@
       <Item value="CloudQueueClient`0" priority="95" />
       <Item value="CloudStorageAccount`0" priority="63" />
       <Item value="storageAccount" priority="159" />
-      <Item value="_queueClient" priority="63" />
+      <Item value="_queueClient" priority="252" />
       <Item value="ApplicationLoader`0" priority="31" />
       <Item value="IEnumerable" priority="31" />
       <Item value="foreach" priority="63" />
@@ -138,7 +143,7 @@
       <Item value="in" priority="63" />
       <Item value="appBlockBlob" priority="63" />
       <Item value="appId" priority="127" />
-      <Item value="CloudQueue`0" priority="127" />
+      <Item value="CloudQueue`0" priority="159" />
       <Item value="_messageInQueue" priority="95" />
       <Item value="_messageOutQueue" priority="95" />
       <Item value="RoleEnvironment`0" priority="63" />
@@ -188,8 +193,8 @@
       <Item value="AppRunner`0" priority="31" />
       <Item value="_appRunner" priority="160" />
       <Item value="AppRunner" priority="28" />
-      <Item value="Trace`0" priority="31" />
-      <Item value="queueClient" priority="258" />
+      <Item value="Trace`0" priority="95" />
+      <Item value="queueClient" priority="318" />
       <Item value="for" priority="31" />
       <Item value="zipEntry" priority="95" />
       <Item value="applicationStorage" priority="63" />
@@ -205,11 +210,49 @@
       <Item value="Console`0" priority="31" />
       <Item value="Utils`0" priority="95" />
       <Item value="appArchivePath" priority="31" />
-      <Item value="while" priority="31" />
+      <Item value="while" priority="95" />
       <Item value="ThreadStaticAttribute`0" priority="31" />
       <Item value="CloudBlobClient" priority="28" />
       <Item value="CloudQueueClient" priority="28" />
       <Item value="long" priority="31" />
+      <Item value="CloudTableClient`0" priority="26" />
+      <Item value="HandlerDescription`0" priority="63" />
+      <Item value="handlerDescription" priority="32" />
+      <Item value="abstract" priority="31" />
+      <Item value="SigiriAzureDaemonContext`0" priority="31" />
+      <Item value="azureDaemonContext" priority="32" />
+      <Item value="Dictionary" priority="63" />
+      <Item value="Dictionary&lt;string,string&gt;" priority="28" />
+      <Item value="_parameters" priority="31" />
+      <Item value="_handlerDescription" priority="32" />
+      <Item value="IWorker`0" priority="127" />
+      <Item value="_jobNotificationManager" priority="224" />
+      <Item value="JobNotificationManager" priority="28" />
+      <Item value="_jobSubmissionManager" priority="159" />
+      <Item value="JobSubmissionManager" priority="28" />
+      <Item value="ThreadPriorityLevel`0" priority="31" />
+      <Item value="Thread" priority="57" />
+      <Item value="ApplicationStore`0" priority="95" />
+      <Item value="JobStore`0" priority="95" />
+      <Item value="_jobStore" priority="193" />
+      <Item value="JobSubmissionManager`0" priority="31" />
+      <Item value="job" priority="32" />
+      <Item value="jobStore" priority="31" />
+      <Item value="InitializeWorkers`0" priority="31" />
+      <Item value="JobStore" priority="28" />
+      <Item value="const" priority="63" />
+      <Item value="ComputingResourceName" priority="31" />
+      <Item value="JobManagerName" priority="31" />
+      <Item value="Handler`0" priority="31" />
+      <Item value="_handlers" priority="64" />
+      <Item value="Dictionary&lt;string,Handler&gt;" priority="28" />
+      <Item value="Job`0" priority="30" />
+      <Item value="JobNotificationManager`0" priority="31" />
+      <Item value="_notificationMessageQueue" priority="31" />
+      <Item value="applicationStore" priority="64" />
+      <Item value="_applicationStore" priority="64" />
+      <Item value="List" priority="31" />
+      <Item value="_applications" priority="31" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:@Microsoft.WindowsAzure.CloudStorageAccount">
       <Item value="Parse`0" priority="76" />
@@ -296,7 +339,7 @@
       <Item value="ToLower`0" priority="107" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:Microsoft.WindowsAzure.StorageClient.CloudQueueClient">
-      <Item value="GetQueueReference`0" priority="107" />
+      <Item value="GetQueueReference`0" priority="134" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:Microsoft.WindowsAzure.ServiceRuntime.LocalResource">
       <Item value="RootPath" priority="26" />
@@ -339,6 +382,7 @@
     </ItemStatistics>
     <ItemStatistics item="Qualified:@System.Diagnostics.Trace">
       <Item value="TraceError`0" priority="49" />
+      <Item value="TraceInformation`0" priority="104" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:Ionic.Zip.ZipFile">
       <Item value="Where`1" priority="26" />
@@ -367,6 +411,20 @@
     </ItemStatistics>
     <ItemStatistics item="Qualified:SigiriAzureDaemon_WorkerRole.Internal.JobScriptConverter">
       <Item value="Convert`0" priority="27" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:SigiriAzureDaemon_WorkerRole.Internal.IWorker">
+      <Item value="OnStart`0" priority="80" />
+      <Item value="OnStop`0" priority="26" />
+      <Item value="Run`0" priority="54" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.Threading.Thread">
+      <Item value="Start`0" priority="53" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:SigiriAzureDaemon_WorkerRole.Internal.JobStore">
+      <Item value="GetJobsToBeScheduledForExecution`0" priority="26" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.Collections.Generic.Dictionary`2">
+      <Item value="Keys" priority="49" />
     </ItemStatistics>
   </CompletionStatisticsManager>
   <NAntValidationSettings>

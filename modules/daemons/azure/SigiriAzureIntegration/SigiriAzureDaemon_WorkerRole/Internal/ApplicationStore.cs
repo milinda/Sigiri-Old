@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
+using System.Linq;
 using System.Net;
 using Ionic.Zip;
 using Microsoft.WindowsAzure.StorageClient;
@@ -47,6 +48,21 @@ namespace SigiriAzureDaemon_WorkerRole.Internal
         {
             return false;
         }
+
+        public string GetApplicationId(string executable)
+        {
+            foreach (var appConfig in _applications.Select(sigiriApplicationConfiguration => sigiriApplicationConfiguration.Value).Where(appConfig => appConfig.ExecutableName.Equals(executable)))
+            {
+                return appConfig.ApplicationId;
+            }
+
+            throw new Exception("Cannot find application archive for executable: " + executable);
+        }
+
+        public List<string> GetApplications()
+        {
+            return new List<string>(_applications.Keys);
+        } 
 
         // Load the existing applications already stored in Azure Blob Storage
         private void LoadExistingApplications()
