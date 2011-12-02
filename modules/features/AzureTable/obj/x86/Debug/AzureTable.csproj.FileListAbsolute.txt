@@ -1,0 +1,7 @@
+C:\Users\kavchand\Documents\scratch\modules\features\AzureTable\bin\Debug\AzureTable.exe.config
+C:\Users\kavchand\Documents\scratch\modules\features\AzureTable\bin\Debug\AzureTable.exe
+C:\Users\kavchand\Documents\scratch\modules\features\AzureTable\bin\Debug\AzureTable.pdb
+C:\Users\kavchand\Documents\scratch\modules\features\AzureTable\bin\Debug\Microsoft.WindowsAzure.StorageClient.dll
+C:\Users\kavchand\Documents\scratch\modules\features\AzureTable\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\kavchand\Documents\scratch\modules\features\AzureTable\obj\x86\Debug\AzureTable.exe
+C:\Users\kavchand\Documents\scratch\modules\features\AzureTable\obj\x86\Debug\AzureTable.pdb
