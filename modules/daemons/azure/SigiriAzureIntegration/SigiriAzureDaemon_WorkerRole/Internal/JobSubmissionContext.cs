@@ -6,5 +6,6 @@ namespace SigiriAzureDaemon_WorkerRole.Internal
     class JobSubmissionContext : SigiriAzureDaemonContext
     {
         
+        
     }
 }

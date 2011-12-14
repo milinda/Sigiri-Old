@@ -60,8 +60,8 @@ namespace SigiriAzureDaemon_WorkerRole.Internal
 
         private void InitializeWorkers()
         {
-            _jobNotificationManager = new JobNotificationManager();
-            _jobSubmissionManager = new JobSubmissionManager(_jobStore);
+            _jobNotificationManager = new JobNotificationManager(_queueStorageClient, _applicationStore);
+            _jobSubmissionManager = new JobSubmissionManager(_jobStore, _applicationStore);
 
             _jobNotificationManager.OnStart();
             _jobSubmissionManager.OnStart();

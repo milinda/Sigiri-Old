@@ -11,7 +11,8 @@ namespace SigiriAzureDaemon_WorkerRole.Internal
      * send them through job submission handler chain. Manage the job
      * submission handler chain.
      */
-    class JobSubmissionManager: IWorker
+
+    internal class JobSubmissionManager : IWorker
     {
         private readonly JobStore _jobStore;
 
@@ -19,23 +20,31 @@ namespace SigiriAzureDaemon_WorkerRole.Internal
 
         private readonly Dictionary<string, Handler> _handlers;
 
-        private LinkedList<string> _handlerSequence; 
+        private readonly LinkedList<string> _handlerSequence;
 
         public JobSubmissionManager(JobStore jobStore, ApplicationStore applicationStore)
         {
             _jobStore = jobStore;
             _applicationStore = applicationStore;
             _handlers = new Dictionary<string, Handler>();
+            _handlerSequence = new LinkedList<string>();
         }
 
         /**
          * Loads the handler chain configuration for jub submission flow.
          * Initialize handler in job submission flow.
          */
+
         public void OnStart()
         {
             // TODO: Put handler objects in to _handlers dictionary and 
             // TODO: setup the handler sequence according to configuration.
+            _handlerSequence.AddLast("ResourceIdentificationHandler");
+            _handlerSequence.AddLast("CredentialManagementHandler");
+            _handlerSequence.AddLast("InputDataMovementHandler");
+            _handlerSequence.AddLast("WorkerRoleSetupHandler");
+            _handlerSequence.AddLast("VMRoleSetupHandler");
+            _handlerSequence.AddLast("ApplicationExecutionHandler");
         }
 
         public void OnStop()
@@ -47,21 +56,26 @@ namespace SigiriAzureDaemon_WorkerRole.Internal
         {
             while (true)
             {
+                // TODO: Find out the possibility of submitting several jobs at once using multiple threads.
+                // TODO: We may have to make handlers thread safe.
                 var jobs = _jobStore.GetJobsToBeScheduledForExecution();
                 foreach (var job in jobs)
                 {
-                    foreach (var handlerId in _handlerSequence)
+                    var jobSubmissionContext = new JobSubmissionContext
                     {
-                        var handler = _handlers[handlerId];
-                        var jobSubmissionContext = new JobSubmissionContext
-                                                       {Type = SigiriAzureDaemonContext.JobType.ApplicationExecution,
-                                                       JobId = job.JobId,
-                                                       ApplicationId = _applicationStore.GetApplicationId(job.Executable)};
+                        Type = SigiriAzureDaemonContext.JobType.ApplicationExecution,
+                        JobId = job.JobId,
+                        ApplicationId =
+                            _applicationStore.GetApplicationId(job.Executable)
+                    };
 
+                    jobSubmissionContext.AddParameter("Job", job);
+
+                    foreach (var handler in _handlerSequence.Select(handlerId => _handlers[handlerId]))
+                    {
                         handler.Invoke(jobSubmissionContext);
-                    }   
+                    }
                 }
-                
             }
         }
     }

@@ -56,6 +56,12 @@
     <Compile Include="Internal\Constants.cs" />
     <Compile Include="Internal\Handler.cs" />
     <Compile Include="Internal\HandlerDescription.cs" />
+    <Compile Include="Internal\Handlers\ApplicationExecutionHandler.cs" />
+    <Compile Include="Internal\Handlers\CredentialManagementHandler.cs" />
+    <Compile Include="Internal\Handlers\InputDataMovementHandler.cs" />
+    <Compile Include="Internal\Handlers\ResourceIdentificationHandler.cs" />
+    <Compile Include="Internal\Handlers\VMRoleSetupHandler.cs" />
+    <Compile Include="Internal\Handlers\WorkerRoleSetupHandler.cs" />
     <Compile Include="Internal\Job.cs" />
     <Compile Include="Internal\JobNotificationContext.cs" />
     <Compile Include="Internal\JobNotificationManager.cs" />

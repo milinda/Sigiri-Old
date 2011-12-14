@@ -9,8 +9,6 @@ namespace SigiriAzureDaemon_WorkerRole.Internal
     {
         private readonly Dictionary<string, string> _parameters = new Dictionary<string, string>();
 
-        private string _name;
-
         private HandlerDescription _handlerDescription;
  
         public abstract void Init(HandlerDescription handlerDescription);
@@ -21,6 +19,8 @@ namespace SigiriAzureDaemon_WorkerRole.Internal
         {
             return _parameters[name];
         }
+
+        public abstract string Name();
 
     }
 }

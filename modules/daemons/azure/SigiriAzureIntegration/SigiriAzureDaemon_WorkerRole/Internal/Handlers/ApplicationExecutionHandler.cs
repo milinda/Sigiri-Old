@@ -5,7 +5,22 @@ using System.Text;
 
 namespace SigiriAzureDaemon_WorkerRole.Internal.Handlers
 {
-    class ApplicationExecutionHandler
+    class ApplicationExecutionHandler:Handler
     {
+        public const string HandlerName = "ApplicationExecutionHandler";
+        public override void Init(HandlerDescription handlerDescription)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Invoke(SigiriAzureDaemonContext azureDaemonContext)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override string Name()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
