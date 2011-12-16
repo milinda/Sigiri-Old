@@ -15,6 +15,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SigiriAzureDaemon_WorkerRol
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureManagementAPITest", "AzureManagementAPITest\AzureManagementAPITest.csproj", "{E4169EA5-76F6-4E59-B1E2-E804D2FD66E9}"
 EndProject
+Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "Simple_WorkerRole", "Simple_WorkerRole\Simple_WorkerRole.ccproj", "{E9B72BF0-8D63-4EE1-91FD-570A74F35C8F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleWorkerRole", "SimpleWorkerRole\SimpleWorkerRole.csproj", "{B6EF2745-0217-4F04-B614-351342A1AB9E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -95,6 +99,26 @@ Global
 		{E4169EA5-76F6-4E59-B1E2-E804D2FD66E9}.Release|Mixed Platforms.Build.0 = Release|x86
 		{E4169EA5-76F6-4E59-B1E2-E804D2FD66E9}.Release|x86.ActiveCfg = Release|x86
 		{E4169EA5-76F6-4E59-B1E2-E804D2FD66E9}.Release|x86.Build.0 = Release|x86
+		{E9B72BF0-8D63-4EE1-91FD-570A74F35C8F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9B72BF0-8D63-4EE1-91FD-570A74F35C8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9B72BF0-8D63-4EE1-91FD-570A74F35C8F}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{E9B72BF0-8D63-4EE1-91FD-570A74F35C8F}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{E9B72BF0-8D63-4EE1-91FD-570A74F35C8F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E9B72BF0-8D63-4EE1-91FD-570A74F35C8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9B72BF0-8D63-4EE1-91FD-570A74F35C8F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9B72BF0-8D63-4EE1-91FD-570A74F35C8F}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{E9B72BF0-8D63-4EE1-91FD-570A74F35C8F}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{E9B72BF0-8D63-4EE1-91FD-570A74F35C8F}.Release|x86.ActiveCfg = Release|Any CPU
+		{B6EF2745-0217-4F04-B614-351342A1AB9E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6EF2745-0217-4F04-B614-351342A1AB9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6EF2745-0217-4F04-B614-351342A1AB9E}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{B6EF2745-0217-4F04-B614-351342A1AB9E}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{B6EF2745-0217-4F04-B614-351342A1AB9E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B6EF2745-0217-4F04-B614-351342A1AB9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6EF2745-0217-4F04-B614-351342A1AB9E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6EF2745-0217-4F04-B614-351342A1AB9E}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{B6EF2745-0217-4F04-B614-351342A1AB9E}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{B6EF2745-0217-4F04-B614-351342A1AB9E}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

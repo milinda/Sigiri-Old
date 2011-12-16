@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Runtime.Serialization;
 using System.Security.Cryptography.X509Certificates;
 using System.ServiceModel;
@@ -13,7 +16,7 @@ using System.Text;
 
 namespace AzureManagementAPITest
 {
-    class Constants
+    internal class Constants
     {
         public const string ServiceManagementNS = "http://schemas.microsoft.com/windowsazure";
         public const string OperationTrackingIdHeader = "x-ms-request-id";
@@ -22,27 +25,104 @@ namespace AzureManagementAPITest
         public const string VersionHeaderContent20100401 = "2010-04-01";
         public const string VersionHeaderContent20101028 = "2010-10-28";
         public const string PrincipalHeader = "x-ms-principal-id";
+
+        public const string WebMethodPost = "POST";
+        public const string ContentTypeApplicationXML = "application/xml";
     }
 
-    class HostedService
+    internal class HostedService
     {
+        private readonly string _subscriptionId;
+        private readonly string _name;
+        private readonly string _label;
+        private readonly X509Certificate2 _mgtCert;
+
+        public HostedService(string subscriptionId, string name, string label, X509Certificate2 azureManagementCert)
+        {
+            _subscriptionId = subscriptionId;
+            _name = name;
+            _label = label;
+            _mgtCert = azureManagementCert;
+        }
+
         public void CreateHostedService()
         {
-            using(var cf = new WebChannelFactory<IServiceManagement>("WindowsAzureEndPoint"))
+            var serializer = new DataContractSerializer(typeof (CreateHostedServiceInput));
+
+            var formData = Encoding.UTF8.GetBytes(GetInputXML());
+            var webRequest = CreateWebRequest(formData);
+
+            Trace.TraceInformation("Creating Hosted Service: " + _name);
+
+            try
             {
-                cf.Endpoint.Behaviors.Add(new ClientOutputMessageInspector());
-                cf.Credentials.ClientCertificate.Certificate =
-                    new X509Certificate2(ConfigurationManager.AppSettings["CertificateFile"]);
-                IServiceManagement channel = cf.CreateChannel();
-
-                CreateHostedServiceInput input = new CreateHostedServiceInput()
-                {
-                    ServiceName = HostedServiceName,
-                    Label = EncodeToBase64String(CSManageCommand.Label),
-                    Description = CSManageCommand.Description
-                };
-
+                var state = new RequestState();
+                state.Request = webRequest;
+                var response = webRequest.BeginGetResponse(RespCallback, state);
             }
+            catch (Exception e)
+            {
+                Trace.TraceError("Error occurred during hosted service creation:\n" + e.Message);
+            }
+
+            Console.ReadKey();
+        }
+
+        public void CreateDeployment()
+        {
+            
+        }
+
+        private string GetInputXML()
+        {
+            var sbRequestXML = new StringBuilder("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
+            sbRequestXML.Append("<CreateHostedService xmlns=\"http://schemas.microsoft.com/windowsazure\">");
+            sbRequestXML.AppendFormat("<ServiceName>{0}</ServiceName>", _name);
+            sbRequestXML.AppendFormat("<Label>{0}</Label>", EncodeToBase64String(_label));
+            sbRequestXML.Append("<Location>Anywhere US</Location>");
+            sbRequestXML.Append("</CreateHostedService>");
+
+            return sbRequestXML.ToString();
+        }
+
+        private HttpWebRequest CreateWebRequest(byte[] formData)
+        {
+            var webRequest =
+                (HttpWebRequest) WebRequest.Create(
+                    new Uri("https://management.core.windows.net/" + _subscriptionId + "/services/hostedservices"));
+
+            webRequest.Method = Constants.WebMethodPost;
+            webRequest.ClientCertificates.Add(_mgtCert);
+            webRequest.ContentType = Constants.ContentTypeApplicationXML;
+            webRequest.ContentLength = formData.Length;
+            webRequest.Headers.Add(Constants.VersionHeaderName, Constants.VersionHeaderContent20101028);
+
+            using (var post = webRequest.GetRequestStream())
+            {
+                post.Write(formData, 0, formData.Length);
+            }
+
+            return webRequest;
+        }
+
+        private static void RespCallback(IAsyncResult result)
+        {
+            var state = (RequestState) result.AsyncState; // Grab the custom state object
+            var request = (WebRequest) state.Request;
+
+            var response =
+                (HttpWebResponse) request.EndGetResponse(result); // Get the Response
+
+            var statusCode = response.StatusCode.ToString();
+
+            // A value that uniquely identifies a request made against the Management service. 
+            // For an asynchronous operation, 
+            // you can call get operation status with the value of the header to determine whether 
+            // the operation is complete, has failed, or is still in progress.
+            var reqId = response.GetResponseHeader("x-ms-request-id");
+
+            Trace.TraceInformation("Creation Return Value: " + statusCode);
+            Trace.TraceInformation("RequestId: " + reqId);
         }
 
         public static string EncodeToBase64String(string original)
@@ -51,20 +131,6 @@ namespace AzureManagementAPITest
         }
     }
 
-    [ServiceContract]
-    public interface IServiceManagement
-    {
-
-        #region CreateHostedService
-        /// <summary>
-        /// Creates a hosted service
-        /// </summary>
-        [OperationContract(AsyncPattern = true)]
-        [WebInvoke(Method = "POST", UriTemplate = @"{subscriptionId}/services/hostedservices")]
-        IAsyncResult BeginCreateHostedService(string subscriptionId, CreateHostedServiceInput input, AsyncCallback callback, object state);
-        void EndCreateHostedService(IAsyncResult asyncResult);
-        #endregion
-    }
 
     /// <summary>
     /// CreateHostedService contract
@@ -90,37 +156,22 @@ namespace AzureManagementAPITest
         public ExtensionDataObject ExtensionData { get; set; }
     }
 
-    public class ClientOutputMessageInspector : IClientMessageInspector, IEndpointBehavior
+    public class RequestState
     {
-        #region IClientMessageInspector Members
+        private const int BufferSize = 1024;
+        public StringBuilder RequestData;
+        public byte[] BufferRead;
+        public WebRequest Request;
+        public Stream ResponseStream;
 
-        public void AfterReceiveReply(ref System.ServiceModel.Channels.Message reply, object correlationState) { }
-        public object BeforeSendRequest(ref System.ServiceModel.Channels.Message request, IClientChannel channel)
+        public Decoder StreamDecode = Encoding.UTF8.GetDecoder(); // Create Decoder for appropriate enconding type.
+
+        public RequestState()
         {
-            var property = (HttpRequestMessageProperty)request.Properties[HttpRequestMessageProperty.Name];
-            if (property.Headers[Constants.VersionHeaderName] == null)
-            {
-                property.Headers.Add(Constants.VersionHeaderName, Constants.VersionHeaderContent20101028);
-            }
-            return null;
+            BufferRead = new byte[BufferSize];
+            RequestData = new StringBuilder(String.Empty);
+            Request = null;
+            ResponseStream = null;
         }
-
-        #endregion
-
-        #region IEndpointBehavior Members
-
-        public void AddBindingParameters(ServiceEndpoint endpoint, BindingParameterCollection bindingParameters) { }
-
-        public void ApplyClientBehavior(ServiceEndpoint endpoint, ClientRuntime clientRuntime)
-        {
-            clientRuntime.MessageInspectors.Add(this);
-        }
-
-        public void ApplyDispatchBehavior(ServiceEndpoint endpoint, EndpointDispatcher endpointDispatcher) { }
-
-        public void Validate(ServiceEndpoint endpoint) { }
-
-        #endregion
-
     }
 }
