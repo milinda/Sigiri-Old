@@ -32,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DotLiquid">
+      <HintPath>..\packages\DotLiquid.1.6.1.0\lib\NET40\DotLiquid.dll</HintPath>
+    </Reference>
     <Reference Include="Ionic.Zip">
       <HintPath>..\packages\DotNetZip.1.9.1.8\lib\net20\Ionic.Zip.dll</HintPath>
     </Reference>
@@ -54,6 +57,9 @@
   <ItemGroup>
     <Compile Include="Internal\ApplicationStore.cs" />
     <Compile Include="Internal\Constants.cs" />
+    <Compile Include="Internal\Deployment\Constants.cs" />
+    <Compile Include="Internal\Deployment\HostedService.cs" />
+    <Compile Include="Internal\Deployment\WorkerRoleDeploymentManager.cs" />
     <Compile Include="Internal\Handler.cs" />
     <Compile Include="Internal\HandlerDescription.cs" />
     <Compile Include="Internal\Handlers\ApplicationExecutionHandler.cs" />
