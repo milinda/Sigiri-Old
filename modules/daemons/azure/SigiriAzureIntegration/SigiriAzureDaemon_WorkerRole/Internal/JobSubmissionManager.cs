@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 
 namespace SigiriAzureDaemon_WorkerRole.Internal
 {
@@ -76,6 +77,8 @@ namespace SigiriAzureDaemon_WorkerRole.Internal
                         handler.Invoke(jobSubmissionContext);
                     }
                 }
+
+                Thread.Sleep(2000);
             }
         }
     }
