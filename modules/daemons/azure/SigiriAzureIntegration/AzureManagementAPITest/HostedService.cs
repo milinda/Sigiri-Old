@@ -13,6 +13,8 @@ using System.ServiceModel.Description;
 using System.ServiceModel.Dispatcher;
 using System.ServiceModel.Web;
 using System.Text;
+using Microsoft.WindowsAzure;
+using Microsoft.WindowsAzure.StorageClient;
 
 namespace AzureManagementAPITest
 {
@@ -36,6 +38,7 @@ namespace AzureManagementAPITest
         private readonly string _name;
         private readonly string _label;
         private readonly X509Certificate2 _mgtCert;
+        private readonly CloudBlobClient _blobClient;
 
         public HostedService(string subscriptionId, string name, string label, X509Certificate2 azureManagementCert)
         {
@@ -43,37 +46,90 @@ namespace AzureManagementAPITest
             _name = name;
             _label = label;
             _mgtCert = azureManagementCert;
+            _blobClient =
+                CloudStorageAccount.Parse(ConfigurationManager.AppSettings["DataConnectionString"]).
+                    CreateCloudBlobClient();
         }
 
         public void CreateHostedService()
         {
-            var serializer = new DataContractSerializer(typeof (CreateHostedServiceInput));
-
-            var formData = Encoding.UTF8.GetBytes(GetInputXML());
-            var webRequest = CreateWebRequest(formData);
+            var formData = Encoding.UTF8.GetBytes(GetCreateHostedServiceInputXML());
+            var requestUri = "https://management.core.windows.net/" + _subscriptionId + "/services/hostedservices";
+            var webRequest = CreateWebRequest(requestUri, formData);
 
             Trace.TraceInformation("Creating Hosted Service: " + _name);
 
             try
             {
-                var state = new RequestState();
-                state.Request = webRequest;
+                var state = new RequestState()
+                                {
+                                    Request = webRequest
+                                };
                 var response = webRequest.BeginGetResponse(RespCallback, state);
             }
             catch (Exception e)
             {
                 Trace.TraceError("Error occurred during hosted service creation:\n" + e.Message);
             }
-
-            Console.ReadKey();
         }
 
         public void CreateDeployment()
         {
+            var blobUri = UploadWorkerRolePackageToBlobStorage();
+            var requestUrl = "https://management.core.windows.net/" + _subscriptionId + "/services/hostedservices/" +
+                             _name + "/deploymentslots/staging";
+            var webRequest = CreateWebRequest(requestUrl, Encoding.UTF8.GetBytes(GetCreateDeploymentInputXML(blobUri)));
             
+            Trace.TraceInformation("Creating Worker Role Deployment..");
+            try
+            {
+                var state = new RequestState() {Request = webRequest};
+                var response = webRequest.BeginGetResponse(RespCallback, state);
+            }
+            catch (Exception e)
+            {
+                Trace.TraceError("Error occurred during deployment creation:\n" + e.Message);
+            }
+
+            Console.ReadKey();
         }
 
-        private string GetInputXML()
+
+        private String UploadWorkerRolePackageToBlobStorage()
+        {
+            var blobContainer = _blobClient.GetContainerReference("workerrolepackages");
+            blobContainer.CreateIfNotExist();
+
+            var workerRolePackageBlob = blobContainer.GetBlobReference("simpleworker.cspkg");
+            workerRolePackageBlob.UploadFile(ConfigurationManager.AppSettings["WorkerRolePkg"]);
+
+            return workerRolePackageBlob.Uri.ToString();
+        }
+
+        private string GetCreateDeploymentInputXML(string blobUrl)
+        {
+            var sbRequestXML = new StringBuilder("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
+            sbRequestXML.Append("<CreateDeployment xmlns=\"http://schemas.microsoft.com/windowsazure\">");
+            sbRequestXML.AppendFormat("<Name>{0}</Name>", "testdeployment");
+            sbRequestXML.AppendFormat("<PackageUrl>{0}</PackageUrl>", blobUrl);
+            sbRequestXML.AppendFormat("<Label>{0}</Label>", EncodeToBase64String("testdeployment"));
+            sbRequestXML.AppendFormat("<Configuration>{0}</Configuration>", EncodeToBase64String(GetWorkerRoleConfigurationFileAsString()));
+            sbRequestXML.Append("<StartDeployment>true</StartDeployment>");
+            sbRequestXML.Append("<TreatWarningsAsError>false</TreatWarningsAsError>");
+            sbRequestXML.Append("</CreateDeployment>");
+            return sbRequestXML.ToString();
+        }
+
+        private string GetWorkerRoleConfigurationFileAsString()
+        {
+            var fileReader = new StreamReader(ConfigurationManager.AppSettings["WorkerRoleConfig"]);
+            var content = fileReader.ReadToEnd();
+            fileReader.Close();
+
+            return content;
+        }
+
+        private string GetCreateHostedServiceInputXML()
         {
             var sbRequestXML = new StringBuilder("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
             sbRequestXML.Append("<CreateHostedService xmlns=\"http://schemas.microsoft.com/windowsazure\">");
@@ -85,7 +141,7 @@ namespace AzureManagementAPITest
             return sbRequestXML.ToString();
         }
 
-        private HttpWebRequest CreateWebRequest(byte[] formData)
+        private HttpWebRequest CreateWebRequest(string uri, byte[] formData)
         {
             var webRequest =
                 (HttpWebRequest) WebRequest.Create(
