@@ -100,8 +100,17 @@ namespace AzureManagementAPITest
             var blobContainer = _blobClient.GetContainerReference("workerrolepackages");
             blobContainer.CreateIfNotExist();
 
+            foreach (var blobItem in blobContainer.ListBlobs())
+            {
+                Console.WriteLine(blobItem.Uri);
+            }
+
             var workerRolePackageBlob = blobContainer.GetBlobReference("simpleworker.cspkg");
-            workerRolePackageBlob.UploadFile(ConfigurationManager.AppSettings["WorkerRolePkg"]);
+
+            if (blobContainer.ListBlobs().Count() == 0)
+            {
+                workerRolePackageBlob.UploadFile(ConfigurationManager.AppSettings["WorkerRolePkg"]);
+            }
 
             return workerRolePackageBlob.Uri.ToString();
         }
@@ -112,10 +121,9 @@ namespace AzureManagementAPITest
             sbRequestXML.Append("<CreateDeployment xmlns=\"http://schemas.microsoft.com/windowsazure\">");
             sbRequestXML.AppendFormat("<Name>{0}</Name>", "testdeployment");
             sbRequestXML.AppendFormat("<PackageUrl>{0}</PackageUrl>", blobUrl);
-            sbRequestXML.AppendFormat("<Label>{0}</Label>", EncodeToBase64String("testdeployment"));
-            sbRequestXML.AppendFormat("<Configuration>{0}</Configuration>", EncodeToBase64String(GetWorkerRoleConfigurationFileAsString()));
+            sbRequestXML.AppendFormat("<Label>{0}</Label>", EncodeToBase64String("testdeploymentlabel"));
+sbRequestXML.AppendFormat("<Configuration>{0}</Configuration>", EncodeToBase64String(GetWorkerRoleConfigurationFileAsString()));
             sbRequestXML.Append("<StartDeployment>true</StartDeployment>");
-            sbRequestXML.Append("<TreatWarningsAsError>false</TreatWarningsAsError>");
             sbRequestXML.Append("</CreateDeployment>");
             return sbRequestXML.ToString();
         }
@@ -145,7 +153,7 @@ namespace AzureManagementAPITest
         {
             var webRequest =
                 (HttpWebRequest) WebRequest.Create(
-                    new Uri("https://management.core.windows.net/" + _subscriptionId + "/services/hostedservices"));
+                    new Uri(uri));
 
             webRequest.Method = Constants.WebMethodPost;
             webRequest.ClientCertificates.Add(_mgtCert);

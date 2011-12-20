@@ -14,7 +14,7 @@ namespace AzureManagementAPITest
             var cert = new X509Certificate2(ConfigurationManager.AppSettings["CertificateFile"]);
             var hostedService = new HostedService("95ce769c-6cfb-48d9-9546-62c219cb0ee7", "TestCreation",
                                                   "TestCreationName", cert);
-            hostedService.CreateHostedService();
+            //hostedService.CreateHostedService();
             hostedService.CreateDeployment();
         }
     }

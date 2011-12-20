@@ -3,8 +3,8 @@
   <Role name="Sigiri_WorkerRole">
     <Instances count="1" />
     <ConfigurationSettings>
-      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=true" />
-      <Setting name="DataConnectionString" value="UseDevelopmentStorage=true" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="DefaultEndpointsProtocol=https;AccountName=storaged2i;AccountKey=byDn4B7tScKRMHiIosZkS3EbkfNlo9UdrrVoYxPghaOwUMfurIzVBjMRO/MyJUpFQi3C/EAwDuD60MhvpMyckw==" />
+      <Setting name="DataConnectionString" value="DefaultEndpointsProtocol=https;AccountName=storaged2i;AccountKey=byDn4B7tScKRMHiIosZkS3EbkfNlo9UdrrVoYxPghaOwUMfurIzVBjMRO/MyJUpFQi3C/EAwDuD60MhvpMyckw==" />
       <Setting name="ApplicationId" value="MatrixMul" />
       <Setting name="ApplicationStorage" value="sigiriapplications" />
     </ConfigurationSettings>
