@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using System.Threading;
 using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.ServiceRuntime;
 using Microsoft.WindowsAzure.StorageClient;
@@ -14,12 +15,15 @@ namespace SigiriAzureDaemon_WorkerRole.Internal.Deployment
 {
     internal class HostedService
     {
-        private readonly string _subscriptionId;
-        private readonly string _name;
-        private readonly string _label;
-        private readonly X509Certificate2 _mgtCert;
         private readonly CloudBlobClient _blobClient;
         private const string Location = "Anywhere US";
+        private readonly ManualResetEvent _allDone = new ManualResetEvent(false);
+
+        public string SubscriptionId { set; get; }
+        public string Name { set; get; }
+        public string Label { set; get; }
+        public string ApplicationId { set; get; }
+        public X509Certificate2 MgtCert { set; get; }
 
         public enum DeploymentStatus
         {
@@ -33,23 +37,19 @@ namespace SigiriAzureDaemon_WorkerRole.Internal.Deployment
             Deleting
         }
 
-        public HostedService(string subscriptionId, string name, string label, X509Certificate2 mgtCert)
+        public HostedService()
         {
-            _subscriptionId = subscriptionId;
-            _name = name;
-            _label = label;
-            _mgtCert = mgtCert;
             _blobClient =
                 CloudStorageAccount.Parse(RoleEnvironment.GetConfigurationSettingValue("DataConnectionString")).
                     CreateCloudBlobClient();
         }
 
-        public void Create()
+        public string Create()
         {
-            var requestUri = "https://management.core.windows.net/" + _subscriptionId + "/services/hostedservices";
+            var requestUri = "https://management.core.windows.net/" + SubscriptionId + "/services/hostedservices";
             var webRequest = CreateWebRequest(requestUri, Encoding.UTF8.GetBytes(GetCreateHostedServiceInputXML()));
 
-            Trace.TraceInformation("Creating Hosted Service: " + _name);
+            Trace.TraceInformation("Creating Hosted Service: " + Name);
 
             try
             {
@@ -58,9 +58,30 @@ namespace SigiriAzureDaemon_WorkerRole.Internal.Deployment
                                     Request = webRequest
                                 };
                 webRequest.BeginGetResponse(RespCallback, state);
-            }catch(Exception e)
+
+                // Waiting till the callback finishes it work.
+                _allDone.WaitOne();
+
+                // Closing the response
+                if (state.Response != null)
+                {
+                    state.Response.Close();
+                }
+
+                if (state.StatusCode.Equals("Created"))
+                {
+                    return state.RequestId;
+                }
+                else
+                {
+                    Trace.TraceError("Failed to create hosted service. Status Code:" + state.StatusCode);
+                    throw new Exception("Failed to create hosted service.");
+                }
+            }
+            catch (Exception e)
             {
                 Trace.TraceError("Error occurred during hosted service creation:\n" + e.Message);
+                throw;
             }
         }
 
@@ -68,8 +89,41 @@ namespace SigiriAzureDaemon_WorkerRole.Internal.Deployment
         {
         }
 
-        public void CreateDeployment()
+        public string CreateDeployment()
         {
+            var requestUrl = "https://management.core.windows.net/" + SubscriptionId + "/services/hostedservices/" +
+                             Name + "/deploymentslots/staging";
+            var workerRolePackagePath = RoleEnvironment.GetConfigurationSettingValue("Sigiri.WorkerRole.Package");
+            var webRequest = CreateWebRequest(requestUrl, Encoding.UTF8.GetBytes(GetCreateDeploymentInputXML(String.Format("{0}deployment", ApplicationId.ToLower()), GetWorkerRolePackageUrl(_blobClient, workerRolePackagePath))));
+
+            Trace.TraceInformation("Creating Worker Role Deployment..");
+            try
+            {
+                var state = new RequestState() { Request = webRequest };
+                webRequest.BeginGetResponse(RespCallback, state);
+                _allDone.WaitOne();
+
+                // Closing the response
+                if (state.Response != null)
+                {
+                    state.Response.Close();
+                }
+
+                if (state.StatusCode.Equals("200"))
+                {
+                    return state.RequestId;
+                }
+                else
+                {
+                    Trace.TraceError(String.Format("Failed to create deployment {0}. Status Code:{1}", String.Format("{0}deployment", ApplicationId), state.StatusCode));
+                    throw new Exception(String.Format("Failed to create deployment {0}.", String.Format("{0}deployment", ApplicationId)));
+                }
+            }
+            catch (Exception e)
+            {
+                Trace.TraceError("Error occurred during deployment creation:\n" + e.Message);
+                throw;
+            }
         }
 
         public DeploymentStatus GetDeploymentStatus()
@@ -93,16 +147,15 @@ namespace SigiriAzureDaemon_WorkerRole.Internal.Deployment
         {
             var requestXML = new StringBuilder("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
             requestXML.Append("<CreateHostedService xmlns=\"http://schemas.microsoft.com/windowsazure\">");
-            requestXML.AppendFormat("<ServiceName>{0}</ServiceName>", _name);
-            requestXML.AppendFormat("<Label>{0}</Label>", EncodeToBase64String(_label));
+            requestXML.AppendFormat("<ServiceName>{0}</ServiceName>", Name);
+            requestXML.AppendFormat("<Label>{0}</Label>", EncodeToBase64String(Label));
             requestXML.AppendFormat("<Location>{0}</Location>", Location);
             requestXML.Append("</CreateHostedService>");
 
             return requestXML.ToString();
         }
 
-        private string GetCreateDeploymentInputXML(string deploymentName, string workerRolePackageBlobUrl,
-                                                   string workerRoleConfigBlobUrl)
+        private string GetCreateDeploymentInputXML(string deploymentName, string workerRolePackageBlobUrl)
         {
             var requestXML = new StringBuilder("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
             requestXML.Append("<CreateDeployment xmlns=\"http://schemas.microsoft.com/windowsazure\">");
@@ -110,16 +163,64 @@ namespace SigiriAzureDaemon_WorkerRole.Internal.Deployment
             requestXML.AppendFormat("<PackageUrl>{0}</PackageUrl>", workerRolePackageBlobUrl);
             requestXML.AppendFormat("<Label>{0}</Label>", EncodeToBase64String("testdeploymentlabel"));
             requestXML.AppendFormat("<Configuration>{0}</Configuration>",
-                                    EncodeToBase64String(GetWorkerRoleConfigurationFileAsString()));
+                                    EncodeToBase64String(GetWorkerRoleConfigurationFileAsString(_blobClient,
+                                                                                                ApplicationId,
+                                                                                                RoleEnvironment.
+                                                                                                    GetConfigurationSettingValue
+                                                                                                    ("DataConnectionString"))));
             requestXML.Append("<StartDeployment>true</StartDeployment>");
             requestXML.Append("</CreateDeployment>");
             return requestXML.ToString();
         }
 
-        private static string GetWorkerRoleConfigurationFileAsString()
+        private static string GetWorkerRolePackageUrl(CloudBlobClient blobClient, string packagePathConfigurationString)
         {
-            // TODO: Implement liquid template base configuration file generation
-            return "";
+            var blobContainer = GetBlobContainerFromConfigurationString(packagePathConfigurationString);
+            var blobName = GetBlobNameFromConfigurationString(packagePathConfigurationString);
+
+            var blobContainerRef = blobClient.GetContainerReference(blobContainer);
+            var blob = blobContainerRef.GetBlobReference(blobName);
+
+            return blob.Uri.ToString();
+        }
+        private static string GetWorkerRoleConfigurationFileAsString(CloudBlobClient blobClient, string applicationId,
+                                                                     string dataConnectionString)
+        {
+            var serivceConfigurationFilePath =
+                RoleEnvironment.GetConfigurationSettingValue("Sigiri.WorkerRole.Configuration.Template");
+            var blobContainer = GetBlobContainerFromConfigurationString(serivceConfigurationFilePath);
+            var blobName = GetBlobNameFromConfigurationString(serivceConfigurationFilePath);
+
+            var blobContainerRef = blobClient.GetContainerReference(blobContainer);
+            var blob = blobContainerRef.GetBlobReference(blobName);
+
+            var configurationFileContent = blob.DownloadText();
+            var configurationFileWithCorrectConnectionString =
+                configurationFileContent.Replace("{data-connection-string}", dataConnectionString);
+
+            return configurationFileWithCorrectConnectionString.Replace("{application-id}", applicationId);
+        }
+
+        private static string GetBlobContainerFromConfigurationString(string configurationString)
+        {
+            var splits = configurationString.Split(';');
+            foreach (var split in splits.Where(split => split.StartsWith("container")))
+            {
+                return split.Substring(10);
+            }
+
+            throw new Exception("Configuration string formatting error.");
+        }
+
+        private static string GetBlobNameFromConfigurationString(string configurationString)
+        {
+            var splits = configurationString.Split(';');
+            foreach (var split in splits.Where(split => split.StartsWith("blob")))
+            {
+                return split.Substring(5);
+            }
+
+            throw new Exception("Configuration string formatting error.");
         }
 
 
@@ -130,7 +231,7 @@ namespace SigiriAzureDaemon_WorkerRole.Internal.Deployment
                     new Uri(uri));
 
             webRequest.Method = Constants.WebMethodPost;
-            webRequest.ClientCertificates.Add(_mgtCert);
+            webRequest.ClientCertificates.Add(MgtCert);
             webRequest.ContentType = Constants.ContentTypeApplicationXML;
             webRequest.ContentLength = formData.Length;
             webRequest.Headers.Add(Constants.VersionHeaderName, Constants.VersionHeaderContent20101028);
@@ -143,24 +244,22 @@ namespace SigiriAzureDaemon_WorkerRole.Internal.Deployment
             return webRequest;
         }
 
-        private static void RespCallback(IAsyncResult result)
+        private void RespCallback(IAsyncResult result)
         {
             var state = (RequestState) result.AsyncState; // Grab the custom state object
             var request = (WebRequest) state.Request;
 
-            var response =
+            state.Response =
                 (HttpWebResponse) request.EndGetResponse(result); // Get the Response
 
-            var statusCode = response.StatusCode.ToString();
+            state.StatusCode = state.Response.StatusCode.ToString();
 
             // A value that uniquely identifies a request made against the Management service. 
             // For an asynchronous operation, 
             // you can call get operation status with the value of the header to determine whether 
             // the operation is complete, has failed, or is still in progress.
-            var reqId = response.GetResponseHeader("x-ms-request-id");
-
-            Trace.TraceInformation("Creation Return Value: " + statusCode);
-            Trace.TraceInformation("RequestId: " + reqId);
+            state.RequestId = state.Response.GetResponseHeader("x-ms-request-id");
+            _allDone.Set();
         }
 
         public static string EncodeToBase64String(string original)
@@ -171,20 +270,19 @@ namespace SigiriAzureDaemon_WorkerRole.Internal.Deployment
 
     public class RequestState
     {
-        private const int BufferSize = 1024;
-        public StringBuilder RequestData;
-        public byte[] BufferRead;
         public WebRequest Request;
-        public Stream ResponseStream;
+        public HttpWebResponse Response;
+        public string RequestId;
+        public string StatusCode;
 
         public Decoder StreamDecode = Encoding.UTF8.GetDecoder(); // Create Decoder for appropriate enconding type.
 
         public RequestState()
         {
-            BufferRead = new byte[BufferSize];
-            RequestData = new StringBuilder(String.Empty);
             Request = null;
-            ResponseStream = null;
+            Response = null;
+            RequestId = "";
+            StatusCode = "";
         }
     }
 }

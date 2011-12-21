@@ -8,8 +8,8 @@
       <InputEndpoint name="MySQLClientEndpoint" protocol="tcp" port="3306" />
     </Endpoints>
     <ConfigurationSettings>
-      <Setting name="Sigiri.WorkerRole.Configuration.Template.Url" />
-      <Setting name="Sigiri.WorkerRole.Package.Url" />
+      <Setting name="Sigiri.WorkerRole.Configuration.Template" />
+      <Setting name="Sigiri.WorkerRole.Package" />
       <Setting name="DataConnectionString" />
     </ConfigurationSettings>
   </WorkerRole>

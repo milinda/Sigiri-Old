@@ -184,7 +184,7 @@ sbRequestXML.AppendFormat("<Configuration>{0}</Configuration>", EncodeToBase64St
             // you can call get operation status with the value of the header to determine whether 
             // the operation is complete, has failed, or is still in progress.
             var reqId = response.GetResponseHeader("x-ms-request-id");
-
+            Console.WriteLine(reqId);
             Trace.TraceInformation("Creation Return Value: " + statusCode);
             Trace.TraceInformation("RequestId: " + reqId);
         }

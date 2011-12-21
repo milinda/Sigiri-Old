@@ -4,8 +4,8 @@
     <Instances count="1" />
     <ConfigurationSettings>
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=true" />
-      <Setting name="Sigiri.WorkerRole.Configuration.Template.Url" value="" />
-      <Setting name="Sigiri.WorkerRole.Package.Url" value="" />
+      <Setting name="Sigiri.WorkerRole.Configuration.Template" value="container=sigiriresources;blob=SigiriWorkerRoleServiceConfiguration.template" />
+      <Setting name="Sigiri.WorkerRole.Package" value="container=sigiriresources;blob=SigiriWorkerRole.cspkg" />
       <Setting name="DataConnectionString" value="UseDevelopmentStorage=true" />
     </ConfigurationSettings>
   </Role>
