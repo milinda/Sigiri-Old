@@ -20,7 +20,7 @@ namespace SigiriAzureDaemon_WorkerRole.Internal.Handlers
             _workerRoleDeploymentManager = new WorkerRoleDeploymentManager();
         }
 
-        public override void Invoke(SigiriAzureDaemonContext azureDaemonContext)
+        public override void Invoke(JobSubmissionContext azureDaemonContext)
         {
             /*
              * Worker Role Setup Algorithm
@@ -30,7 +30,13 @@ namespace SigiriAzureDaemon_WorkerRole.Internal.Handlers
              *  - If there are active workers skip this method
              */
             var applicationId = azureDaemonContext.ApplicationId;
-            throw new NotImplementedException();
+
+            if (!_workerRoleDeploymentManager.IsWorkerRoleActiveForApplication(applicationId))
+            {
+                
+            }
+            Trace.TraceInformation(String.Format("There are active worker roles for application {0}. Ignoring worker role setup step.", applicationId));
+            return;
         }
 
         public override string Name()

@@ -14,7 +14,7 @@ namespace SigiriAzureDaemon_WorkerRole.Internal.Deployment
             return _activeWorkerRoles[applicationId];
         }
 
-        public void SetpWorkerRoleForApplication(string applicationId)
+        public void SetupWorkerRoleForApplication(string applicationId)
         {
             
         }

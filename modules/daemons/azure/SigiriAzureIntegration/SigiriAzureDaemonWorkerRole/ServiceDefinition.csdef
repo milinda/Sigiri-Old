@@ -11,6 +11,7 @@
       <Setting name="Sigiri.WorkerRole.Configuration.Template" />
       <Setting name="Sigiri.WorkerRole.Package" />
       <Setting name="DataConnectionString" />
+      <Setting name="Azure.SubscriptionId" />
     </ConfigurationSettings>
   </WorkerRole>
 </ServiceDefinition>

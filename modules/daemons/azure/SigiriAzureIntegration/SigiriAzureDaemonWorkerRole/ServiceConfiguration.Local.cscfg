@@ -7,6 +7,7 @@
       <Setting name="Sigiri.WorkerRole.Configuration.Template" value="container=sigiriresources;blob=SigiriWorkerRoleServiceConfiguration.template" />
       <Setting name="Sigiri.WorkerRole.Package" value="container=sigiriresources;blob=SigiriWorkerRole.cspkg" />
       <Setting name="DataConnectionString" value="UseDevelopmentStorage=true" />
+      <Setting name="Azure.SubscriptionId" value="" />
     </ConfigurationSettings>
   </Role>
 </ServiceConfiguration>

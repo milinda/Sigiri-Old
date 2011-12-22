@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using SigiriAzureDaemon_WorkerRole.Internal.Handlers;
 
 namespace SigiriAzureDaemon_WorkerRole.Internal
 {
@@ -23,8 +24,12 @@ namespace SigiriAzureDaemon_WorkerRole.Internal
 
         private readonly LinkedList<string> _handlerSequence;
 
-        public JobSubmissionManager(JobStore jobStore, ApplicationStore applicationStore)
+        private readonly SigiriAzureDaemonConfiguration _daemonConfiguration;
+
+        public JobSubmissionManager(SigiriAzureDaemonConfiguration daemonConfiguration, JobStore jobStore,
+                                    ApplicationStore applicationStore)
         {
+            _daemonConfiguration = daemonConfiguration;
             _jobStore = jobStore;
             _applicationStore = applicationStore;
             _handlers = new Dictionary<string, Handler>();
@@ -38,14 +43,7 @@ namespace SigiriAzureDaemon_WorkerRole.Internal
 
         public void OnStart()
         {
-            // TODO: Put handler objects in to _handlers dictionary and 
-            // TODO: setup the handler sequence according to configuration.
-            _handlerSequence.AddLast("ResourceIdentificationHandler");
-            _handlerSequence.AddLast("CredentialManagementHandler");
-            _handlerSequence.AddLast("InputDataMovementHandler");
-            _handlerSequence.AddLast("WorkerRoleSetupHandler");
-            _handlerSequence.AddLast("VMRoleSetupHandler");
-            _handlerSequence.AddLast("ApplicationExecutionHandler");
+            InitializeHandlerSequence();
         }
 
         public void OnStop()
@@ -63,12 +61,13 @@ namespace SigiriAzureDaemon_WorkerRole.Internal
                 foreach (var job in jobs)
                 {
                     var jobSubmissionContext = new JobSubmissionContext
-                    {
-                        Type = SigiriAzureDaemonContext.JobType.ApplicationExecution,
-                        JobId = job.JobId,
-                        ApplicationId =
-                            _applicationStore.GetApplicationId(job.Executable)
-                    };
+                                                   {
+                                                       Type = JobSubmissionContext.JobType.ApplicationExecution,
+                                                       JobId = job.JobId,
+                                                       ApplicationId =
+                                                           _applicationStore.GetApplicationId(job.Executable),
+                                                       DaemonConfiguration = _daemonConfiguration
+                                                   };
 
                     jobSubmissionContext.AddParameter("Job", job);
 
@@ -80,6 +79,28 @@ namespace SigiriAzureDaemon_WorkerRole.Internal
 
                 Thread.Sleep(2000);
             }
+        }
+
+        private void InitializeHandlerSequence()
+        {
+            InitHandlers();
+            _handlerSequence.AddLast("ResourceIdentificationHandler");
+            _handlerSequence.AddLast("CredentialManagementHandler");
+            _handlerSequence.AddLast("InputDataMovementHandler");
+            _handlerSequence.AddLast("WorkerRoleSetupHandler");
+            _handlerSequence.AddLast("VMRoleSetupHandler");
+            _handlerSequence.AddLast("ApplicationExecutionHandler");
+        }
+
+        private void InitHandlers()
+        {
+            // TODO: Add handler description based initialization.
+            _handlers.Add("ResourceIdentificationHandler", new ResourceIdentificationHandler());
+            _handlers.Add("CredentialManagementHandler", new CredentialManagementHandler());
+            _handlers.Add("InputDataMovementHandler", new InputDataMovementHandler());
+            _handlers.Add("WorkerRoleSetupHandler", new WorkerRoleSetupHandler());
+            _handlers.Add("VMRoleSetupHandler", new VMRoleSetupHandler());
+            _handlers.Add("ApplicationExecutionHandler", new ApplicationExecutionHandler());
         }
     }
 }

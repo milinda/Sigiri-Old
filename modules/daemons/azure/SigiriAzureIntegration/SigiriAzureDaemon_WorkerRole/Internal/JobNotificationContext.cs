@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SigiriAzureDaemon_WorkerRole.Internal
 {
-    class JobNotificationContext : SigiriAzureDaemonContext
+    class JobNotificationContext : JobSubmissionContext
     {
     }
 }

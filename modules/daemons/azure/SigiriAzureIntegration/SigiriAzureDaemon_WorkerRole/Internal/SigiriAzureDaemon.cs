@@ -22,11 +22,19 @@ namespace SigiriAzureDaemon_WorkerRole.Internal
         private IWorker _jobSubmissionManager;
         private IWorker _jobNotificationManager;
 
+        private SigiriAzureDaemonConfiguration _daemonConfiguration;
+
 
         private static void Main(string[] args)
         {
-            var sigiriAzureDaemon = new SigiriAzureDaemon();
+            // TODO: Initialize the daemon configuration correctly.
+            var sigiriAzureDaemon = new SigiriAzureDaemon(new SigiriAzureDaemonConfiguration());
             sigiriAzureDaemon.Initialize();
+        }
+
+        public SigiriAzureDaemon(SigiriAzureDaemonConfiguration daemonConfiguration)
+        {
+            _daemonConfiguration = daemonConfiguration;
         }
 
         /**
@@ -61,7 +69,7 @@ namespace SigiriAzureDaemon_WorkerRole.Internal
         private void InitializeWorkers()
         {
             _jobNotificationManager = new JobNotificationManager(_queueStorageClient, _applicationStore);
-            _jobSubmissionManager = new JobSubmissionManager(_jobStore, _applicationStore);
+            _jobSubmissionManager = new JobSubmissionManager(_daemonConfiguration, _jobStore, _applicationStore);
 
             _jobNotificationManager.OnStart();
             _jobSubmissionManager.OnStart();

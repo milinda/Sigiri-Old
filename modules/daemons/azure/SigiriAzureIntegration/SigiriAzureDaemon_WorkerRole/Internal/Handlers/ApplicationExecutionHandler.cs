@@ -13,7 +13,7 @@ namespace SigiriAzureDaemon_WorkerRole.Internal.Handlers
             throw new NotImplementedException();
         }
 
-        public override void Invoke(SigiriAzureDaemonContext azureDaemonContext)
+        public override void Invoke(JobSubmissionContext azureDaemonContext)
         {
             throw new NotImplementedException();
         }

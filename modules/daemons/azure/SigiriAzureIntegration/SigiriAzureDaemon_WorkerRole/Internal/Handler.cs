@@ -13,7 +13,7 @@ namespace SigiriAzureDaemon_WorkerRole.Internal
  
         public abstract void Init(HandlerDescription handlerDescription);
 
-        public abstract void Invoke(SigiriAzureDaemonContext azureDaemonContext);
+        public abstract void Invoke(JobSubmissionContext azureDaemonContext);
 
         public string GetParameter(string name)
         {

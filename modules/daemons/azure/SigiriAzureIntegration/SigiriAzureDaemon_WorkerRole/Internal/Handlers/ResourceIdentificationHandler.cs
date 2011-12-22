@@ -14,7 +14,7 @@ namespace SigiriAzureDaemon_WorkerRole.Internal.Handlers
             throw new NotImplementedException();
         }
 
-        public override void Invoke(SigiriAzureDaemonContext azureDaemonContext)
+        public override void Invoke(JobSubmissionContext azureDaemonContext)
         {
             // TODO: Improve to detect resource type based on job information.
             // TODO: Current implementation only supports worker roles.
