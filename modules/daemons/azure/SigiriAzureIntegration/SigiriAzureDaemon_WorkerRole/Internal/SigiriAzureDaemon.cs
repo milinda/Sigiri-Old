@@ -22,7 +22,7 @@ namespace SigiriAzureDaemon_WorkerRole.Internal
         private IWorker _jobSubmissionManager;
         private IWorker _jobNotificationManager;
 
-        private SigiriAzureDaemonConfiguration _daemonConfiguration;
+        private readonly SigiriAzureDaemonConfiguration _daemonConfiguration;
 
 
         private static void Main(string[] args)

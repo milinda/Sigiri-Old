@@ -36,11 +36,10 @@ namespace SigiriAzureDaemon_WorkerRole.Internal
             _handlerSequence = new LinkedList<string>();
         }
 
-        /**
-         * Loads the handler chain configuration for jub submission flow.
-         * Initialize handler in job submission flow.
-         */
-
+        /// <summary>
+        /// Loads the handler chain configuration for jub submission flow.
+        /// Initialize handler in job submission flow.
+        /// </summary>
         public void OnStart()
         {
             InitializeHandlerSequence();

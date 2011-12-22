@@ -9,7 +9,7 @@ namespace SigiriAzureDaemon_WorkerRole.Internal.Handlers
     {
         public const string HandlerName = "ResourceIdentificationHandler";
 
-        public override void Init(HandlerDescription handlerDescription)
+        public override void Init(HandlerDescription handlerDescription, SigiriAzureDaemonConfiguration daemonConfiguration)
         {
             throw new NotImplementedException();
         }

@@ -5,7 +5,7 @@ namespace SigiriAzureDaemon_WorkerRole.Internal.Handlers
     class CredentialManagementHandler:Handler
     {
         public const string HandlerName = "CredentialManagementHandler";
-        public override void Init(HandlerDescription handlerDescription)
+        public override void Init(HandlerDescription handlerDescription, SigiriAzureDaemonConfiguration daemonConfiguration)
         {
             throw new NotImplementedException();
         }

@@ -8,7 +8,7 @@ namespace SigiriAzureDaemon_WorkerRole.Internal.Handlers
     class ApplicationExecutionHandler:Handler
     {
         public const string HandlerName = "ApplicationExecutionHandler";
-        public override void Init(HandlerDescription handlerDescription)
+        public override void Init(HandlerDescription handlerDescription, SigiriAzureDaemonConfiguration daemonConfiguration)
         {
             throw new NotImplementedException();
         }

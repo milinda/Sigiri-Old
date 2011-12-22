@@ -11,7 +11,7 @@ namespace SigiriAzureDaemon_WorkerRole.Internal
 
         private HandlerDescription _handlerDescription;
  
-        public abstract void Init(HandlerDescription handlerDescription);
+        public abstract void Init(HandlerDescription handlerDescription, SigiriAzureDaemonConfiguration daemonConfiguration);
 
         public abstract void Invoke(JobSubmissionContext azureDaemonContext);
 

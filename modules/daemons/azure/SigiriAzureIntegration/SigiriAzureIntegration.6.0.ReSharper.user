@@ -1,86 +1,97 @@
 <Configuration>
   <RecentFiles>
     <RecentFiles>
-      <File id="3AD2B869-C181-40E0-A7B5-B0FC910F1258/f:ServiceConfiguration.Local.cscfg" caret="693" fromTop="8" />
-      <File id="8DF79254-4F9E-47EA-9176-052E13B5CF3E/f:App.config" caret="190" fromTop="4" />
-      <File id="E943E58B-0835-4788-B3C0-97E317BC964F/f:SigiriApplicationConfiguration.cs" caret="943" fromTop="4" />
       <File id="E943E58B-0835-4788-B3C0-97E317BC964F/f:SigiriAzureInMessage.cs" caret="0" fromTop="0" />
       <File id="E943E58B-0835-4788-B3C0-97E317BC964F/f:AppRunner.cs" caret="0" fromTop="0" />
       <File id="8DF79254-4F9E-47EA-9176-052E13B5CF3E/f:Utils.cs" caret="0" fromTop="0" />
       <File id="8DF79254-4F9E-47EA-9176-052E13B5CF3E/f:Program.cs" caret="0" fromTop="0" />
-      <File id="9D5670E0-AB88-4253-93AA-41D8410893C2/f:ApplicationManager.cs" caret="0" fromTop="0" />
-      <File id="9D5670E0-AB88-4253-93AA-41D8410893C2/f:Constants.cs" caret="0" fromTop="0" />
       <File id="E4169EA5-76F6-4E59-B1E2-E804D2FD66E9/f:Program.cs" caret="588" fromTop="16" />
       <File id="B6EF2745-0217-4F04-B614-351342A1AB9E/f:WorkerRole.cs" caret="0" fromTop="0" />
-      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/d:Deployment/f:WorkerRoleDeploymentManager.cs" caret="0" fromTop="0" />
-      <File id="E943E58B-0835-4788-B3C0-97E317BC964F/f:WorkerRole.cs" caret="0" fromTop="0" />
-      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/f:WorkerRole.cs" caret="0" fromTop="0" />
-      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/d:Deployment/f:Constants.cs" caret="831" fromTop="18" />
       <File id="DD32F226-4333-4395-8234-7C26573388CA/f:ServiceConfiguration.Cloud.cscfg" caret="0" fromTop="0" />
       <File id="E9B72BF0-8D63-4EE1-91FD-570A74F35C8F/f:ServiceConfiguration.Local.cscfg" caret="0" fromTop="0" />
       <File id="E9B72BF0-8D63-4EE1-91FD-570A74F35C8F/f:ServiceConfiguration.Cloud.cscfg" caret="0" fromTop="0" />
       <File id="3AD2B869-C181-40E0-A7B5-B0FC910F1258/f:ServiceConfiguration.Cloud.cscfg" caret="0" fromTop="0" />
-      <File id="E4169EA5-76F6-4E59-B1E2-E804D2FD66E9/f:HostedService.cs" caret="2345" fromTop="15" />
-      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/d:Deployment/f:HostedService.cs" caret="1920" fromTop="0" />
-      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/f:app.config" caret="503" fromTop="11" />
-      <File id="E943E58B-0835-4788-B3C0-97E317BC964F/f:app.config" caret="0" fromTop="0" />
       <File id="E4169EA5-76F6-4E59-B1E2-E804D2FD66E9/f:App.config" caret="2480" fromTop="27" />
+      <File id="E4169EA5-76F6-4E59-B1E2-E804D2FD66E9/f:HostedService.cs" caret="2345" fromTop="15" />
+      <File id="E943E58B-0835-4788-B3C0-97E317BC964F/f:app.config" caret="0" fromTop="0" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/f:app.config" caret="503" fromTop="11" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/d:Deployment/f:Constants.cs" caret="831" fromTop="18" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/f:WorkerRole.cs" caret="0" fromTop="0" />
+      <File id="E943E58B-0835-4788-B3C0-97E317BC964F/f:WorkerRole.cs" caret="0" fromTop="0" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/f:Handler.cs" caret="465" fromTop="13" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/d:Handlers/f:ApplicationExecutionHandler.cs" caret="404" fromTop="10" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/d:Handlers/f:CredentialManagementHandler.cs" caret="329" fromTop="7" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/d:Handlers/f:InputDataMovementHandler.cs" caret="398" fromTop="10" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/d:Handlers/f:ResourceIdentificationHandler.cs" caret="410" fromTop="11" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/d:Handlers/f:VMRoleSetupHandler.cs" caret="173" fromTop="7" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/f:SigiriAzureDaemon.cs" caret="820" fromTop="12" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/f:JobSubmissionContext.cs" caret="0" fromTop="0" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/f:JobSubmissionManager.cs" caret="1412" fromTop="19" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/f:SigiriAzureDaemonConfiguration.cs" caret="0" fromTop="0" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/d:Deployment/f:HostedService.cs" caret="1497" fromTop="0" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/d:Handlers/f:WorkerRoleSetupHandler.cs" caret="1011" fromTop="12" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/d:Deployment/f:WorkerRoleDeploymentManager.cs" caret="847" fromTop="0" />
     </RecentFiles>
     <RecentEdits>
-      <File id="E4169EA5-76F6-4E59-B1E2-E804D2FD66E9/f:Program.cs" caret="694" fromTop="16" />
-      <File id="E4169EA5-76F6-4E59-B1E2-E804D2FD66E9/f:HostedService.cs" caret="4459" fromTop="38" />
-      <File id="E4169EA5-76F6-4E59-B1E2-E804D2FD66E9/f:Program.cs" caret="588" fromTop="16" />
-      <File id="E4169EA5-76F6-4E59-B1E2-E804D2FD66E9/f:HostedService.cs" caret="6556" fromTop="21" />
-      <File id="E4169EA5-76F6-4E59-B1E2-E804D2FD66E9/f:HostedService.cs" caret="5084" fromTop="34" />
-      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/d:Deployment/f:HostedService.cs" caret="484" fromTop="11" />
-      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/d:Deployment/f:HostedService.cs" caret="6475" fromTop="15" />
-      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/d:Deployment/f:HostedService.cs" caret="7064" fromTop="31" />
-      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/d:Deployment/f:HostedService.cs" caret="6701" fromTop="68" />
-      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/d:Deployment/f:Constants.cs" caret="183" fromTop="9" />
-      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/d:Deployment/f:Constants.cs" caret="831" fromTop="18" />
-      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/d:Deployment/f:HostedService.cs" caret="992" fromTop="22" />
-      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/d:Deployment/f:HostedService.cs" caret="3214" fromTop="16" />
-      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/f:app.config" caret="62" fromTop="2" />
-      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/f:app.config" caret="521" fromTop="11" />
-      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/d:Deployment/f:HostedService.cs" caret="3008" fromTop="0" />
-      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/d:Deployment/f:HostedService.cs" caret="4376" fromTop="24" />
-      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/d:Deployment/f:HostedService.cs" caret="4407" fromTop="24" />
-      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/d:Deployment/f:HostedService.cs" caret="3408" fromTop="11" />
-      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/d:Deployment/f:HostedService.cs" caret="3808" fromTop="18" />
-      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/d:Deployment/f:HostedService.cs" caret="708" fromTop="13" />
-      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/d:Deployment/f:HostedService.cs" caret="2315" fromTop="25" />
-      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/d:Deployment/f:HostedService.cs" caret="2233" fromTop="24" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/d:Deployment/f:HostedService.cs" caret="4794" fromTop="24" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/d:Deployment/f:HostedService.cs" caret="4825" fromTop="24" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/d:Deployment/f:HostedService.cs" caret="3826" fromTop="11" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/d:Deployment/f:HostedService.cs" caret="4226" fromTop="18" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/d:Deployment/f:HostedService.cs" caret="1052" fromTop="13" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/d:Deployment/f:HostedService.cs" caret="2733" fromTop="25" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/d:Deployment/f:HostedService.cs" caret="2651" fromTop="24" />
       <File id="E4169EA5-76F6-4E59-B1E2-E804D2FD66E9/f:App.config" caret="1216" fromTop="13" />
       <File id="E4169EA5-76F6-4E59-B1E2-E804D2FD66E9/f:App.config" caret="1972" fromTop="27" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/f:SigiriAzureDaemon.cs" caret="820" fromTop="18" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/d:Handlers/f:WorkerRoleSetupHandler.cs" caret="757" fromTop="12" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/f:Handler.cs" caret="465" fromTop="13" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/d:Handlers/f:ApplicationExecutionHandler.cs" caret="404" fromTop="10" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/d:Handlers/f:CredentialManagementHandler.cs" caret="329" fromTop="7" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/d:Handlers/f:InputDataMovementHandler.cs" caret="398" fromTop="10" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/d:Handlers/f:ResourceIdentificationHandler.cs" caret="410" fromTop="11" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/d:Handlers/f:VMRoleSetupHandler.cs" caret="386" fromTop="10" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/d:Deployment/f:WorkerRoleDeploymentManager.cs" caret="237" fromTop="8" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/d:Handlers/f:WorkerRoleSetupHandler.cs" caret="415" fromTop="8" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/d:Deployment/f:HostedService.cs" caret="667" fromTop="18" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/d:Deployment/f:HostedService.cs" caret="914" fromTop="16" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/f:JobSubmissionManager.cs" caret="1412" fromTop="19" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/d:Deployment/f:WorkerRoleDeploymentManager.cs" caret="536" fromTop="12" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/d:Deployment/f:HostedService.cs" caret="1401" fromTop="15" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/d:Deployment/f:HostedService.cs" caret="1750" fromTop="31" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/d:Deployment/f:WorkerRoleDeploymentManager.cs" caret="1547" fromTop="20" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/d:Deployment/f:WorkerRoleDeploymentManager.cs" caret="3498" fromTop="30" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/d:Deployment/f:WorkerRoleDeploymentManager.cs" caret="1160" fromTop="17" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/d:Deployment/f:WorkerRoleDeploymentManager.cs" caret="1077" fromTop="17" />
+      <File id="12A54F5B-D7C4-4125-849E-1B5AFFE0BD01/d:Internal/d:Handlers/f:WorkerRoleSetupHandler.cs" caret="1011" fromTop="12" />
     </RecentEdits>
   </RecentFiles>
   <CompletionStatisticsManager>
     <ItemStatistics item="CSharpCodeCompletionContext">
       <Item value="static" priority="313" />
       <Item value="AppDomainManagerInitializationOptions`0" priority="31" />
-      <Item value="string" priority="1023" />
+      <Item value="string" priority="1087" />
       <Item value="using" priority="188" />
       <Item value="Microsoft" priority="30" />
-      <Item value="public" priority="1246" />
-      <Item value="void" priority="863" />
-      <Item value="var" priority="1150" />
+      <Item value="public" priority="1342" />
+      <Item value="void" priority="895" />
+      <Item value="var" priority="1214" />
       <Item value="System" priority="125" />
       <Item value="Configuration" priority="53" />
       <Item value="azureStorageAccountConnectionString" priority="31" />
       <Item value="blobStorage" priority="31" />
       <Item value="azureStorageAccount" priority="63" />
       <Item value="queueStorage" priority="31" />
-      <Item value="private" priority="1151" />
-      <Item value="readonly" priority="223" />
+      <Item value="private" priority="1215" />
+      <Item value="readonly" priority="287" />
       <Item value="LogManager`0" priority="31" />
       <Item value="try" priority="159" />
       <Item value="catch" priority="127" />
       <Item value="Log" priority="31" />
       <Item value="throw" priority="63" />
-      <Item value="new" priority="1023" />
+      <Item value="new" priority="1087" />
       <Item value="WebException" priority="58" />
       <Item value="false" priority="97" />
-      <Item value="if" priority="351" />
+      <Item value="if" priority="383" />
       <Item value="_storageInitialized" priority="63" />
       <Item value="return" priority="319" />
       <Item value="true" priority="97" />
@@ -97,7 +108,7 @@
       <Item value="ZipEntry`0" priority="31" />
       <Item value="applicationArchive" priority="31" />
       <Item value="executableConfigurations" priority="31" />
-      <Item value="String`0" priority="608" />
+      <Item value="String`0" priority="641" />
       <Item value="ConfigXmlDocument`0" priority="31" />
       <Item value="Xml" priority="26" />
       <Item value="XmlDocument`0" priority="63" />
@@ -106,7 +117,7 @@
       <Item value="XmlNode`0" priority="31" />
       <Item value="idElements" priority="31" />
       <Item value="idElement" priority="31" />
-      <Item value="applicationId" priority="250" />
+      <Item value="applicationId" priority="379" />
       <Item value="ConfigurationManager`0" priority="31" />
       <Item value="CloudBlockBlob`0" priority="63" />
       <Item value="applicatiobBlobName" priority="31" />
@@ -210,7 +221,7 @@
       <Item value="abstract" priority="31" />
       <Item value="SigiriAzureDaemonContext`0" priority="31" />
       <Item value="azureDaemonContext" priority="32" />
-      <Item value="Dictionary" priority="63" />
+      <Item value="Dictionary" priority="95" />
       <Item value="Dictionary&lt;string,string&gt;" priority="28" />
       <Item value="_parameters" priority="31" />
       <Item value="_handlerDescription" priority="32" />
@@ -265,6 +276,23 @@
       <Item value="state" priority="31" />
       <Item value="Exception`0" priority="31" />
       <Item value="e" priority="31" />
+      <Item value="SigiriAzureDaemonConfiguration`0" priority="127" />
+      <Item value="daemonConfiguration" priority="195" />
+      <Item value="WorkerRoleDeploymentManager`0" priority="31" />
+      <Item value="_daemonConfiguration" priority="130" />
+      <Item value="HostedService`0" priority="31" />
+      <Item value="_hostedServices" priority="96" />
+      <Item value="Dictionary&lt;string,HostedService&gt;" priority="28" />
+      <Item value="bool" priority="31" />
+      <Item value="HostedService" priority="28" />
+      <Item value="SubscriptionId" priority="31" />
+      <Item value="Name" priority="32" />
+      <Item value="Label" priority="32" />
+      <Item value="ApplicationId" priority="32" />
+      <Item value="MgtCert" priority="32" />
+      <Item value="DataConnectionString" priority="64" />
+      <Item value="hostedService" priority="63" />
+      <Item value="_workerRoleDeploymentManager" priority="31" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:@Microsoft.WindowsAzure.CloudStorageAccount">
       <Item value="Parse`0" priority="103" />
@@ -312,7 +340,7 @@
       <Item value="InnerText" priority="158" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:@System.String">
-      <Item value="Format`0" priority="324" />
+      <Item value="Format`0" priority="352" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:System.IO.FileInfo">
       <Item value="LastAccessTime" priority="26" />
@@ -349,7 +377,7 @@
     <ItemStatistics item="Qualified:System.String">
       <Item value="StartsWith`0" priority="26" />
       <Item value="Equals`0" priority="26" />
-      <Item value="ToLower`0" priority="107" />
+      <Item value="ToLower`0" priority="134" />
     </ItemStatistics>
     <ItemStatistics item="Qualified:Microsoft.WindowsAzure.StorageClient.CloudQueueClient">
       <Item value="GetQueueReference`0" priority="134" />
@@ -457,6 +485,19 @@
     <ItemStatistics item="Qualified:System.Exception">
       <Item value="Data" priority="26" />
       <Item value="Message" priority="26" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:SigiriAzureDaemon_WorkerRole.Internal.SigiriAzureDaemonConfiguration">
+      <Item value="AzureSubscriptionId" priority="27" />
+      <Item value="AzureManagementCertificate" priority="27" />
+      <Item value="DataConnectionString" priority="27" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:SigiriAzureDaemon_WorkerRole.Internal.Deployment.HostedService">
+      <Item value="Create`0" priority="26" />
+      <Item value="Active" priority="26" />
+      <Item value="CreateDeployment`0" priority="26" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:SigiriAzureDaemon_WorkerRole.Internal.Deployment.WorkerRoleDeploymentManager">
+      <Item value="Initialize`0" priority="26" />
     </ItemStatistics>
   </CompletionStatisticsManager>
   <NAntValidationSettings>

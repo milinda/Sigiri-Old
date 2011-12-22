@@ -7,17 +7,22 @@ using SigiriAzureDaemon_WorkerRole.Internal.Deployment;
 
 namespace SigiriAzureDaemon_WorkerRole.Internal.Handlers
 {
+    /// <summary>
+    /// Delegate the worker role initialization to WorkerRoleDeploymentManager when no active worker roles
+    /// are there to handle jobs for a application.
+    /// </summary>
     class WorkerRoleSetupHandler:Handler
     {
         public const string HandlerName = "WorkerRoleSetupHandler";
 
         private WorkerRoleDeploymentManager _workerRoleDeploymentManager;
 
-        public override void Init(HandlerDescription handlerDescription)
+        public override void Init(HandlerDescription handlerDescription, SigiriAzureDaemonConfiguration daemonConfiguration)
         {
             Trace.TraceInformation(String.Format("Inializing {0}...", HandlerName));
 
-            _workerRoleDeploymentManager = new WorkerRoleDeploymentManager();
+            _workerRoleDeploymentManager = new WorkerRoleDeploymentManager(daemonConfiguration);
+            _workerRoleDeploymentManager.Initialize();
         }
 
         public override void Invoke(JobSubmissionContext azureDaemonContext)

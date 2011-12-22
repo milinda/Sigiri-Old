@@ -13,10 +13,17 @@ using Microsoft.WindowsAzure.StorageClient;
 
 namespace SigiriAzureDaemon_WorkerRole.Internal.Deployment
 {
+    /// <summary>
+    /// There will be HostedService instance per Application. This handles worker role
+    /// deployment, un-deployment and deletion for the application it handles. Auto scaling 
+    /// will also be handle by this in future.
+    /// </summary>
     internal class HostedService
     {
         private readonly CloudBlobClient _blobClient;
         private const string Location = "Anywhere US";
+
+        // Use to notify completion of Azure management API operations.
         private readonly ManualResetEvent _allDone = new ManualResetEvent(false);
 
         public string SubscriptionId { set; get; }
@@ -24,6 +31,9 @@ namespace SigiriAzureDaemon_WorkerRole.Internal.Deployment
         public string Label { set; get; }
         public string ApplicationId { set; get; }
         public X509Certificate2 MgtCert { set; get; }
+        // Status of worker roles under this hosted servie.
+        public bool Active { set; get; }
+        public string DataConnectionString { set; get; }
 
         public enum DeploymentStatus
         {
@@ -39,9 +49,7 @@ namespace SigiriAzureDaemon_WorkerRole.Internal.Deployment
 
         public HostedService()
         {
-            _blobClient =
-                CloudStorageAccount.Parse(RoleEnvironment.GetConfigurationSettingValue("DataConnectionString")).
-                    CreateCloudBlobClient();
+            _blobClient = CloudStorageAccount.Parse(DataConnectionString).CreateCloudBlobClient();
         }
 
         public string Create()
