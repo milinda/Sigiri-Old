@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using SigiriAzureDaemon_WorkerRole.Internal.Deployment;
 
 namespace SigiriAzureDaemon_WorkerRole.Internal.Handlers
 {
@@ -9,10 +11,13 @@ namespace SigiriAzureDaemon_WorkerRole.Internal.Handlers
     {
         public const string HandlerName = "WorkerRoleSetupHandler";
 
+        private WorkerRoleDeploymentManager _workerRoleDeploymentManager;
 
         public override void Init(HandlerDescription handlerDescription)
         {
-            throw new NotImplementedException();
+            Trace.TraceInformation(String.Format("Inializing {0}...", HandlerName));
+
+            _workerRoleDeploymentManager = new WorkerRoleDeploymentManager();
         }
 
         public override void Invoke(SigiriAzureDaemonContext azureDaemonContext)
