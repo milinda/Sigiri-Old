@@ -20,7 +20,7 @@ namespace SigiriAzureDaemon_WorkerRole.Internal.Handlers
 
         public override string Name()
         {
-            throw new NotImplementedException();
+            return HandlerName;
         }
     }
 }

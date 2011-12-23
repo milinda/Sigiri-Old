@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace SigiriAzureDaemon_WorkerRole.Internal.Handlers
 {
@@ -12,12 +13,13 @@ namespace SigiriAzureDaemon_WorkerRole.Internal.Handlers
 
         public override void Invoke(JobSubmissionContext azureDaemonContext)
         {
-            throw new NotImplementedException();
+            // TODO: Currently not required
+            Trace.TraceInformation(String.Format("CredentialManagementHandler invoked for Job {0} of App {1}", azureDaemonContext.JobId, azureDaemonContext.ApplicationId));
         }
 
         public override string Name()
         {
-            throw new NotImplementedException();
+            return HandlerName;
         }
     }
 }

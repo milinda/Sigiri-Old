@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
@@ -15,12 +16,13 @@ namespace SigiriAzureDaemon_WorkerRole.Internal.Handlers
 
         public override void Invoke(JobSubmissionContext azureDaemonContext)
         {
-            throw new NotImplementedException();
+            // TODO: Need to implement support or input data movement. 
+            Trace.TraceInformation(String.Format("InputDataMovementHandler Invoked for Application {0} Job {1}.", azureDaemonContext.ApplicationId, azureDaemonContext.JobId));
         }
 
         public override string Name()
         {
-            throw new NotImplementedException();
+            return HandlerName;
         }
     }
 }

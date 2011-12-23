@@ -87,7 +87,6 @@ namespace SigiriAzureDaemon_WorkerRole.Internal
             _handlerSequence.AddLast("CredentialManagementHandler");
             _handlerSequence.AddLast("InputDataMovementHandler");
             _handlerSequence.AddLast("WorkerRoleSetupHandler");
-            _handlerSequence.AddLast("VMRoleSetupHandler");
             _handlerSequence.AddLast("ApplicationExecutionHandler");
         }
 
@@ -98,7 +97,6 @@ namespace SigiriAzureDaemon_WorkerRole.Internal
             _handlers.Add("CredentialManagementHandler", new CredentialManagementHandler());
             _handlers.Add("InputDataMovementHandler", new InputDataMovementHandler());
             _handlers.Add("WorkerRoleSetupHandler", new WorkerRoleSetupHandler());
-            _handlers.Add("VMRoleSetupHandler", new VMRoleSetupHandler());
             _handlers.Add("ApplicationExecutionHandler", new ApplicationExecutionHandler());
         }
     }
