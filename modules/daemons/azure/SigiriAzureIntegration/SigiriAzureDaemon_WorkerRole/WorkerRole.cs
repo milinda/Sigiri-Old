@@ -1,7 +1,10 @@
+using System;
 using System.Diagnostics;
 using System.Net;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
+using Microsoft.WindowsAzure;
+using Microsoft.WindowsAzure.Diagnostics;
 using Microsoft.WindowsAzure.ServiceRuntime;
 using SigiriAzureDaemon_WorkerRole.Internal;
 
@@ -28,6 +31,21 @@ namespace SigiriAzureDaemon_WorkerRole
             // Set the maximum number of concurrent connections 
             ServicePointManager.DefaultConnectionLimit = 12;
 
+            DiagnosticMonitorConfiguration diagConfig = DiagnosticMonitor.GetDefaultInitialConfiguration();
+
+            diagConfig.WindowsEventLog.DataSources.Add("System!*");
+            diagConfig.WindowsEventLog.DataSources.Add("Application!*");
+            diagConfig.WindowsEventLog.ScheduledTransferLogLevelFilter = LogLevel.Error;
+            diagConfig.WindowsEventLog.ScheduledTransferPeriod = TimeSpan.FromMinutes(5);
+
+            diagConfig.Logs.ScheduledTransferLogLevelFilter = LogLevel.Information;
+            diagConfig.Logs.ScheduledTransferPeriod = TimeSpan.FromMinutes(5);
+
+            DiagnosticMonitor.Start("DiagnosticsConnectionString", diagConfig);
+
+            CloudStorageAccount.SetConfigurationSettingPublisher(
+                (configName, configSetter) => configSetter(RoleEnvironment.GetConfigurationSettingValue(configName)));
+
             // For information on handling configuration changes
             // see the MSDN topic at http://go.microsoft.com/fwlink/?LinkId=166357.
 
@@ -50,6 +68,7 @@ namespace SigiriAzureDaemon_WorkerRole
                                                           "AzureManagementCertificateLocation")))
                                           };
             _azureDaemon = new SigiriAzureDaemon(daemonConfiguration);
+            _azureDaemon.Initialize();
             return base.OnStart();
         }
 
