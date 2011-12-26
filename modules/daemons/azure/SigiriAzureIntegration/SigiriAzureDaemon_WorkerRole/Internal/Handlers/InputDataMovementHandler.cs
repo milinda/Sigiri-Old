@@ -11,7 +11,7 @@ namespace SigiriAzureDaemon_WorkerRole.Internal.Handlers
         public const string HandlerName = "InputDataMovementHandler";
         public override void Init(HandlerDescription handlerDescription, SigiriAzureDaemonConfiguration daemonConfiguration)
         {
-            throw new NotImplementedException();
+            // TODO
         }
 
         public override void Invoke(JobSubmissionContext azureDaemonContext)

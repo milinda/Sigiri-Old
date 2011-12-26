@@ -78,6 +78,7 @@
     <Compile Include="Internal\SigiriApplicationConfiguration.cs" />
     <Compile Include="Internal\SigiriAzureDaemon.cs" />
     <Compile Include="Internal\SigiriAzureDaemonConfiguration.cs" />
+    <Compile Include="Internal\SigiriAzureOutMessage.cs" />
     <Compile Include="Internal\Worker.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WorkerRole.cs" />

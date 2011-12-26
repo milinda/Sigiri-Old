@@ -38,9 +38,12 @@ namespace SigiriAzureDaemon_WorkerRole.Internal.Handlers
 
             if (!_workerRoleDeploymentManager.IsWorkerRoleActiveForApplication(applicationId))
             {
-                
+                Trace.TraceInformation(String.Format("Setting up worker role for application {0}..", applicationId));
+                _workerRoleDeploymentManager.SetupWorkerRoleForApplication(applicationId);        
+            } else
+            {
+                Trace.TraceInformation(String.Format("There are active worker roles for application {0}. Ignoring worker role setup step.", applicationId));    
             }
-            Trace.TraceInformation(String.Format("There are active worker roles for application {0}. Ignoring worker role setup step.", applicationId));
             return;
         }
 

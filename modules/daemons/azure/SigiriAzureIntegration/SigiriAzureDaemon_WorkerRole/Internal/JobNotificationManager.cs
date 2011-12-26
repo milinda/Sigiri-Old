@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using Microsoft.WindowsAzure.StorageClient;
 
 namespace SigiriAzureDaemon_WorkerRole.Internal
@@ -10,7 +11,7 @@ namespace SigiriAzureDaemon_WorkerRole.Internal
     internal class JobNotificationManager : IWorker
     {
         private readonly CloudQueueClient _queueClient;
-        private ApplicationStore _applicationStore;
+        private readonly ApplicationStore _applicationStore;
 
         public JobNotificationManager(CloudQueueClient queueClient, ApplicationStore applicationStore)
         {
@@ -32,7 +33,21 @@ namespace SigiriAzureDaemon_WorkerRole.Internal
         {
             while (true)
             {
-                // TODO: Search for notifications in Storage Queue for all the currently available applications.
+                var applications = _applicationStore.GetApplications();
+                foreach (var outMessageQueue in applications.Select(application => _queueClient.GetQueueReference(String.Format("{0}outqueue", application.ToLower()))))
+                {
+                    outMessageQueue.CreateIfNotExist();
+                    
+                    // TODO: Make message count configurable
+                    var outMessages = outMessageQueue.GetMessages(20);
+                    foreach (var outMessage in outMessages.Select(cloudQueueMessage => SigiriAzureOutMessage.CreateSigiriAzureOutMessageFromXML(cloudQueueMessage.AsString)))
+                    {
+                        Trace.TraceInformation(String.Format("Job {0} of application {1} completed with status {2}.", outMessage.JobId, outMessage.ApplicationId, outMessage.Status));
+                    }
+                }
+
+                // TODO: Make this configurable
+                Thread.Sleep(400);
             }
         }
     }

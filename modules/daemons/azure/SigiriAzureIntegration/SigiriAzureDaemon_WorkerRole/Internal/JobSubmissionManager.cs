@@ -93,11 +93,25 @@ namespace SigiriAzureDaemon_WorkerRole.Internal
         private void InitHandlers()
         {
             // TODO: Add handler description based initialization.
-            _handlers.Add("ResourceIdentificationHandler", new ResourceIdentificationHandler());
-            _handlers.Add("CredentialManagementHandler", new CredentialManagementHandler());
-            _handlers.Add("InputDataMovementHandler", new InputDataMovementHandler());
-            _handlers.Add("WorkerRoleSetupHandler", new WorkerRoleSetupHandler());
-            _handlers.Add("ApplicationExecutionHandler", new ApplicationExecutionHandler());
+            Handler handler = new ResourceIdentificationHandler();
+            handler.Init(null, _daemonConfiguration);
+            _handlers.Add("ResourceIdentificationHandler", handler);
+
+            handler = new CredentialManagementHandler();
+            handler.Init(null, _daemonConfiguration);
+            _handlers.Add("CredentialManagementHandler", handler);
+
+            handler = new InputDataMovementHandler();
+            handler.Init(null, _daemonConfiguration);
+            _handlers.Add("InputDataMovementHandler", handler);
+
+            handler = new WorkerRoleSetupHandler();
+            handler.Init(null, _daemonConfiguration);
+            _handlers.Add("WorkerRoleSetupHandler", handler);
+
+            handler = new ApplicationExecutionHandler();
+            handler.Init(null, _daemonConfiguration);
+            _handlers.Add("ApplicationExecutionHandler", handler);
         }
     }
 }
