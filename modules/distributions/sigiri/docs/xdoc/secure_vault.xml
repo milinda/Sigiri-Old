@@ -1,0 +1,378 @@
+<!--
+  ~ Copyright 2005-2007 WSO2, Inc. (http://wso2.com)
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+        "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <body>
+        <p>WSO2 Carbon - Secure Vault [<a href="docs_index.html">Documentation Index</a>]
+        </p>
+
+        <h1>WSO2 Carbon Secure Vault</h1>
+        <p>This guide describes how we can secure the plain text password in carbon configuration
+            files. WSO2Carbon 3.2.2 is shipped with a secure vault implementation which is a
+            modified version of synapse secure vault. Please refer synapse secure vault guide for
+            more detail on it
+        </p>
+
+        <h2>Contents</h2>
+        <p></p>
+
+        <ul>
+            <li>
+                <a href="#introductiontosecurevault">Introduction to Secure Vault</a>
+            </li>
+            <li>
+                <a href="#defaultConfig">Use Secure Vault with default Configuration</a>
+            </li>
+            <ul>
+                <li>
+                    <a href="#ciphertool">CipherTool</a>
+                </li>
+                <li>
+                    <a href="#defaultSecretCallbackHandler">Default Secret CallbackHandler</a>
+                </li>
+            </ul>
+            <li>
+                <a href="#ownconfig">Use Secure Vault with your own Configurations</a>
+            </li>
+            <li>
+                <a href="#secretalias">Secrets and Alias list in Carbon Configurations</a>
+            </li>
+        </ul>
+
+        <h2 id="introductiontosecurevault">Introduction to Secure Vault</h2>
+        <h3>Secret Manger</h3>
+        <p>All secrets are managed using the Secret Manager. Secret Manager initializes the secret
+            repository and the keystores. It uses secret repository to keep the secret values
+            (encrypted values). These secrets can be accessed by providing aliases for them. Key
+            store is required to create the decryption crypto which can use to resolve encrypted
+            secrets values. Keystore and secret repository are configurable. It can be done through
+            the 'secret-conf.properties' which can be found in CARBON_HOME/repository/conf
+        </p>
+        <h3>Secret Repository</h3>
+        <p>This is used to keep the secret values. Currently, there is only one secret repository is
+            implemented within secure vault and it is called the FileBaseSecretRepository. It uses
+            cipher-text.properties which can be found in CARBON_HOME/repository/conf , to keep the
+            secrets. It keeps aliases vs. its actual secret in encrypted format (encrypted by a key
+            in keystore). Any secret repositories can be written by implementing the
+            SecretRepository and SecretRepositoryProvider classes.
+        </p>
+        <h3>Secret Callback</h3>
+        <p>This provides the actual password for the given alias. There is a
+            SecretManagerSecretCallbackHandler which has combined with secret manager to resolve the
+            secret. Any callback can be written by implementing the SecretCallbackHandler class.
+        </p>
+        <h3>Secret Resolver</h3>
+        <p>Any configuration builder, which uses secret information within their own configuration
+            file, is needed to initialize the secret resolver when building its own configuration.
+            secret resolver keeps the list of secured elements which are needed to be defined in
+            configuration file with secret alias. Secret resolver initializes secret callback
+            handler class which is defined in configuration file.
+        </p>
+        <h2 id="defaultConfig">Use Secure Vault with default Configuration</h2>
+        <p>
+            In default configuration,
+            <br/>
+            1. File base secret repository is used , cipher-text.properties which can be found in
+            CARBON_HOME/repository/conf
+            <br/>
+            2. Carbon Server primary key store is used for encrypting and decrypting passwords,
+            which can be found in CARBON_HOME/repository/resources/security
+            <br/>
+            3.DefaultSecretCallbackHandler
+            (org.wso2.carbon.securevault.DefaultSecretCallbackHandler) is used as the password
+            resolver for keystore and private key passwords of Carbon Server primary Keystore
+            <br/>
+            4. SecretManagerSecretCallbackHandler
+            (org.wso2.securevault.secret.handler.SecretManagerSecretCallbackHandler) is used as the
+            password resolver for the all secret values which are defined in carbon configuration
+            files
+            <br/>
+            <br/>
+            WSO2Carbon 3.2.2 has made the secure vault configuration easy by shipping a command line
+            tools called Ciphertool
+        </p>
+        <h2 id="ciphertool">Cipher Tool</h2>
+        <p>
+            By default, CipherTool can be used for creating encrypted value for given plaint text.
+            But there are two options that helps for secure vault configuration
+            <br/>
+            <br/>
+            <strong>-Dconfigure</strong>
+            (sh ciphertool.sh -Dconfigure)
+            <br/>
+            <br/>
+            This option would allow user to secure plain text passwords in carbon configuration
+            files.
+            <br/>
+            1. Read alias values and their corresponding plain text passwords from the
+            cipher-text.properties file.
+            Please note that CipherTool identifies the plain text which are defined with in square
+            brackets as the plain text passwords.
+            If password is not in the cipher-text.properties for corresponding alias, User needs to
+            provide it using command-line
+            <br/>
+            2. Check whether alias is a known password alias in Carbon configurations, If Ciphertool
+            modifies the configuration element and file
+
+            Replace configuration element with alias name
+            Define a secret callback in configuration file
+            Add proper name spaces for defining secure vault.
+            <br/>
+            3. Encrypt plain test value using the primary key store of carbon server (Details of
+            primary Key store is read from carbon.xml file which can be found in
+            CARBON_HOME/repository/conf)
+            <br/>
+            4. Replace plain text values in cipher-text.properties file with the encrypted
+            passwords.
+            <br/>
+            5. Add default configuration to secret-conf.properties
+            <br/>
+            <br/>
+            <strong>-Dchange</strong>
+            (sh ciphertool.sh -Dchange)
+            <br/>
+            This option is allowed user to change password of a secured password
+        </p>
+        <h2 id="defaultSecretCallbackHandler">Default Secret CallbackHandler</h2>
+        <p>
+            This secret callback handler is used to resolve the keystore and private key passwords
+            of Carbon Server primary key store. As these password are need to initialize the secret
+            manager decrypt the encrypted values in secret repository, these passwords act as the
+            root passwords for secure vault. Therefore DefaultSecretCallbackHandler provides two
+            options of reading this password when starting carbon sever.
+            <br/>
+            <br/>
+            <strong>1. Enter Password in command-line</strong>
+            <br/>
+            <br/>
+            If option 2 has not been configured, When Carbon Server is starting, It would promote
+            to enter the private key and keystore passwords.
+            <br/>
+            Admin who starts the Carbon server, must provide the private key and keystore passwords
+            using command-line. (passwords are hided from terminal and logs files)
+            <br/>
+            By default Password provider assumes that both private key and keystore passwords are
+            same. If not, following system property must be passed when Carbon server is start-up
+            <br/>
+            <strong>export JAVA_OPTS=-Dkey.password=true (in UNIX)</strong>
+            <br/>
+            <br/>
+            <strong>Limitation :</strong>
+            This option is only valid, when Carbon server is started with sh
+            wso2server.sh . But when Carbon server is started as a daemon, This option can not be
+            used
+            <br/>
+            <br/>
+            <strong>2. Store Password in a temporary text file</strong>
+            <br/>
+            <br/>
+            When Carbon Server is starting, It first check for the text file called
+            <strong>"password" in
+                CARBON_HOME directory
+            </strong>
+            and read private key and keystore password. After reading text
+            file, It would be deleted automatically
+            <br/>
+            Admin who starts the Carbon Server. must create a text file called "password" in
+            CARBON_HOME and enter the keyStore password in first line of the file. Steps are as
+            followings,
+            <br/>
+            1. Shutdown server if you have already started.
+            <br/>
+            2. Create a text file with name "password" in CARBON_HOME location.
+            <br/>
+            3. Open and enter your primary keystore password in the 1st line of the text file and
+            save it.
+            <br/>
+            4. Then restart the Carbon Server as daemon. sh wso2server.sh -start
+            <br/>
+
+            By default Password provider assumes that both private key and keystore passwords are
+            same. If not, private key password must be entered in second line of the file.
+            <br/>
+            <br/>
+            <strong>Important :</strong>
+            If carbon server is deployed in any other app server (ex - weblogic) or key
+            password of https transport (password in mgt-transports.xml ) is not secured, File name
+            of text file must be “password-tmp” (not “password”)
+            <br/>
+            <br/>
+            <strong>Limitation :</strong>
+            Every restart, Admin needs to create a text file.
+            <br/>
+        </p>
+        <h2 id="ownconfig">Use Secure Vault with your own Configurations</h2>
+
+        <p>You can use your own configurations by changing follows according to your choice.
+            <br/>
+            <br/>
+            1. Secret repository
+            <br/>
+            2. Secret Callback Hander
+            <br/>
+            3. Using a keystore other than the primary key store of carbon server.
+            <br/>
+            <br/>
+            Lets see how we can write a new Secret Callback Hander class to secure the user
+            management database connection password. In this sample you need not to configure a
+            secret repository or keyStore (cipher-text.properties) as you are not going to store the
+            secret or encrypted values.
+            <br/>
+            <br/>
+            1. Write secret callback class. You need to implement the SecretCallbackHandler
+            interface or extend the AbstractSecretCallbackHandler abstract class.
+            <br/>
+            <br/>
+
+            public class HardCodedSecretCallbackHandler extends AbstractSecretCallbackHandler {
+            <br/>
+            protected void handleSingleSecretCallback(SingleSecretCallback singleSecretCallback) {
+            <br/>
+            singleSecretCallback.setSecret("password");
+            <br/>
+            }
+            <br/>
+            }
+            <br/>
+            <br/>
+            we can set multiple passwords based id of SingleSecretCallback as follows,
+            <br/>
+            <br/>
+            public class HardCodedSecretCallbackHandler extends AbstractSecretCallbackHandler {
+            <br/>
+            protected void handleSingleSecretCallback(SingleSecretCallback singleSecretCallback) {
+            <br/>
+            if("foo".equals(singleSecretCallback.getId())){
+            <br/>
+            singleSecretCallback.setSecret("foo_password");
+            <br/>
+            } else if("bar".equals(singleSecretCallback.getId())){
+            <br/>
+            singleSecretCallback.setSecret("bar_password");
+            <br/>
+            }
+            <br/>
+
+
+            }
+            <br/>
+            }
+            <br/>
+            <br/>
+
+            2. Create a jar or OSGI bundle
+            <br/>
+            3. Copy jar file to CARBON_HOME/repository/component/lib , OSGI bundle to
+            CARBON_HOME/repository/component/dropins>
+            <br/>
+            4. Configure user-mgt.xml file with alias name and your secret callback handler class
+            name
+            <br/>
+            <br/>
+            &lt;UserManager<strong>xmlns:svns="http://org.wso2.securevault/configuration"</strong>
+            &gt;
+            <br/>
+            <strong>
+                &lt;svns:SecureVault
+                provider="org.wso2.securevault.secret.handler.HardCodedSecretCallbackHandler"&gt;
+            </strong>
+            <br/>
+            &lt;Realm&gt;
+            <br/>
+            &lt;Configuration&gt;
+            <br/>
+            &lt;AdminRole&gt;admin&lt;/AdminRole&gt;
+            <br/>
+            &lt;AdminUser&gt;
+            <br/>
+            &lt;UserName&gt;admin&lt;/UserName&gt;
+            <br/>
+            &lt;Password&gt;admin&lt;/Password&gt;
+            &lt;/AdminUser&gt;
+            <br/>
+            &lt;EveryOneRoleName&gt;everyone&lt;/EveryOneRoleName&gt;
+            <br/>
+            &lt;Property name="url"&gt;jdbc:h2:repository/database/WSO2CARBON_DB;DB_CLOSE_ON_EXIT=FALSE&lt;/Property&gt;
+            <br/>
+            &lt;Property name="userName"&gt;wso2carbon&lt;/Property&gt;
+            <br/>
+            <strong>
+                &lt;Property name="password"
+                svns:secretAlias="UserManager.Configuration.Property.password"&gt;password&lt;/Property&gt;
+            </strong>
+            <br/>
+            &lt;Property name="driverName"&gt;org.h2.Driver&lt;/Property&gt;
+            <br/>
+            &lt;Property name="maxActive"&gt;50&lt;/Property&gt;
+            <br/>
+            &lt;Property name="maxWait"&gt;60000&lt;/Property&gt;
+            <br/>
+            &lt;Property name="minIdle"&gt;5&lt;/Property&gt;
+            <br/>
+            &lt;/Configuration&gt;
+            <br/>
+            <br/>
+
+            5. Restart the server.
+            <br/>
+        </p>
+
+        <h2 id="secretalias">Secrets and Alias list in Carbon Configurations</h2>
+        <p>
+        Following are the alias names and secrets of carbon configuration files which are supported
+        by secure vault
+        <br/>
+        <br/>
+        transports.https.keystorePass -> SSL key and keystore password in mgt-transport.xml
+        <br/>
+        Carbon.Security.KeyStore.Password- > Keystore password of Carbon server in carbon.xml
+        <br/>
+        Carbon.Security.KeyStore.KeyPassword -> Private key password of Carbon server in carbon.xml
+        <br/>
+        Carbon.Security.TrustStore.Password -> Trust store password of Carbon server in carbon.xml
+        <br/>
+        UserManager.AdminUser.Password -> Admin User password in user-mgt.xml
+        <br/>
+        UserManager.Configuration.Property.password -> User Manager database connection password in
+        user-mgt.xml
+        <br/>
+        UserStoreManager.Property.ConnectionPassword -> User store connection password in user-mgt
+        .xml
+        <br/>
+        wso2registry.[Registry Name].password -> Registry database connection password in
+        registry.xml
+        <br/>
+        Axis2.Https.Listener.TrustStore.Password -> NIO Listener SSL trust store password in
+        axis2.xml
+        <br/>
+        Axis2.Https.Listener.KeyStore.Password -> NIO Listener SSL keystore store password in
+        axis2.xml
+        <br/>
+        Axis2.Https.Listener.KeyStore.KeyPassword -> NIO Listener SSL key password in axis2.xml
+        <br/>
+        Axis2.Https.Sender.TrustStore.Password -> NIO Sender SSL trust store password in axis2.xml
+        <br/>
+        Axis2.Https.Sender.KeyStore.Password -> NIO Sender SSL key store password in axis2.xml
+        <br/>
+        Axis2.Https.Sender.KeyStore.KeyPassword -> NIO Sender SSL key password in axis2.xml
+        <br/>
+        Axis2.Mailto.Parameter.Password -> Email sender password in axis2.xml
+        <br/>
+        </p>
+
+    </body>
+</html>

@@ -1,0 +1,1223 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+ ~ Copyright (c) 2005-2010, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ ~
+ ~ WSO2 Inc. licenses this file to you under the Apache License,
+ ~ Version 2.0 (the "License"); you may not use this file except
+ ~ in compliance with the License.
+ ~ You may obtain a copy of the License at
+ ~
+ ~    http://www.apache.org/licenses/LICENSE-2.0
+ ~
+ ~ Unless required by applicable law or agreed to in writing,
+ ~ software distributed under the License is distributed on an
+ ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ ~ KIND, either express or implied.  See the License for the
+ ~ specific language governing permissions and limitations
+ ~ under the License.
+ -->
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+
+        <meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"/>
+        <title>User Core Admin Guide</title>
+
+
+    </head>
+    <body>
+        <h1>User Core Admin Guide</h1>
+
+        This document has the following sections.
+        <br/>
+
+        <ul>
+            <a href="#Overview"></a>
+            <li>
+                <a href="#Overview">Overview</a>
+            </li>
+            <a href="#Configuration"></a>
+            <li>
+                <a href="#Configuration">Realm Configuration</a>
+            </li>
+            <a href="DefaultLDAP"></a>
+            <li>
+                <a href="#DefaultLDAP">
+                    Default LDAP User Store Configuration
+                </a>
+            </li>
+            <a href="#InternalJDBC"></a>
+            <li>
+                <a href="#InternalJDBC">Internal JDBC
+                    User Store Configuration
+                </a>
+            </li>
+            <li>
+                <a href="#change">How to Change the RDBMS</a>
+            </li>
+            <a href="#LDAP"></a>
+            <li>
+                <a href="#LDAP">How to Configure an External LDAP User Store</a>
+            </li>
+            <a href="#JDBC"></a>
+            <li>
+                <a href="#JDBC">How to Configure an External JDBC User Store
+                    <br/>
+                </a>
+            </li>
+        </ul>
+
+        <h2>
+            <a name="Overview">1. Overview</a>
+        </h2>
+
+        User kernal of Carbon has the following new features.
+        <br/>
+
+        <ul>
+
+            <li>The concept of single user store. The user store can be
+                either
+                external or internal.
+                <br/>
+            </li>
+            <li>Default internal user store is embedded-apacheds ldap.
+                <br/>
+            </li>
+            <li>Ability to operate in readonly mode on your company's LDAP
+                and
+                Active Directory userstores.
+                <br/>
+            </li>
+            <li>Ability to operate in read-write mode on internal and external user stores.
+
+                <br/>
+            </li>
+            <li>Supports any custom realm
+                <br/>
+            </li>
+            <li>Roles can contain users from external user stores</li>
+            <li>Improved configurability for external user stores&#32;
+                <br/>
+            </li>
+            <li>Capability to read/write roles from/to LDAP/Active Direcotry user
+                stores
+            </li>
+            <li>Implements management permission of the carbon console</li>
+        </ul>
+
+        The user core is driven by the user-mgt.xml found in the following
+        location.
+        <br/>
+
+        <div style="margin-left: 80px;">
+            <code>${carbon-home}/repository/conf/user-mgt.xml</code>
+            <br/>
+        </div>
+
+        <h3>
+            <a name="Configuration">2. Realm Configuration</a>
+        </h3>
+
+        <br/>
+        The user-mgt.xml main configuration section indicates the following
+        information.
+        <br/>
+
+        <code>
+            <br/>
+            &#32;&#32;&#32;&#32; &#60;Configuration&#62;
+            <br/>
+            &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;
+            &#60;AdminRole&#62;admin&#60;/AdminRole&#62;
+            <br/>
+            &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;
+            &#60;AdminUser&#62;
+            <br/>
+            &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;
+            &#60;UserName&#62;admin&#60;/UserName&#62;
+            <br/>
+            &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;
+            &#60;Password&#62;admin&#60;/Password&#62;
+            <br/>
+            &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;
+            &#60;/AdminUser&#62;
+            <br/>
+            &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;
+            &#60;EveryOneRoleName&#62;everyone&#60;/EveryOneRoleName&#62;
+            &#60;!-- By
+            default users in thsi role sees the registry root --&#62;
+            <br/>
+            &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;
+            &#60;Property
+            name="url"&#62;jdbc:h2:repository/database/WSO2CARBON_DB&#60;/Property&#62;
+            <br/>
+            &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;
+            &#60;Property
+            name="userName"&#62;wso2carbon&#60;/Property&#62;
+            <br/>
+            &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;
+            &#60;Property
+            name="password"&#62;wso2carbon&#60;/Property&#62;
+            <br/>
+            &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;
+            &#60;Property
+            name="driverName"&#62;org.h2.Driver&#60;/Property&#62;
+            <br/>
+            &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;
+            &#60;Property name="maxActive"&#62;50&#60;/Property&#62;
+            <br/>
+            &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;
+            &#60;Property name="maxWait"&#62;60000&#60;/Property&#62;
+            <br/>
+            &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;
+            &#60;Property name="minIdle"&#62;5&#60;/Property&#62;
+            <br/>
+            &#32;&#32;&#32;&#32;&#32;
+            &#60;/Configuration&#62;
+            <br/>
+            <br/>
+        </code>
+        The main elemenents of the Realm Configuration can be explained as
+        follows.
+        <br/>
+
+        <br/>
+
+        <table style="text-align: left; width: 968px; height: 172px;" border="1" cellpadding="2"
+               cellspacing="2">
+
+            <tbody>
+                <tr>
+                    <td style="vertical-align: top;">Element Name
+                        <br/>
+                    </td>
+                    <td style="vertical-align: top;">Description
+                        <br/>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;">
+                        <code>&#60;AdminRole&#62;</code>
+                    </td>
+                    <td style="vertical-align: top;">Admin's role name.
+                        This role has permission to carry out any action related to Management
+                        Console. If the user store is read only then the this role is added to
+                        the
+                        system as a special internal role, where users are from the external
+                        user store.
+                        <br/>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;">
+                        <code>&#60;AdminUser&#62;\</code>
+                        <code>&#60;UserName&#62;</code>
+                    </td>
+                    <td style="vertical-align: top;">Admin user's
+                        username. If the user store is read only then the admin user must be
+                        present. Otherwise the system won't startup.
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;">
+                        <code>&#60;AdminUser&#62;</code>
+                        <code>\</code>
+                        <code>&#60;Password&#62;</code>
+                    </td>
+                    <td style="vertical-align: top;">Admin user's
+                        password. If the user store is read only then the admin is ignored.
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;">
+                        <code>&#60;EveryOneRoleName&#62;</code>
+                    </td>
+                    <td style="vertical-align: top;">Everyone role name.
+                        All the
+                        users in the system will belong to this role.
+                        <br/>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <br/>
+
+        <div style="text-align: center;">Table 2.1
+            <br/>
+        </div>
+
+        <br/>
+
+        The main properties of the user Realm Configuration can be explained as
+        follows. It mainly contains details for the database connection.
+        <br/>
+
+        <br/>
+
+        <table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2">
+
+            <tbody>
+                <tr>
+                    <td style="vertical-align: top;">Property Name
+                        <br/>
+                    </td>
+                    <td style="vertical-align: top;">Description
+                        <br/>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;">
+                        <code>url</code>
+                    </td>
+                    <td style="vertical-align: top;">URL of the dartabase
+                        <br/>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;">
+                        <code>userName</code>
+                    </td>
+                    <td style="vertical-align: top;">User name of the
+                        database
+                        <br/>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;">
+                        <code>password</code>
+                    </td>
+                    <td style="vertical-align: top;">Password of the
+                        database
+                        <br/>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;">
+                        <code>driverName</code>
+                    </td>
+                    <td style="vertical-align: top;">Driver name. The
+                        driver must be
+                        added to the classpath
+                        <br/>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;">
+                        <code>maxActive</code>
+                    </td>
+                    <td style="vertical-align: top;">Maximum number of
+                        active
+                        connections in the pool
+                        <br/>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;">
+                        <code>maxWait</code>
+                    </td>
+                    <td style="vertical-align: top;">Max wait time of
+                        the connection
+                        <br/>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;">
+                        <code>minIdle</code>
+                    </td>
+                    <td style="vertical-align: top;">Min idle time of
+                        the connection
+                        <br/>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <br/>
+
+        <div style="text-align: center;">Table 2.2
+            <br/>
+        </div>
+        <h3>
+            <a name="DefaultLDAP">3. Default LDAP User Store
+                Configuration
+            </a>
+        </h3>
+
+        Following is the default configuration for the internal LDAP user store which is embedded
+        ApacheDS LDAP. If ApacheDSUserStoreManager is enabled in user-mgt.xml with following
+        configuration, user manager reads/writes into the default LDAP user store of carbon.
+        <br/>
+
+        <br/>
+        <code>
+            &lt;UserStoreManager class=&quot;org.wso2.carbon.user.core.ldap.ApacheDSUserStoreManager&quot;&gt;
+            <br/>
+            &lt;Property name=&quot;ReadOnly&quot;&gt;false&lt;/Property&gt;
+            <br/>
+            &lt;Property name=&quot;ConnectionURL&quot;&gt;ldap://localhost:${Ports.EmbeddedLDAP.LDAPServerPort}&lt;/Property&gt;
+            <br/>
+            &lt;Property name=&quot;ConnectionName&quot;&gt;uid=admin,ou=system&lt;/Property&gt;
+            <br/>
+            &lt;Property name=&quot;ConnectionPassword&quot;&gt;admin&lt;/Property&gt;
+            <br/>
+            &lt;Property name=&quot;passwordHashMethod&quot;&gt;SHA&lt;/Property&gt;
+            <br/>
+            &lt;Property name=&quot;UserNameListFilter&quot;&gt;(objectClass=person)&lt;/Property&gt;
+            <br/>
+            &lt;Property name=&quot;UserEntryObjectClass&quot;&gt;wso2Person&lt;/Property&gt;
+            <br/>
+            &lt;Property name=&quot;UserSearchBase&quot;&gt;ou=Users,dc=wso2,dc=org&lt;/Property&gt;
+            <br/>
+            &lt;Property name=&quot;UserNameSearchFilter&quot;&gt;(&amp;amp;(objectClass=person)(uid=?))&lt;/Property&gt;
+            <br/>
+            &lt;Property name=&quot;UserNameAttribute&quot;&gt;uid&lt;/Property&gt;
+            <br/>
+            &lt;Property name=&quot;PasswordJavaScriptRegEx&quot;&gt;[\\S]{5,30}&lt;/Property&gt;
+            <br/>
+            &lt;Property name=&quot;ReadLDAPGroups&quot;&gt;true&lt;/Property&gt;
+            <br/>
+            &lt;Property name=&quot;WriteLDAPGroups&quot;&gt;true&lt;/Property&gt;
+            <br/>
+            &lt;Property name=&quot;EmptyRolesAllowed&quot;&gt;true&lt;/Property&gt;
+            <br/>
+            &lt;Property name=&quot;GroupSearchBase&quot;&gt;ou=Groups,dc=wso2,dc=org&lt;/Property&gt;
+            <br/>
+            &lt;Property name=&quot;GroupNameListFilter&quot;&gt;(objectClass=groupOfNames)&lt;/Property&gt;
+            <br/>
+            &lt;Property name=&quot;GroupEntryObjectClass&quot;&gt;groupOfNames&lt;/Property&gt;
+            <br/>
+            &lt;Property name=&quot;GroupNameSearchFilter&quot;&gt;(&amp;amp;(objectClass=groupOfNames)(cn=?))&lt;/Property&gt;
+            <br/>
+            &lt;Property name=&quot;GroupNameAttribute&quot;&gt;cn&lt;/Property&gt;
+            <br/>
+            &lt;Property name=&quot;MembershipAttribute&quot;&gt;member&lt;/Property&gt;
+            <br/>
+            &lt;/UserStoreManager&gt;
+            <br/>
+        </code>
+        <br/>
+
+        Above configuration can be described as follows.
+        <br/>
+
+        <br/>
+        <table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2">
+
+
+            <tbody>
+                <tr>
+                    <td style="vertical-align: top;">Property Name
+                        <br/>
+                    </td>
+                    <td style="vertical-align: top;">Description
+                        <br/>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;">
+                        <code>ReadOnly</code>
+                    </td>
+                    <td style="vertical-align: top;">Indicates whether
+                        the user store
+                        of this realm operates in the user read only mode or not
+                        <br/>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;">
+                        <code>ConnectionURL</code>
+                    </td>
+                    <td style="vertical-align: top;">Connection URL to the ldap server. In the case
+                        of
+                        default LDAP in carbon, port is mentioned in carbon.xml and a reference to
+                        that port is mentioned in the above configuration.
+                        <br/>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;">
+                        <code>ConnectionName</code>
+                    </td>
+                    <td style="vertical-align: top;">This should be the DN (Distinguish Name) of the
+                        admin user in LDAP.
+                        <br/>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;">
+                        <code>ConnectionPassword</code>
+                    </td>
+                    <td style="vertical-align: top;">Password of the admin user.
+                        <br/>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;">
+                        <code>passwordHashMethod</code>
+                    </td>
+                    <td style="vertical-align: top;">Password Hash method when storing user entries
+                        in LDAP.
+                        <br/>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;">
+                        <code>UserNameListFilter</code>
+                    </td>
+                    <td style="vertical-align: top;">Filtering criteria for listing all the user
+                        entries in LDAP.
+                        <br/>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;">
+                        <code>UserEntryObjectClass</code>
+                    </td>
+                    <td style="vertical-align: top;">Object Class used to construct user entries. In
+                        the case of default LDAP in carbon,
+                        it is a custom object class defined with the name-'wso2Person'
+                        <br/>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;">
+                        <code>UserSearchBase</code>
+                    </td>
+                    <td style="vertical-align: top;">DN of the context under which user entries are
+                        stored in LDAP.
+                        <br/>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;">
+                        <code>UserNameSearchFilter</code>
+                    </td>
+                    <td style="vertical-align: top;">Filtering criteria for searching a particular
+                        user entry.
+                        <br/>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;">
+                        <code>UserNameAttribute</code>
+                    </td>
+                    <td style="vertical-align: top;">Attribute used for uniquely identifying a user
+                        entry. Users can be authenticated using their email address, uid and etc .....
+                        <br/>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;">
+                        <code>PasswordJavaScriptRegEx</code>
+                    </td>
+                    <td style="vertical-align: top;">Policy that defines the password format.
+                        <br/>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;">
+                        <code>ReadLDAPGroups</code>
+                    </td>
+                    <td style="vertical-align: top;">Specifies whether groups should be read from
+                        LDAP.
+                        <br/>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;">
+                        <code>WriteLDAPGroups</code>
+                    </td>
+                    <td style="vertical-align: top;">Specifies whether groups should be written to
+                        LDAP.
+                        <br/>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;">
+                        <code>EmptyRolesAllowed</code>
+                    </td>
+                    <td style="vertical-align: top;">Specifies whether underlying LDAP user store
+                        allows empty groups to be created. In the case of ldap in carbon, the schema
+                        is modified such that empty groups are allowed to be created. Usually LDAP
+                        servers do not allow to create empty groups.
+                        <br/>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;">
+                        <code>GroupSearchBase</code>
+                    </td>
+                    <td style="vertical-align: top;">DN of the context under which user entries are
+                        stored in LDAP.
+                        <br/>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;">
+                        <code>GroupNameListFilter</code>
+                    </td>
+                    <td style="vertical-align: top;">Filtering criteria for listing all the group
+                        entries in LDAP.
+                        <br/>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;">
+                        <code>GroupEntryObjectClass</code>
+                    </td>
+                    <td style="vertical-align: top;">Object Class used to construct user entries.
+                        <br/>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;">
+                        <code>GroupNameSearchFilter</code>
+                    </td>
+                    <td style="vertical-align: top;">Filtering criteria for searching a particular
+                        group entry.
+                        <br/>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;">
+                        <code>GroupNameAttribute</code>
+                    </td>
+                    <td style="vertical-align: top;">Attribute used for uniquely identifying a user
+                        entry.
+                        <br/>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;">
+                        <code>MembershipAttribute</code>
+                    </td>
+                    <td style="vertical-align: top;">Attribute used to define members of LDAP
+                        groups.
+                        <br/>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <br/>
+        <div style="text-align: center;">Table 3.1
+            <br/>
+        </div>
+        <h3>
+            <a name="InternalJDBC">4. Internal JDBC User Store
+                Configuration
+            </a>
+        </h3>
+
+        Following is the configuration for the internal JDBC user store. It
+        reads/writes into the default database of the carbon server if JDBCUserStoreManager is
+        enabled in the user-mgt.xml.
+        <br/>
+
+        <br/>
+
+        <code>
+            &#60;UserManager&#62;
+            <br/>
+            &#32; &#32; &#60;Realm&#62;
+            <br/>
+            &#32; .........................
+            <br/>
+            &#32;&#32;&#32;&#32;&#32;&#32;&#32;
+            &#60;UserStoreManager
+            <br/>
+            &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;
+            class="org.wso2.carbon.user.core.jdbc.JDBCUserStoreManager"&#62;
+            <br/>
+            &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;
+            &#60;Property
+            name="ReadOnly"&#62;false&#60;/Property&#62;
+            <br/>
+            &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;
+            &#60;Property
+            name="MaxUserNameListLength"&#62;100&#60;/Property&#62;
+            <br/>
+            &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;
+            &#60;Property
+            name="IsEmailUserName"&#62;false&#60;/Property&#62;
+            <br/>
+            &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;
+            &#60;Property
+            name="DomainCalculation"&#62;default&#60;/Property&#62;
+            <br/>
+            &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;
+            &#60;Property
+            name="PasswordDigest"&#62;SHA-256&#60;/Property&#62;
+            <br/>
+            &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;
+            &#60;Property
+            name="StoreSaltedPassword"&#62;true&#60;/Property&#62;
+            <br/>
+            &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;
+            &#60;Property
+            name="UserNameUniqueAcrossTenants"&#62;false&#60;/Property&#62;
+            <br/>
+            &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;
+            &#60;Property
+            name="PasswordJavaRegEx"&#62;[\S]{5,30}$&#60;/Property&#62;
+            <br/>
+            &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;
+            &#60;Property
+            name="PasswordJavaScriptRegEx"&#62;[\\S]{5,30}&#60;/Property&#62;
+            <br/>
+            &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;
+            &#60;Property
+            name="UsernameJavaRegEx"&#62;^[^~!@#$;%^*+={}\\|\\\\&lt;&gt;]{3,30}$&#60;/Property&#62;
+            <br/>
+            &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;
+            &#60;Property
+            name="UsernameJavaScriptRegEx"&#62;[\\S]{3,30}&#60;/Property&#62;
+            <br/>
+            &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;
+            &#60;Property
+            name="RolenameJavaRegEx"&#62;^[^~!@#$;%^*+={}\\|\\\\&lt;&gt;]{3,30}$&#60;/Property&#62;
+            <br/>
+            &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;
+            &#60;Property
+            name="RolenameJavaScriptRegEx"&#62;[\\S]{3,30}&#60;/Property&#62;
+            <br/>
+        </code>
+        <code>&#32;&#32;&#32;&#32;&#32;&#32;&#32;
+            &#60;/UserStoreManager&#62;
+            <br/>
+            &#32;&#32;&#32;&#32;&#32;&#32;&#32;
+            &#60;AuthorizationManager
+            <br/>
+            &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;
+            class="org.wso2.carbon.user.core.authorization.JDBCAuthorizationManager"&#62;
+            <br/>
+            &#32;&#32;&#32;&#32;&#32;&#32;&#32;
+            &#60;/AuthorizationManager&#62;&#32;
+            <br/>
+            &#32;&#32;&#32; &#60;/Realm&#62;
+            <br/>
+            &#60;/UserManager&#62;
+            <br/>
+            <br/>
+        </code>
+        Above configuration can be described as follows.
+        <br/>
+
+        <br/>
+        <table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2">
+
+
+            <tbody>
+                <tr>
+                    <td style="vertical-align: top;">Property Name
+                        <br/>
+                    </td>
+                    <td style="vertical-align: top;">Description
+                        <br/>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;">
+                        <code>ReadOnly</code>
+                    </td>
+                    <td style="vertical-align: top;">Indicates whether
+                        the user store
+                        of this realm operates in the user read only mode or not
+                        <br/>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;">
+                        <code>MaxUserNameListLength</code>
+                    </td>
+                    <td style="vertical-align: top;">Maximum number of
+                        users retrieved
+                        at once by user realm
+                        <br/>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;">
+                        <code>IsEmailUserName</code>
+                    </td>
+                    <td style="vertical-align: top;">Indicates whether
+                        Email is used as user name
+                        (apply when realm operates in read only mode)
+                        <br/>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;">
+                        <code>DomainCalculation</code>
+                    </td>
+                    <td style="vertical-align: top;">Can be either default or custom
+                        (apply when realm operates in read only mode)
+                        <br/>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;">
+                        <code>PasswordDigest</code>
+                    </td>
+                    <td style="vertical-align: top;">Digesting method of the password
+                        <br/>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;">
+                        <code>StoreSaltedPassword</code>
+                    </td>
+                    <td style="vertical-align: top;">Indicates whether to salt the password
+                        <br/>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;">
+                        <code>UserNameUniqueAcrossTenants</code>
+                    </td>
+                    <td style="vertical-align: top;">An attribute used in for multitenancy.
+                        <br/>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;">
+                        <code>PasswordJavaRegEx</code>
+                    </td>
+                    <td style="vertical-align: top;">Policy defines password format
+                        <br/>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;">
+                        <code>PasswordJavaScriptRegEx</code>
+                    </td>
+                    <td style="vertical-align: top;">Policy defines password format
+                        <br/>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;">
+                        <code>UsernameJavaRegEx</code>
+                    </td>
+                    <td style="vertical-align: top;">Policy defines user name format
+                        <br/>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;">
+                        <code>UsernameJavaScriptRegEx</code>
+                    </td>
+                    <td style="vertical-align: top;">Policy defines user name format
+                        <br/>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;">
+                        <code>RolenameJavaRegEx</code>
+                    </td>
+                    <td style="vertical-align: top;">Policy defines role name format
+                        <br/>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;">
+                        <code>RolenameJavaScriptRegEx</code>
+                    </td>
+                    <td style="vertical-align: top;">Policy defines role name format
+                        <br/>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <br/>
+        <div style="text-align: center;">Table 4.1
+            <br/>
+        </div>
+        <h3>
+            <a name="change">5. How to Change the RDBMS</a>
+        </h3>
+
+        The default database of user manager is the&#32; H2 database shipped
+        by the WSO2&#32; Carbon based products. You can configure it to point
+        to databases by different vendors.
+        <br/>
+
+        &#32;
+        <br/>
+
+        Step 1 : Add the JDBC driver to the classpath by dropping the jar into
+        <code>${carbon-home}/</code>
+        <code>repository/components/lib</code>
+        <br/>
+        <br/>
+        Step 2 : Change values of properties given in Table 2.2 appropriately.
+        <br/>
+        <br/>
+
+        Step 3 : Create the database by running the relevant script in
+        <code>${carbon-home}/</code>
+        <code>dbscript/</code>
+        and Start the server as
+        <code>sh wso2server.sh (wso2server.bat)</code>
+        <br/>
+        Or Start the server as
+        <code>sh wso2server.sh -Dsetup (wso2server.bat -Dsetup)</code>
+        <br/>
+        <br/>
+        <h3>
+            <a name="LDAP">6. How to Configure an External LDAP User
+                Store 
+                <br/>
+            </a>
+        </h3>
+
+        All WSO2 Carbon based products can read and write users and roles from external
+        LDAP user stores. You can configure Carbon products to with your company LDAP in one of the
+        following modes.
+        <ul>
+            <li>1. Read Only mode</li>
+            <li>2. Read/Write users and Read only groups</li>
+            <li>3. Read/Write both users and groups</li>
+        </ul>
+        
+        <h4>6.1. Read Only mode</h4>
+
+        Following steps describe how to configure an external LDAP in read only mode. 
+        <br/>
+        <br/>
+        Step 1 :
+        Backup the<code>${carbon-home}/repository/conf/user-mgt.xml</code>.
+        A sample file for LDAP user store is available<a href="user-mgt-ldap.xml">
+        here</a>.
+        Download the relevant file
+        and save it as<code>${carbon-home}/repository/conf/user-mgt.xml.</code>Please
+        observe the following in your file.
+        <br/>
+        <br/>
+        <code>&#60;UserStoreManager
+            &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;
+            class="org.wso2.carbon.user.core.ldap.LDAPUserStoreManager"&#62;
+        </code>
+        <br/>
+        <br/>
+        Step 2 :
+        Find a valid user that resides in the Directory Server. For
+        example let's say a valid user name is "AdminSOA". Update the Admin
+        user section of your ldap configuration as follows. You don't have to
+        update the password element - just leave it as it is.
+        <br/>
+        <br/>
+        <code>&#32;&#32;&#32; &#60;AdminUser&#62;
+            <br/>
+            &#32;&#32;&#32;&#32;&#32;&#32;&#32;
+            &#60;UserName&#62;AdminSOA&#60;/UserName&#62;
+            <br/>
+            &#32;&#32;&#32;&#32;&#32;&#32;&#32;
+            &#60;Password&#62;XXXXXX&#60;/Password&#62;
+            <br/>
+            &#32;&#32;&#32;
+            &#60;/AdminUser&#62;
+        </code>
+        <br/>
+        <br/>
+        Step 3 :
+        If you wish to connect the user store in read only mode, make sure the
+        value of the<code>&#60;ReadOnly&#62; </code>element is set to be true as
+        follows. 
+        <br/>
+        <br/>
+        <div style="text-align: center;">
+            <div style="text-align: left;">
+                <code>&#60;ReadOnly&#62;true&#60;/ReadOnly&#62;
+                </code>
+            </div>
+            <code/>
+        </div>
+
+        <ol>
+
+        </ol>
+
+        <br/>
+
+        Step 4 :
+        Update the connection details to suite your Directory Server.
+        <br/>
+
+        <code>&#60;Property
+            name="ConnectionURL"&#62;ldap://localhost:10389&#60;/Property&#62;</code>
+        <br/>
+        <br/>
+        Step 5 :
+        Obtain a user who has permission to read all users/attributes
+        and to perform searches
+        on the Directory Server from your LDAP administrator. For example let's
+        say your privileged user is "AdminLDAP" and password is "2010#Avrudu".
+        Now update the following sections of the realm configuration.
+        <br/>
+        <br/>
+        <code>&#60;Property
+            name="ConnectionName"&#62;uid=AdminLDAP,ou=system,dc=ABCompany,dc=lk&#60;/Property&#62;
+            <br/>
+            &#60;Property
+            name="ConnectionPassword"&#62;2010#Avrudu
+        </code>
+        <code>&#60;/Property&#62;
+        </code>
+        <br/>
+
+        <br/>
+
+        Step 6 :&#32; Update the
+        <code>&#60;Property
+            name="UserSearchBase"&#62;</code>
+        by giving the directory where the
+        users are stored. LDAP searches for users will start from this location.
+        <br/>
+
+        <code>Property
+            name="UserSearchBase"&#62;</code>
+        <code>ou=system,dc=ABCompany,dc=lk</code>
+        <code>&#60;/Property&#62;</code>
+        <br/>
+        <br/>
+
+        Step 7 : Set the attribute that you wish to use as the username.
+        The most common case is to use either "cn" or "uid" as the username. If
+        you are not sure what attribute is available in your LDAP please ask
+        your LDAP administrator.
+        <br/>
+        <br/>
+        <code>&#60;Property
+            name="UserNameAttribute"&#62;uid&#60;/Property&#62;</code>
+        <br/>
+
+        <br/>
+
+        Step 8 : This is the most basic configuration. For more advanced
+        options like "external roles" please jump to next step. Otherwise you
+        are done now start your server and try to login as "AdminSOA". The
+        password is the AdminSOA's password in the LDAP server. If you are
+        unable to login please send a mail to carbon user group.
+        <br/>
+
+        <br/>
+        Step 9 : The realm can read roles from the Directory Server. It can
+        read user/role mapping based on membership attribute in ApacheDirectory server and OpenLDAP.
+        Following are the properties in user-mgt.xml that are related with LDAP groups.
+        <br/>
+        <br/>
+        'ReadLDAPGroups' property indicates whether to read groups from external LDAP.
+        If this is 'false' then none of the attributes following it, needs to be set and carbon
+        roles will be written and read from internal JDBC database only.
+        If this is 'true', then carbon roles will be written to internal JDBC database and
+        will be read from both internal JDBC database and external LDAP user store.
+        <br/>
+
+        <br/>
+        
+        <code>&#60;Property
+            name="ReadLDAPGroups"&#62;false&#60;/Property&#62;
+            <br/>
+            &#60;Property
+            name="GroupSearchBase"&#62;ou=system&#60;/Property&#62;
+            <br/>
+            &#60;Property
+            name="GroupSearchFilter"&#62;(objectClass=groupOfNames)&#60;/Property&#62;
+            <br/>
+            &#60;Property
+            name="GroupNameAttribute"&#62;cn&#60;/Property&#62;
+            <br/>
+            &#60;Property
+            name="MembershipAttribute"&#62;member&#60;/Property&#62;
+        </code>
+        <br/>
+
+        <br/>
+
+        The table 3.1 contains detail descriptions of each of the above mentioned properties.
+
+
+        <h4>6.2. Read/Write users and Read-only groups</h4>
+
+        If you wish to connect to external LDAP user store such that only the user entries are written to external LDAP
+        and roles are not written to external LDAP, the only difference from the steps in section 6.1 is:
+        <br/>
+        <br/>
+        In step 3: set the ReadOnly property to false.
+        
+
+        <h4>6.3. Read/Write both users and groups</h4>
+
+        From this release onwards, you can configure Carbon products to read and write both users and roles
+        in your company LDAP.
+        Following are the steps that are different from the steps in section 6.1 above:
+        <br/>
+        <br/>
+        Step 1: Use the sample user-mgt.xml configuration file for LDAP user store that is available
+        <a href="user-mgt-ldap-read-write.xml">
+            here
+        </a>
+        <br/>
+        <br/>
+        Step 9: You may notice the following two additional properties in configuration than those
+        mentioned in the step 9 of the section 6.1 above:
+        <br/>
+        <br/>
+        &lt;Property name=&quot;WriteLDAPGroups&quot;&gt;true&lt;/Property&gt;
+        <br/>
+	    &lt;Property name=&quot;EmptyRolesAllowed&quot;&gt;false&lt;/Property&gt;
+        <br/>
+        <br/>
+
+        Usually LDAP servers do not allow to create empty groups. Hence the property value 'EmptyRolesAllowed'
+        is by default set to 'false'. When it is set to false, you have to assign at least one user to a role
+        that you are creating through carbon admin console.
+
+        <h3>
+            <a name="LDAP">7. How to Configure an External Active Directory User Store
+                <br/>
+            </a>
+        </h3>
+
+        All WSO2 Carbon based products can read users and roles from external ActiveDirectory
+        user stores. You can configure Carbon products to read users/roles from
+        your
+        company Active Directory. It&#32; does not write any data into the Active Directory.
+        <br/>
+        <br/>
+        Following are the steps that are different from the steps mentioned in the section 6.1 above.
+        <br/>
+        <br/>
+        Step 1: A sample user-mgt.xml configuration file for
+        Active Directory is available<a href="user-mgt-actdir.xml">here</a>.
+        <br/>
+        <br/>
+        Step 6: UserNameAttribute for Active Directory is different.
+        <br/>
+
+        <code>&#60;Property
+            name="UserNameAttribute"&#62;sAMAccountName&#60;/Property&#62;</code>
+        <br/>
+
+        <br/>
+
+        Step 8 : The realm can read roles from the Active Directory. It can
+        read user/role mapping based on a backlink attribute.
+        <br/>
+        Following are the properties related to reading roles based on a backlink attribute.
+        <br/>
+
+        <br/>
+
+        <code>&#60;Property
+            name="ReadLDAPGroups"&#62;true&#60;/Property&#62;
+            <br/>
+            &#60;Property
+            name="GroupSearchBase"&#62;cn=users,dc=wso2,dc=lk&#60;/Property&#62;
+            <br/>
+            &#60;Property
+            name="GroupSearchFilter"&#62;(objectcategory=group)&#60;/Property&#62;
+            <br/>
+            &#60;Property
+            name="GroupNameAttribute"&#62;cn&#60;/Property&#62;
+            <br/>
+            &#60;Property
+            name="MemberOfAttribute"&#62;memberOf&#60;/Property&#62;
+        </code>
+        <br/>
+
+        <br/>
+
+        <h3>
+            <a name="JDBC">6. How to Configure an External JDBC User Store</a>
+        </h3>
+
+        All Carbon based products can work with external RDBMSes. You can
+        configure Carbon to read users/roles from your
+        company RDBMSes, and if you go one extra mile ever write to it. So the
+        user core will connect to two databases.
+        <br/>
+
+        <ul>
+
+            <li>Carbon database where authorization information
+                is stored in the internal Carbon database.
+            </li>
+            <li>Your company database where users/roles resides.</li>
+            So the user-mgt.xml MUST contain details for two database connections.
+            The connection details mentioned in 2.2 is used by the Authorization
+            manager. If we specifiy another set of database connection details
+            inside UserStoreManager it will read/write users to that database.
+            <br/>
+            <br/>
+            Step by step guidelines for connecting to an external JDBC user store in
+            read only mode can be given below.
+            <br/>
+            <br/>
+
+        </ul>
+
+        Step 1 : Backup the<code>${carbon-home}/repository/conf/user-mgt.xml</code>.
+        A sample file for JDBC user store is available<a href="user-mgt-jdbc.xml">
+        here</a>. Download the relavent file
+        and save it as<code>${carbon-home}/repository/conf/user-mgt.xml</code>. Please
+        observe the following in your file.
+        <br/>
+
+
+        <br/>
+
+
+        <code>&#60;UserStoreManager
+            <br/>
+            &#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;
+            class="org.wso2.carbon.user.core.jdbc.JDBCUserStoreManager"&#62;
+        </code>
+        <br/>
+
+        <br/>
+
+        Step 2 : Find a valid user that resides in the RDBMS. For
+        example let's say a valid user name is "AdminSOA". Update the Admin
+        user section of your ldap configuration as follows. You don't have to
+        update the password element - just leave it as it is.
+        <br/>
+
+
+        <br/>
+
+
+        <code>&#32;&#32;&#32; &#60;AdminUser&#62;
+            <br/>
+            &#32;&#32;&#32;&#32;&#32;&#32;&#32;
+            &#60;UserName&#62;AdminSOA&#60;/UserName&#62;
+            <br/>
+            &#32;&#32;&#32;&#32;&#32;&#32;&#32;
+            &#60;Password&#62;XXXXXX&#60;/Password&#62;
+            <br/>
+            &#32;&#32;&#32;
+            &#60;/AdminUser&#62;
+        </code>
+        <br/>
+        <br/>
+        Step 3 : Add the JDBC driver to the classpath by droping the jar into
+        <code>${carbon-home}/</code>
+        <code>repository/components/lib</code>
+        <br/>
+
+        <code></code>
+        <br/>
+        Step 4 : Update the connection details inside the
+        <code>&#60;UserStoreManager&#62;</code>
+        class.
+        <br/>
+        <br/>
+        Step 5 : Start the server.
+        <br/>
+        <br/>
+    </body>
+</html>

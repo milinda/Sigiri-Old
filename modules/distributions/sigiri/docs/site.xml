@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ ~ Copyright (c) 2005-2010, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ ~
+ ~ WSO2 Inc. licenses this file to you under the Apache License,
+ ~ Version 2.0 (the "License"); you may not use this file except
+ ~ in compliance with the License.
+ ~ You may obtain a copy of the License at
+ ~
+ ~    http://www.apache.org/licenses/LICENSE-2.0
+ ~
+ ~ Unless required by applicable law or agreed to in writing,
+ ~ software distributed under the License is distributed on an
+ ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ ~ KIND, either express or implied.  See the License for the
+ ~ specific language governing permissions and limitations
+ ~ under the License.
+ -->
+<project name="WSO2 Carbon Framework">
+
+  <skin>
+    <groupId>org.apache.maven.skins</groupId>
+    <artifactId>maven-default-skin</artifactId>
+    <version>1.0</version>
+  </skin>
+
+    <body>
+        <links>
+            <item name="OSGi" href="http://www.osgi.org"/>
+            <item name="Eclipse Equinox" href="http://www.eclipse.org/equinox/"/>
+            <item name="Equinox P2" href="http://www.eclipse.org/equinox/p2/"/>
+            <item name="Axis2/Java" href="http://ws.apache.org/axis2"/>
+            <item name="Axiom" href="http://ws.apache.org/commons/axiom/index.html"/>
+            <item name="WSO2.org" href="http://www.wso2.org/"/>            
+        </links>
+
+         <menu name="Overview">
+             <item name="Home" href="index.html"/>
+             <item name="Release Note" href="release_notes.html"/>
+             <item name="Contents" href="docs_index.html"/>
+        </menu>
+
+        <menu name="Downloads">
+             <item name="Releases" href="http://www.wso2.org/downloads/carbon"/>
+        </menu>
+
+         <menu name="Documentation">
+             <item name="Installation Guide" href="installation_guide.html"/>
+             <item name="User Guide" href="user_guide.html"/>
+             <item name="Admin Guide" href="admin_guide.html"/>
+             <item name="Provisioning Carbon" href="component-mgt/docs/userguide.html"/>
+             <item name="Carbon Secure Vault" href="secure_vault.html"/>
+        </menu>
+
+        <menu name="Tools">
+             <item name="carbondump" href="carbon-core/tools/carbondump.html"/>
+             <item name="chpasswd" href="carbon-core/tools/chpasswd.html"/>
+             <item name="ciphertool" href="carbon-core/tools/ciphertool.html"/>            
+             <item name="tcpmon" href="carbon-core/tools/tcpmon.html"/>
+        </menu>
+
+         <menu name="Resources">
+             <item name="Wiki" href="https://wso2.org/wiki/display/carbon/Carbon"/>
+             <item name="Forum" href="http://wso2.org/forum/505"/>
+             <item name="Library" href="http://wso2.org/library/carbon"/>
+        </menu>
+
+         <menu name="Get Involved">
+            <item name="Checkout the Source" href="source-repository.html"/>
+            <item name="Mailing Lists" href="mail-lists.html"/>
+        </menu>
+
+        <menu name="Project Information">
+            <item name="Issue Tracking" href="issue-tracking.html"/>
+            <item name="License" href="http://www.apache.org/licenses/LICENSE-2.0.html"/>            
+        </menu>
+
+    </body>
+</project>

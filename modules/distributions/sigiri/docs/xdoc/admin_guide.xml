@@ -1,0 +1,446 @@
+<!--
+  ~ Copyright 2005-2007 WSO2, Inc. (http://wso2.com)
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+       "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<body>
+<p>WSO2 Carbon -  System Administration Guide [<a href="docs_index.html"> Documentation Index </a>]</p>
+
+<h1>WSO2 Carbon System Administration Guide</h1>
+<p>This guide provides useful information to administrate a WSO2 Carbon instance. It contains information on how to
+    configure and maintain various aspects of WSO2 Carbon. This guide also explains the directory structure,
+    various configuration files and how to configure the system using these configuration files. </p>
+
+<h2>Contents</h2><p></p>
+
+<ul>
+    <li><a href="#downloadingCarbon">Downloading WSO2 Carbon</a></li>
+    <li><a href="#DirHierarchy">WSO2 Carbon Directory Hierarchy</a></li>
+    <li><a href="#installingCarbon">Installing and Running WSO2 Carbon</a>
+        <ul>
+            <li><a href="#Standalone">Running the Carbon in Standalone Mode</a></li>
+            <li><a href="#webappmode">Running the Carbon in Apache Tomcat(Webapp Mode)</a></li>
+        </ul>
+    </li>
+    <li><a href="#CarbonMan">Using the WSO2 Carbon Management Console</a></li>
+    <li><a href="#CarbonUserMgt">User Management</a>
+        <ul>
+            <li><a href="#UserStores">Configuring User Stores</a></li>
+        </ul>
+    </li>
+    <li><a href="#SettingLogging">Setting Up Logging</a></li>
+    <li><a href="#P2">Installing and Managing Features</a></li>
+    <li><a href="#ExternalDeps">Adding External Dependencies to the System</a></li>
+</ul>
+
+<h2 id="downloadingCarbon">Downloading WSO2 Carbon</h2>
+<p>Binary distributions and source distributions of WSO2 Carbon can be downloaded from the <a class="externalLink" href="http://wso2.org/projects/carbon">
+WSO2 Carbon</a> home page in the <a class="externalLink" href="http://wso2.org">WSO2 Oxygen Tank</a>. Before proceeding to the
+downloads page you will be asked to register on the WSO2 Oxygen Tank. Registration is free and optional
+however it is recommended that you sign up for an account right away since registered Oxygen Tank users
+get exclusive access to our support forums and tons of valuable content related to SOA and Web Services.
+</p>
+<p>
+Once you are on the downloads page click on the relevant links to download a binary distribution or a
+source distribution of the latest stable release of the WSO2 Carbon. If you are interested in an older
+version of the Carbon, scroll down in the downloads page to locate the links to previous releases. You will
+also find links to download developer releases and nightly builds of the WSO2 Carbon on the same page. We
+recommend that you always download the latest stable release. If you want to try out a feature that was
+added very recently you can try out a nightly build.
+</p>
+<p>
+
+If you downloaded a source distribution of the Carbon you need to build the source to get the executable
+binary. WSO2 Carbon uses an <a class="externalLink" href="http://maven.apache.org">Apache Maven2</a> based build system and
+therefore you need to first download and install Apache Maven2. Please refer Maven2 documentation on
+installing and configuring Apache Maven2. Also note that Apache Maven2 requires Java to run.
+Once Maven2 is properly configured extract the downloaded source distribution and change your working
+directory to the directory that is created. Then execute the command 'mvn clean install' to run the builder.
+Once the build process is complete you can find the binary distribution archive in CARBON_SRC_HOME/modules/distribution/target
+directory.('CARBON_SRC_HOME' refers to the directory in the file system where WSO2 Carbon source distribution is installed)
+</p>
+
+<h2 id="DirHierarchy">Downloading WSO2 Carbon</h2>
+<p>Once you extract the binary distribution of WSO2 Carbon, you will be able to see the following directory layout.</p>
+<p></p>
+<table class="bodyTable">
+    <tbody>
+        <tr class="a">
+            <td><strong>Directory</strong></td>
+            <td><strong>Description</strong></td>
+        </tr>
+        <tr class="b">
+            <td><strong>bin</strong></td>
+            <td>Contains all the necessary scripts to interact with the WSO2 Carbon instance. There are shell scripts
+                (with .sh extension) for Unix/Linux users and batch files (with .bat extension) for Windows users.
+                In general you will find the following scripts in this directory.
+                <ul>
+                    <li>wso2server.sh/wso2server.bat - Launches WSO2 Carbon</li>
+                    <li>wsdl2java.sh/wsdl2java.bat - Launches the Java stub generation tool for Web Services</li>
+                    <li>java2wsdl.sh/java2wsdl.bat - Launches the WSDL generation tool for Java Web Services</li>
+                    <li>tcpmon.sh/tcpmon.bat - Launches TCPMon, the TCP connection monitor</li>
+                    <li>chpasswd.sh/chpasswd.bat -Use this script to change the administrator password without signing
+                    in to the server<br/></li>
+                    <li>daemon.sh -Start WSO2 Carbon as a daemon on Unix/Linux systems<br/></li>
+                    <li>install.bat - Install WSO2 Carbon as a background service on Windows<br/></li>
+                    <li>repowriter.sh/repowriter.bat</li>
+                </ul>
+
+            </td>
+        </tr>
+        <tr class="a">
+            <td><strong>dbscripts</strong></td>
+            <td>Contains a collection of database scripts required to create the Carbon database on a variety of
+                database management systems.</td>
+        </tr>
+        <tr class="b">
+            <td><strong>lib</strong></td>
+            <td>The lib directory houses all the jar files and OSGi bundles required by the embedded Tomcat instance.
+                The log4j.properties file used by the Carbon is also stored here.</td>
+        </tr>
+        <tr class="a">
+            <td><strong>repository</strong></td>
+            <td>repository is the main repository for all kind of deployments and
+                configurations in Carbon. This includes all Axis2 artifacts, Synapse artifacts etc. In
+                addition to that, Axis2 configurations, Carbon configurations etc are also hosted
+                under this folder.
+                <ul>
+                    <li>lib - Directory contains all the client side Axis2 libraries. These libraries will be copied here after
+                            starting the server once or by running 'ant' from CARBON_HOME/bin.</li>
+                    <li>deployment - Directory can be used to deploy Axis2 (can have Synapse, BPel stuff as well) artifacts for both
+                            server side and client side. See deployment/README for more details.</li>
+                    <li>conf - Directory contains all the configuration files. axis2.xml, carbon.xml etc.</li>
+                    <li>components - Directory contains all OSGi related stuff. Carbon bundles, OSGi configuration
+                            files and p2 stuff.
+                        <ul>
+                            <li>plugins - This contains all OSGi bundles that are used to run the server.</li>
+                            <li>p2 - Contains Carbon provisioning (p2) related configuration files.</li>
+                            <li>lib - If you want any third part libraries to be used as OSGi bundles in the
+                                    system, copy those libraries into this directory.</li>
+                            <li>dropins - If you have OSGi bundles that should be added to Carbon, copy
+                                    those into this directory.</li>
+                            <li>configuration - OSGi specific configuration files.<br/></li>
+                        </ul>
+                    </li>
+                    <li>logs - Directory contains all Carbon logs.<br/></li>
+                    <li>tenants - Directory will contain relevant tenant artifacts in the case of a multitenant deployment.<br/></li>
+                </ul>
+            </td>
+        </tr>
+        <tr class="b">
+            <td><strong>resources</strong></td>
+            <td>Contains additional resources required by WSO2 Carbon. This includes security related resources such
+                as keystores.</td>
+        </tr>
+        <tr class="a">
+            <td><strong>tmp</strong></td>
+            <td>The temporary files directory used by the Carbon</td>
+        </tr>
+    </tbody>
+</table>
+<h2 id="installingCarbon">Installing and Running WSO2 Carbon</h2>
+<p>Extract the downloaded binary distribution into your file system. If you built WSO2 Carbon from source extract the
+    archive created by the builder. In order to be able to start WSO2 Carbon you need Java 6. Set JAVA_HOME variable
+    pointing to the directory in which Java is installed.</p>
+<h2 id="Standalone">Installing and Running WSO2 Carbon</h2>
+<p>Go to CARBON_HOME/bin directory and if you are on Unix/Linux execute the wso2server.sh shell script or if you are on
+    Windows execute the wso2server.bat batch file. This will start the Carbon and you can see the progress of the
+    startup procedure on the console. Please note that server startup may take some time depending on the hardware
+    configuration of your system. If the server started up cleanly you should get an output similar to the following on
+    the console.</p>
+<pre>  [2010-11-30 17:15:26,251]  INFO {org.wso2.carbon.server.Main} -  Initializing system...
+[2010-11-30 17:15:26,511]  INFO {org.wso2.carbon.server.TomcatCarbonWebappDeployer} -  Deployed Carbon webapp: StandardEngine[carbonEngine].StandardHost
+    [defaulthost].StandardContext[/]
+OSGi console has been enabled with options: -console
+
+osgi> [2010-11-30 17:15:31,436]  INFO {org.wso2.carbon.core.internal.CarbonCoreActivator} -  Starting WSO2 Carbon...
+[2010-11-30 17:15:31,453]  INFO {org.wso2.carbon.core.internal.CarbonCoreActivator} -  Operating System : Linux 2.6.28-11-generic, amd64
+[2010-11-30 17:15:31,453]  INFO {org.wso2.carbon.core.internal.CarbonCoreActivator} -  Java Home        : /opt/softwares/jdk1.6.0_13/jre
+[2010-11-30 17:15:31,453]  INFO {org.wso2.carbon.core.internal.CarbonCoreActivator} -  Java Version     : 1.6.0_13
+[2010-11-30 17:15:31,453]  INFO {org.wso2.carbon.core.internal.CarbonCoreActivator} -  Java VM          : Java HotSpot(TM) 64-Bit Server VM 11.3-b02,Sun Microsystems Inc.
+[2010-11-30 17:15:31,454]  INFO {org.wso2.carbon.core.internal.CarbonCoreActivator} -  Carbon Home      : /home/user/wso2carbon-3.1.0
+[2010-11-30 17:15:31,454]  INFO {org.wso2.carbon.core.internal.CarbonCoreActivator} -  Java Temp Dir    : /home/user/wso2carbon-3.1.0
+[2010-11-30 17:15:31,454]  INFO {org.wso2.carbon.core.internal.CarbonCoreActivator} -  User             : user, en-US, Asia/Colombo
+[2010-11-30 17:15:34,266]  INFO {org.wso2.carbon.registry.core.internal.RegistryCoreServiceComponent} -  Registry Mode    : READ-WRITE
+[2010-11-30 17:15:34,687]  INFO {org.wso2.carbon.core.init.CarbonServerManager} -  Starting Carbon initialization...
+[2010-11-30 17:15:34,776]  INFO {org.wso2.carbon.core.init.CarbonServerManager} -  Creating super-tenant Axis2 ConfigurationContext
+[2010-11-30 17:15:34,931]  INFO {org.apache.axis2.deployment.ClusterBuilder} -  Clustering has been disabled
+[2010-11-30 17:15:35,050]  INFO {org.wso2.carbon.core.deployment.DeploymentInterceptor} -  Deploying Axis2 module: addressing-3.10 {super-tenant}
+[2010-11-30 17:15:35,174]  INFO {org.apache.axis2.transport.tcp.TCPTransportSender} -  TCP Sender started
+[2010-11-30 17:15:35,406]  INFO {org.wso2.carbon.core.deployment.DeploymentInterceptor} -  Deploying Axis2 service: version {super-tenant}
+[2010-11-30 17:15:35,719]  INFO {org.apache.axis2.deployment.DeploymentEngine} -  Deploying Web service: Version.aar - file:/home/user/wso2carbon-3.1.0/
+    repository/deployment/server/axis2services/Version.aar
+[2010-11-30 17:15:35,753]  INFO {org.wso2.carbon.core.init.CarbonServerManager} -  Completed super-tenant Axis2 ConfigurationContext creation in 0.977 sec
+[2010-11-30 17:15:35,885]  INFO {org.apache.axis2.deployment.ModuleDeployer} -  Deploying module: addressing-1.6-wso2v3 - file:/home/user/wso2carbon-3.1.0/repository/deployment/client/modules/addressing-1.6-wso2v3.mar
+[2010-11-30 17:15:35,890]  INFO {org.apache.axis2.transport.tcp.TCPTransportSender} -  TCP Sender started
+[2010-11-30 17:15:36,604]  INFO {org.wso2.carbon.core.init.CarbonServerManager} -  Repository       : /home/user/wso2carbon-3.1.0/repository/
+    deployment/server/
+[2010-11-30 17:15:36,643]  INFO {org.wso2.carbon.core.internal.permission.update.PermissionUpdater} -  Permission cache updated for tenant 0
+[2010-11-30 17:15:36,645]  INFO {org.wso2.carbon.core.init.CarbonServerManager} -  ConfigurationContextService registered in 41ms
+[2010-11-30 17:15:36,651]  WARN {org.apache.axis2.engine.ListenerManager} -  ConfigurationContext provided for the ListenerManager initialization is null.
+    ListenerManager will not be initialized
+[2010-11-30 17:15:36,651]  INFO {org.wso2.carbon.core.transports.http.HttpsTransportListener} -  HTTPS port       : 9443
+[2010-11-30 17:15:36,651]  INFO {org.wso2.carbon.core.transports.http.HttpTransportListener} -  HTTP port        : 9763
+[2010-11-30 17:15:37,530]  INFO {org.wso2.carbon.ui.internal.CarbonUIServiceComponent} -  Mgt Console URL  : https://10.100.1.141:9443/carbon/
+[2010-11-30 17:15:37,540]  INFO {org.wso2.carbon.core.internal.StartupFinalizerServiceComponent} -  Started Transport Listener Manager
+[2010-11-30 17:15:37,541]  INFO {org.wso2.carbon.core.internal.StartupFinalizerServiceComponent} -  Server           :  WSO2 Carbon 3.2.2
+[2010-11-30 17:15:37,541]  INFO {org.wso2.carbon.core.internal.StartupFinalizerServiceComponent} -  WSO2 Carbon started in 10 sec
+</pre>
+
+<p>Now to access the Web-based management console go to the https://localhost:9443/carbon in your browser. Login to the
+console using the default username and password</p>
+<h2 id="webappmode">Running WSO2 Carbon in Apache Tomcat (Webapp Mode)</h2>
+        WSO2 Carbon can be deployed in application servers such as Apache Tomcat, JBOSS, WebSphere and WebLogic. In the below guide it explains how you can deploy Carbon, in the popular servlet container : Apache Tomcat.
+        The installation steps, that are given below are valid for any WSO2 product that uses Carbon as its core platform. Furthermore the installation steps are more or less the same for any other application server apart
+        from the server specific configuration parameters.
+
+    <h3 id="webEnvandTools">Setting up the Environment and Tools</h3>
+    <p>
+    Download and install the Apache tomcar servlet container, version 7.x.x    <br/>
+    Download the latest carbon distribution from the project home  <a class="externalLink" href="http://wso2.com/products/carbon/">Carbon</a>
+    </p>
+
+    <h3>Carbon Directory Structure</h3>
+        <p>Unzip your freshly downloaded carbon binary package (wso2carbon-3.x.x.zip) in to local file system.You should see the below directory structure in your unzipped carbon distribution.</p>
+        <div style="margin-left: 20px; margin-top: 10px;margin-bottom: 10px;">
+        <a href="./images/dist-structure.png">
+            <img alt="carbon distribution structure" src="./images/dist-structure.png"/>
+        </a>
+        </div>
+
+
+<h3 id="crbnRepository" >Creating and Configuring the Carbon Repository</h3>
+
+<p>
+    create a directory in your file system (we assume the directory name as <strong>&lt;Carbon_Repository&gt;</strong> from here onwards), which to be use as our carbon repository.
+    First we have to populate our carbon repository with the artifacts, extracted from the binary distribution. copy the following directory from your carbon binary distribution
+    in to your newly created carbon repository.
+</p>    
+
+    <p>
+        wso2carbon-3.x.x/repository <br/>
+    </p>
+
+    <p>
+    After populating with artifacts, the carbon repository looks like,
+    </p>
+    
+
+
+<div style="margin-left: 20px; margin-top: 10px;margin-bottom: 10px;">
+    <a href="./images/repo-structure.png">
+        <img alt="carbon repository directory structure" src="./images/repo-structure.png"/>
+    </a>
+    </div>
+
+
+<p>
+    Now we have to update some configurations files found in the <strong>&lt;Carbon_Repository&gt;</strong>/repository/conf directory. <br/>
+    <strong>Note:</strong> below configurations use <strong>&lt;Carbon_Repository&gt;</strong> instead of the absolute path to previously created carbon repository directory.
+       The user should replace the <strong>&lt;Carbon_Repository&gt;</strong> with the appropriate absolute path, according to their local directory structure.
+    </p>
+    <p>
+    1. Configuring the transports (http and https ports):    <br/>
+    Edit the <strong>&lt;Carbon_Repository&gt;</strong>/repository/conf/axis2.xml as follows.
+    </p>
+   <pre>
+        &lt;transportReceiver name="http" class="org.wso2.carbon.core.transports.http.HttpTransportListener"&gt;
+        &lt;parameter name="port">8080&lt;/parameter&gt;
+
+        &lt;transportReceiver name="https" class="org.wso2.carbon.core.transports.http.HttpsTransportListener">
+        &lt;parameter name="port">8443&lt;/parameter></pre>
+
+    <p>
+    Here we have selected the ports 8080 and 8443 as the respective ports for http and https. admin can decide the ports they are going to use &amp; chage the configuration files accordingly.<br/>
+
+    2. Configuring the carbon.xml     <br/>
+    Edit the <strong>&lt;Carbon_Repository&gt;</strong>/repository/conf/carbon.xml as follows.
+    </p>
+    <pre>
+         &lt;WebContextRoot&gt;/crbn&lt;/WebContextRoot&gt;
+         &lt;ServerURL&gt;https://localhost:8443/crbn/services/&lt;/ServerURL&gt;</pre>
+
+     <p>
+    3. Configuring the registry.xml   <br/>
+    Edit the <strong>&lt;Carbon_Repository&gt;</strong>/repository/conf/registry.xml as follows.
+    </p>
+    <pre>&lt;url&gt;jdbc:h2:<strong>&lt;Carbon_Repository&gt;</strong>/repository/database/WSO2CARBON_DB;DB_CLOSE_ON_EXIT=FALSE&lt;/url&gt;</pre>
+    <p>
+    4. Configuring the usr-mgt.xml <br/>
+    Edit the <strong>&lt;Carbon_Repository&gt;</strong>/repository/conf/user-mgt.xml as follows.
+    </p>
+
+    <pre>&lt;Property name="url">jdbc:h2:<strong>&lt;Carbon_Repository&gt;</strong>/repository/database/WSO2CARBON_DB;DB_CLOSE_ON_EXIT=FALSE&lt;/Property&gt;</pre>
+  
+
+<h3 id="creatingWarFile">Creating and Configuring the Carbon Web App (.war file)</h3>
+     <p>
+    1. Create a new Directory in your local file system (we assume the directory name as &lt;WAR_DIR&gt; from here onwards). copy the WEB-INF directory found under
+
+    wso2carbon-3.x.x/lib/core. 
+
+    in to the newly created WAR_DIR directory. Now the WAR_DIR should have the directory structure similar to,
+     </p>
+   <div style="margin-left: 20px; margin-top: 10px;margin-bottom: 10px;">
+    <a href="./images/web-structure.png">
+        <img alt="carbon web archive directory structure" src="./images/web-structure.png"/>
+    </a>
+    </div>
+
+    <p>
+    2. To enable proper carbon related logging , copy the log4j.properties file found in
+
+    wso2carbon-3.x.x/lib/
+
+    in to the
+
+    &lt;WEB_DIR&gt;/WEB-INF/classes
+
+    directory.</p>
+
+    <p>3. Copy all libraries found in wso2carbon-3.x.x/lib/api/ directory into WAR_DIR/WEB-INF/lib directory.</p>
+
+    <p>Alternately you can execute the ant task, <strong>ant createWAR</strong> from the wso2carbon-3.x.x/bin which creates a WEB-INF with all the above steps applied. </p>
+
+    <p>4. Now it is time to pack the the our web app as a wep application archive (.war) file.
+        In the command shell navigate to the WAR_DIR and execute the command;
+    </p>
+
+    <pre>$> jar -cvf ./crbn.war ./*</pre>
+<p>
+    This will create a archive names crbn.war in the WAR_DIR directory and we are going to deploy that archive in out Apache Tomcat installation.
+ </p>    
+
+
+
+<h3 id="confApacheTomcat">Configuring Apache Tomcat</h3>
+
+<p>
+Here we are using the https to access the management console of the carbon web app. Hence we have to specify the java key store file to be used by the Tomcat installation. Open the file,
+
+&lt;CATALINA_HOME&gt;/conf/server.xml      (the Apache Tomcat installation root directory is identified as the CATALINA_HOME)
+
+update the server.xml as shown follows.
+    </p>
+
+   <pre>
+       &lt;Connector SSLEnabled='true' keystoreFile='&lt;Carbon_Repository&gt;/resources/security/wso2carbon.jks' keystorePass='wso2carbon'
+       maxSpareThreads='76' port='8443' protocol='HTTP/1.1' maxThreads='150' secure='true' scheme='https' sslProtocol='TLS' clientAuth='false'/&gt;
+  </pre>
+
+<h3 id="finalSteps">Final Steps</h3>
+
+<p>
+
+1. Set the CARBON_HOME environment variable in your OS.  </p>
+
+    <pre>$> export CARBON_HOME=(absolute path to the &lt;Carbon_Repository&gt;)</pre>
+
+    <p>
+2. Set required memory limits as follows. </p>
+    <pre>$> export JAVA_OPTS="-Xms256m -Xmx512m -XX:MaxPermSize=128m"</pre>
+
+    <p>
+2. copy the previously created carbon.war file in to CATALINA_HOME/webapps directory. <br/>
+3. Start Apache Tomcat. <br/>
+4. Open your browser &amp; go to the URL https://localhost:8443/crbn/carbon
+    </p>
+
+<h3 id="specialCases">Special Cases</h3>
+    <p>1. If you want to deploy JAX-WS services on your carbon server, you have to copy the
+    JDK_HOME/lib/tools.jar into WAR_DIR/WEB-INF/lib directory.</p>
+    <p>2. If you are deploying WSO2 AppServer on Tomcat, it is recommended to delete
+        org.wso2.carbon.webapp.mgt*.jar files (there are 3 jar files) from
+        &lt;Carbon_Repository&gt;/repository/components/plugins directory.</p>
+
+<h2 id="CarbonMan">Using the WSO2 Carbon Management Console</h2>
+<p>WSO2 Carbon management console is a Web based console powered by JSP and AJAX which enables system administrators
+    to interact with a running Carbon instance, without having to touch any underlying configuration files. The management
+    console allows the users to configure, manage the system.</p>
+
+<p>We recommend using Mozilla Firefox 3, 3.5 or Internet Explorer 7, 8 to access the WSO2 Carbon management console. Please note
+    that your browser must be JavaScript enabled to take the full advantage of the management console. To access the
+    Carbon management console fire off you Web browser and navigate to
+    https://&lt;Server Host&gt;:&lt;Server Port&gt;/&lt;Context&gt;.
+    If you are running the Web browser on the same machine as the Carbon you may use 'localhost' as the server host.
+    The default port and the context for the Carbon management console are '9443' and 'carbon' respectively.
+    If you entered the URL correctly you will be taken to the management console's login page.</p>
+
+<p>On the login page enter 'admin' as the username and the password to login to the system. You can change user
+    credentials and even add new users once you login. Controls and wizards in the Carbon management console are pretty
+    much self explanatory. However if you are having trouble finding your way in the management console,
+    click on the 'Help' link at the top right corner of any page to access context sensitive help.</p>
+
+<p>Please note that the management console makes use of the default HTTPS servlet transport which is configured in
+    the CARBON_HOME/repository/conf/mgt-transports.xml file. It is important that this transport is always properly
+    configured in the mentioned file. Otherwise the management console might be inaccessible to the users. </p>
+
+<h2 id="CarbonUserMgt">User Management</h2>
+<p>You can manage user and roles in the system by user management facility available in the web-based management console.
+     Click on User Management menu from left.</p>
+
+<p>Please refer the <a href="user/docs/userguide.html">documentation</a> on managing users for details.</p>
+<h3 id="UserStores">Configuring User Stores</h3>
+<p>Please refer <a href="carbon-core/user.core/admin_guide.html">this guide</a> which talks about user store configuration.</p>
+
+<h2 id="SettingLogging">Setting Up Logging</h2>
+<p>A properly configured logging system is vital in identifying errors, security threats and usage patterns. WSO2 Carbon
+    uses a log4j based logging mechanism through Apache Commons Logging facade library. The log4j.properties file which
+    governs how logging is performed by the server can be found in CARBON_HOME/lib directory. </p>
+<p>By default WSO2 Carbon comes with the following log appenders configured.</p>
+
+    <ul>
+        <li>CARBON_CONSOLE - Console appender, as the name implies it appends log messages to the System.out</li>
+        <li>CARBON_LOGFILE - File appender, appends log messages to a file(Writes the logs to CARBON_HOME/repository/logs/wso2-carbon.log)</li>
+        <li>CARBON_MEMORY - Memory appender, Append  log messages to circular buffer in memory and this buffer length can be configured</li>
+        <li>CARBON_SYS_LOG - Syslog appender sends  log messages to a syslog receiver.</li>
+    </ul>
+<p>Log Levels</p>
+
+    <ul>
+        <li><strong>trace</strong> - developing only, can be used to follow the program execution.</li>
+        <li><strong>Debug</strong> - developing only, for debugging purpose</li>
+        <li><strong>Info</strong> - Production optionally, Course grained (rarely written  information), I use it to
+            print that a configuration is initialized, a long running import job is starting 	and ending.</li>
+        <li><strong>Warn</strong> - Production, simple application error or unexpected behaviour.  Application 	can
+            continue. I warn for example in case of bad login  attempts, unexpected 	data during import jobs. </li>
+        <li><strong>Error</strong> - Production, application error/exception but application can continue. Part of the
+            application is probably not working.</li>
+        <li><strong>Fatal</strong> - Production, fatal application error, application cannot continue, 	for example
+            database is down.</li>
+    </ul>
+
+<h2 id="P2">Installing and Managing Features</h2>
+
+    <p>New features can be easily installed into the Carbon by using the 'WSO2 Carbon Feature Manager' that comes
+    with the Carbon. Feature manager is powered by Equinox P2 and allows you to connect to a remote or local P2
+    repository and get any feature installed into the Carbon runtime. You can also uninstall existing features of
+    the Carbon and come up with a customized version of WSO2 Carbon tailored to meet your requirements.</p>
+    <p>To use the Feature manager, login to the management console and click on 'Feature Management' under the
+    'Configure' menu. Go to the 'Settings' tab and click on 'Manage Repositories'. Click 'Add New Repository'
+    and specify the P2 repository to which you wish to connect to. The official WSO2 P2 repository is available
+    over http://dist.wso2.org/p2/carbon/releases/3.1.0/.</p>
+    <p>Once the repository is configured go to the 'Available Features' tab to browse through the features and get them
+    installed to the Carbon. The installation of a feature can take a while depending on the network bandwidth and
+    hardware configuration available. Once a feature has been successfully installed you will be prompted to logout
+    and restart the Carbon.</p>
+    <p>If you wish to uninstall an existing feature go to the 'Installed Features' tab, select the features to be
+    uninstalled and click on 'Uninstall' at the bottom of the page.</p>
+<h2 id="ExternalDeps">Adding External Dependencies to the System</h2>
+<p>This is clearly explaining in an article hosted WSO2 Oxygen Tack. Please refer <a href="http://wso2.org/library/knowledgebase/add-external-jar-libraries-wso2-carbon-based-products">How to Add External Jar Libraries to WSO2 Carbon based products.
+</a></p>
+</body>
+</html>

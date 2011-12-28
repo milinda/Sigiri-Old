@@ -1,0 +1,68 @@
+<!--
+  ~ Copyright 2005-2007 WSO2, Inc. (http://wso2.com)
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+       "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<body>
+<p>WSO2 Carbon - User Guide [<a href="docs_index.html"> Documentation Index </a>]</p>
+
+<h1>
+    WSO2 Carbon User Guide
+</h1>
+
+<p>WSO2 Carbon user guide provides information on starting and configuring the product. And also it is a good starting place
+    for users who are new to WSO2 Carbon.</p>
+
+<h2 id="Installing">Installing and Running the WSO2 Carbon</h2>
+<p>Please refer the <a href="installation_guide.html">Installation Guide</a>
+      for details on how to install and run the WSO2 Carbon.</p>
+
+<h2 id="Accessing">Accessing the WSO2 Carbon Web based Management Console</h2>
+
+<p><a id="access">Once WSO2 Carbon has been successfully installed and started, launch a Web
+      browser instance and point it to the URL </a><a class="externalLink" href="https://localhost:9443/carbon">https://localhost:9443/carbon</a>.
+      This will take you to the <em>Sign In</em> page of the WSO2 Carbon</p>
+
+<img src="images/carbon-login-page.png" alt="Sign-in" border="1"/>
+<p>Figure: Sign-in Page</p>
+
+
+<h2 id="Signing">Signing In</h2>
+<p>Enter your user name and password to log on to the Carbon Management Console.</p>
+<p><strong>The default username / password is : admin / admin</strong></p>
+
+<p>You can change your password using the <a href="#Changing">instructions</a>
+      given below.</p>
+<p>If you get any errors when trying
+      to sign in, click <strong>Sign-in Help</strong>. A list of
+      possible errors, their descriptions and solutions will be displayed.</p>
+
+<h2 id="Changing">Managing Users and Roles</h2>
+<p>You can manage user and roles in the system by user management facility available in the web-based management console.
+     Click on User Management menu from left.</p>
+
+<p>Please refer the <a href="user/docs/userguide.html">documentation</a> on managing users for details.</p>
+
+<h2 id="provisiong">Managing Features of WSO2 Carbon</h2>
+
+<p>WSO2 Carbon comes with a facility called "Feature Manager" which provides GUI to help developers customize
+    WSO2 Carbon and Carbon based products with ease. You can provision WSO2 Carbon with various feature available in
+    feature repositories. The list of avaialbe repositoris are listed
+    <a href="http://wso2.org/projects/carbon/provisioning-wso2-carbon-with-equinox-p2">here</a></p>
+
+<p>For a comprehensive documentation on using the feature manager facility, please refer <a href="component-mgt/docs/userguide.html">this</a>. </p>
+</body>
+</html>  

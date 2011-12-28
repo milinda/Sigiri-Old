@@ -1,0 +1,130 @@
+<!--
+  ~ Copyright 2005-2007 WSO2, Inc. (http://wso2.com)
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+       "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<body>
+<p>WSO2 Carbon [<a href="docs_index.html"> Documentation Index </a>]</p>
+
+<h1>
+    Welcome to WSO2 Carbon
+</h1>
+
+<h2>Overview</h2>
+
+<p>WSO2 Carbon is the award-winning base platform for WSO2's enterprise-grade middleware stack. It provides the core
+    capabilities for security, clustering, logging, statistics, and management, and through a technology called OSGi, 
+    higher level capabilities can be readily added as components to this core. The WSO2 Carbon core platform hosts a
+    rich set of middleware components encompassing capabilities such as service hosting and management, message routing
+    and transformation, governance and identity management, business process management and business activity
+    monitoring, and more. The point-and-click WSO2 Carbon Component Manager makes it a snap to select the perfect set
+    of components to address your unique requirements.</p>
+
+<div style="border: 1px solid rgb(204, 204, 204); padding: 0px 20px; margin-left: 20px; margin-top: 10px;
+                    margin-bottom: 10px; width: 280px; background-color: rgb(238, 238, 238);">
+    <h3 style="margin-top: 10px;">Carbon-based Products</h3>
+    <ul style="list-style-type: none; list-style-image: none; list-style-position: outside;
+                    margin-left: 0px; padding-left: 0px;">
+        <li>
+            <a href="http://wso2.com/products/enterprise-service-bus/">
+                <img alt="WSO2 ESB" src="./images/esb_logo_h23.gif"/>
+            </a>
+        </li>
+        <li>
+            <a href="http://wso2.com/products/web-services-application-server">
+            <img alt="WSO2 Web Services Application Server" src="./images/wsas_logo_h23.gif"/>
+            </a>
+        </li>
+        <li>
+            <a href="http://wso2.com/products/data-services-server/">
+            <img alt="WSO2 Data Services Server" src="./images/ds_logo_h23.gif"/>
+            </a>
+        </li>
+        <li>
+            <a href="http://wso2.com/products/governance-registry/">
+            <img alt="WSO2 Governance Registry" src="./images/greg_logo_h23.gif"/>
+            </a>
+        </li>
+        <li>
+            <a href="http://wso2.com/products/identity-server/">
+            <img alt="WSO2 Identity Solution" src="./images/identity_logo_h23.gif"/>
+            </a>
+        </li>
+        <li>
+            <a href="http://wso2.com/products/business-activity-monitor/">
+            <img alt="WSO2 Business Activity Monitor" src="./images/bam_logo_h23.gif"/>
+            </a>
+        </li>
+        <li>
+            <a href="http://wso2.com/products/business-process-server/">
+            <img alt="WSO2 Business Process Server" src="./images/bps_logo_h23.gif"/>
+            </a>
+        </li>
+        <li>
+            <a href="http://wso2.com/products/business-rules-server/">
+            <img alt="WSO2 Business Rules Server" src="./images/brs_logo_h23.gif"/>
+            </a>
+        </li>
+        <li>
+            <a href="http://wso2.com/products/mashup-server/">
+            <img alt="WSO2 Mashup Server" src="./images/mashup_logo_h23.gif"/>
+            </a>
+        </li>
+        <li>
+            <a href="http://wso2.com/products/gadget-server/">
+            <img alt="WSO2 Gadget Server" src="./images/gs_logo_h23.gif"/>
+            </a>
+        </li>
+    </ul>
+</div>
+
+<p/>
+<h2>WSO2 Carbon Architecture</h2>
+
+<p>WSO2 Carbon is based on Java OSGi technology which allows components to be dynamically installed, started, stopped,
+    updated, and uninstalled, as well as eliminating component version conflicts. In Carbon, this capability translates
+    into a solid core of common middleware components useful across any enterprise project, plus the ability to add
+    components for specific features needed to solve a specific enterprise scenario. </p>
+
+<div style="margin-left: 20px; margin-top: 10px;margin-bottom: 10px;">
+    <a href="./images/wso2-carbon-architecture-small.png">
+        <img alt="WSO2 Carbon Architecture" src="./images/wso2-carbon-architecture-small.png"/>
+    </a>
+</div>
+
+<p>The core set of components in WSO2 Carbon provides WSO2 middleware products with a consistent set of enterprise-class
+    management, security, clustering, logging, statistics, tracing, throttling, caching, and other capabilities as well
+    as a management UI framework. Central to these components is WSO2’s solid and high performance SOA and Web Services
+    engine. Add-in components encapsulate major types of functionality.</p>
+
+<p>A unified graphical management console can deploy, manage, and view services, processes, process instances, and
+    statistics across the whole platform, comprising of different products. As each runtime component is added,
+    associated management components are added to the UI. With a clean front-end/back-end separation between the UI
+    and the runtime, all capabilities can be controlled through a remote WSO2 Carbon UI, or through a clean Web Services
+    interface.</p>
+
+<div style="margin-left: 20px; margin-top: 10px;margin-bottom: 10px;">
+<a href="./images/wso2-carbon-products-small.png">
+    <img alt="WSO2 Carbon Based Products" src="./images/wso2-carbon-products-small.png"/>
+</a>
+</div>
+
+<p>We use Carbon as the core of our middleware products, which are simply common “constellations” of components
+    reflecting familiar middleware product categories. Most users will start with one of these categories, but rest
+    easy in the assurance that components can be added to encompass requirements. </p>
+
+</body>
+</html>

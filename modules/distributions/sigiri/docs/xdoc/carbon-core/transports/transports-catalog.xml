@@ -1,0 +1,3049 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+  ~  Copyright (c) 2009, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+  ~
+  ~  WSO2 Inc. licenses this file to you under the Apache License,
+  ~  Version 2.0 (the "License"); you may not use this file except
+  ~  in compliance with the License.
+  ~  You may obtain a copy of the License at
+  ~
+  ~    http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~  Unless required by applicable law or agreed to in writing,
+  ~  software distributed under the License is distributed on an
+  ~  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  ~  KIND, either express or implied.  See the License for the
+  ~  specific language governing permissions and limitations
+  ~  under the License.
+  -->
+
+<!DOCTYPE html
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <title>WSO2 Carbon Transports Catalog</title>
+        <link href="../css/esb-docs.css" rel="stylesheet" type="text/css" media="all"/>
+  <link href="../styles/dist-docs.css" rel="stylesheet" type="text/css" media="all"/>
+    </head>
+
+    <body>
+
+        <h1>WSO2 Carbon Transports Catalog</h1>
+
+        <p>Describes all the transports available for Carbon based products including the optional transports.
+        This guide also contains how to configure each and every transport.</p>
+
+        <h2>Contents</h2>
+
+        <ul>
+            <li><a href="#Intro">Introduction</a></li>
+            <li><a href="#DocConv">Document Conventions</a></li>
+            <li><a href="#TrpArchi">WSO2 Carbon Transports Architecture</a></li>
+            <li><a href="#EnablingTrp">Configuring and Enabling WSO2 Carbon Transports</a>
+                <ul>
+                    <li><a href="#Axis2XML">Using the axis2.xml</a></li>
+                    <li><a href="#CarbonMan">Using the WSO2 Carbon Management Console</a></li>
+                    <li><a href="#TransportsXML">Configuring Servlet Transports in the Standalone Mode Using
+                        the transports.xml File</a></li>
+                </ul>
+            </li>
+            <li><a href="#CarbonTrp">WSO2 Carbon Transports</a>
+                <ul>
+                    <li><a href="#HttpTrp">HTTP Servlet Transport Implementation</a></li>
+                    <li><a href="#HttpsServletTrp">HTTPS Servlet Transport Implementation</a></li>
+                    <li><a href="#HttpNIOTrp">HTTP-NIO Transport Implementation</a></li>
+                    <li><a href="#HttpsNIOTrp">HTTPS-NIO Transport Implementation</a></li>
+                    <li><a href="#MailToTrp">MAILTO Transport Implementation</a></li>
+                    <li><a href="#JmsTrp">JMS Transport Implementation</a></li>
+                    <li><a href="#VfsTrp">VFS Transport Implementation</a></li>
+                    <li><a href="#TcpTrp">TCP Transport Implementation</a></li>
+                    <li><a href="#LocalTrp">Local Transport Implementation</a></li>
+                    <li><a href="#NBLocalTrp">Non Blocking Local Transport Implementation</a></li>
+                    <li><a href="#UdpTrp">UDP Transport Implementation</a></li>
+                    <li><a href="#FixTrp">FIX Transport Implementation</a></li>
+                 </ul>
+            </li>
+            <li><a href="#Future">Future Work</a></li>
+        </ul>
+
+        <h2 id="Intro">Introduction</h2>
+
+        <p>
+            WSO2 Carbon is the base platform on which all WSO2 Java products are developed. Built on OSGi, Carbon encapsulates all
+            major SOA functionality such as data services, routing, mediation, transformation, business process management, rules,
+            security, caching, throttling and monitoring. With WSO2 Carbon these capabilities are no longer tied to individual products.
+            Rather, they are made available as a collection of highly reusable and easily maintainable components.
+        </p>
+        <p>
+            WSO2 Carbon supports a variety of transports which makes Carbon based products capable of receicing and sending messages
+            over a multitude of transport and application level protocols. Transport management is therefore one of the most crucial
+            functionalities of WSO2 Carbon. This functionality is implemented mainly in the Carbon core component which combines with
+            a set of transport specific components to load, enable, manage and persist transport related functionality and configurations.
+        </p>
+        <p>
+            The purpose of this document is to introduce the set of transports supports by WSO2 Carbon and formally describe how each
+            transport can be configured and setup for a particular deployment scenario. Configuration parameters associated with each
+            transport are discussed in detail and samples will be referred to where appropriate.
+        </p>
+
+        <h2 id="DocConv">Documentation Conventions</h2>
+
+        <ul>
+            <li>
+                $CARBON_HOME represents the location in the disk where WSO2 Carbon or any Carbon based product is installed.
+            </li>
+            <li>
+                All transport parameter names are case sensitive.
+            </li>
+            <li>
+                In transport parameter tables, literals displayed in <i>italic mode</i> under the 'Possible Values' column should be
+                considered as fixed literal constant values. Those values can be directly put in transport configurations.
+            </li>
+        </ul>
+
+        <h2 id="TrpArchi">WSO2 Carbon Transports Architecture</h2>
+
+        <p>
+            All transports currently supported by WSO2 Carbon are directly or indirectly based on the Apache Axis2 transports framework.
+            This framework provides two main interfaces that each transport implementation must implement.
+        </p>
+        <ul>
+            <li>
+                org.apache.axis2.transport.TransportListener - Implementations of this interface should specify how incoming messages are
+                received and processed before handing them over to the Axis2 engine for further processing.
+            </li>
+            <li>
+                org.apache.axis2.transport.TransportSender - Implementations of this interface should specify how a message can be sent out
+                from the Axis2 engine.
+            </li>
+        </ul>
+
+        <p>
+            Because each transport implementation has to implement the above two interfaces, each transport generally contains a
+            transport receiver/listener implementation and a transport sender implementation. Axis2 transport framework enables the
+            user to configure, enable and manage transport listeners and senders independently of each other. For example one may
+            enable only the JMS transport sender without having to enable JMS transport listener. WSO2 Carbon provides the user the
+            same capability.
+        </p>
+
+
+        <h2 id="EnablingTrp">Configuring and Enabling WSO2 Carbon Transports</h2>
+
+        <p>There are two methods to globally configure and enable transports in WSO2 Carbon or any Carbon based solution.</p>
+
+        <ul>
+            <li>
+                Using the axis2.xml file
+            </li>
+            <li>
+                Using the WSO2 Carbon Management Console
+            </li>
+        </ul>
+
+        <p>Globally enabled and configured transports will effect all the services deployed on the Carbon instance.</p>
+
+        <h3 id="Axis2XML">Using the axis2.xml File</h3>
+
+        <p>
+            WSO2 Carbon and all Carbon based products ship with a configuration file named axis2.xml. This XML configuration file can
+            be found at $CARBON_HOME/conf directory. This is similar to the axis2.xml file that ships with Apache Axis2 and Apache Synapse.
+            It contains the global configuration for WSO2 Carbon and the Carbon based products. The axis2.xml configuration generally
+            includes configuration details for modules, phases, handlers, global configuration parameters and transports. The elements
+            &lt;transportReceiver&gt; and &lt;transportSender&gt; are used to configure transport receivers and senders respectively.
+            If you open up an axis2.xml file that comes with WSO2 Carbon or any Carbon based product in a text editor, you will see that some
+            transports are already configured and enabled by default, including the HTTP and HTTPS transports.
+        </p>
+
+        <p>The HTTP transport receiver configuration would be something similar to the following.</p>
+
+<pre xml:space="preserve">  &lt;transportReceiver name="http" class="org.wso2.carbon.core.transports.http.HttpTransportListener"&gt;
+      &lt;parameter name="port"&gt;9763&lt;/parameter&gt;
+  &lt;/transportReceiver&gt;</pre>
+
+        <p>
+            The 'name' and 'class' attributes of the &lt;transportReceiver&gt; element are mandatory and they should indicate a unique name
+            for the transport receiver and the transport receiver implementation class respectively. Configuration parameters for the
+            transport receiver can be specified using &lt;parameter&gt; elements which should be included as child elements of the
+            &lt;transportReceiver&gt; element. In the above example we have defined one parameter named 'port' for the HTTP transport receiver.
+        </p>
+        <p>
+            Similarly &lt;transportSender&gt; elements can be used to configure and enable transport senders in WSO2 Carbon. Given below is
+            the HTTP transport sender configuration that comes with WSO2 Carbon by default. It contains three parameters.
+        </p>
+<pre xml:space="preserve">  &lt;transportSender name="http" class="org.apache.axis2.transport.http.CommonsHTTPTransportSender"&gt;
+      &lt;parameter name="PROTOCOL"&gt;HTTP/1.1&lt;/parameter&gt;
+      &lt;parameter name="Transfer-Encoding"&gt;chunked&lt;/parameter&gt;
+
+      &lt;parameter name="OmitSOAP12Action"&gt;true&lt;/parameter&gt;
+  &lt;/transportSender&gt;</pre>
+
+        <p>
+            Please be aware that axis2.xml file will be loaded to the memory only during server startup. Therefore any changes made to the file
+            while the server is up and running has no effect. In such cases the server must be restarted for the changes to take effect. Also one
+            need to keep in mind the fact that simply having &lt;transportReceiver&gt; and &lt;transportSender&gt; elements in the axis2.xml file
+            causes those transports to be loaded and activated during server startup. Therefore any dependency jars required by those transport
+            implementations must be included in the server classpath to prevent the server from running into exceptions at startup. In addition to
+            that, an inaccurate transport configuration (eg: a wrong parameter value) might cause the transport to be not enabled properly.
+        </p>
+
+        <p>This method of configuration is mainly intendedd for advanced users.</p>
+
+        <h3 id="CarbonMan">Using the WSO2 Carbon Management Console</h3>
+
+        <p>
+            As an alternative to the traditional axis2.xml file based configuration method, one might use the WSO2 Carbon Management Console
+            to manage transport receivers and senders. (Note: Earlier versions of WSO2 Carbon did not enable the user to manage transport 'senders'
+            through the management console. This functionality was first intriduces in WSO2 Carbon 2.0) Carbon Management Console loads transport
+            configurations from the embedded registry and any changes made to the configurations through the UI will also be saved back into the
+            registry. To manage transports from the Management Console the you must first login to the server management console. Then click on
+            'Transports' under the 'Manage' menu to the left of the screen. This will take you to the 'Transport Management' home page from where
+            you can configure, enable or disable individual transport receivers and senders. More information on using the 'Transport Management'
+            home page can be found by clicking on the 'Help' link at the top of the 'Transport Management' home page.
+        </p>
+
+        <p>
+            As of WSO2 Carbon version 2.0, the management console also allows adding new parameters to the transport configurations. Also note
+            that Carbon Management Console does not allow the user to disable HTTP, HTTPS transports. This is because those transports are
+            required by the management console and all the related administrative services.
+        </p>
+
+        <p>
+            When a transport is enabled from the management console, its configuration will be saved in the registry and will be loaded automatically
+            during the next server startup. However keep in mind that transport configurations specified in the axis2.xml get higher priority over
+            configurations stored in the registry. Therefore if the same transport is enabled in the axis2.xml as well as in the registry, transport
+            configuration in the axis2.xml will be loaded and activated.
+        </p>
+
+        <p>
+            This method of configuration is mainly intended for relatively novice users. However it is very useful even for advanced users because it
+            enables one to try out different transport settings without having to restart the server many times.
+        </p>
+
+        <h3 id="TransportsXML">Configuring Servlet Transports in the Standalone Mode Using the transports.xml File</h3>
+
+        <p>
+            In addition to the two methods discussed above there is a third method to globally configure transport RECEIVERS in Carbon which works ONLY
+            when Carbon is running in the standalone mode (ie no external servelet container is being used to deploy Carbon). By default WSO2 Carbon and
+            all Carbon based products run in the standalone mode and hence it is important that users be aware of this configuration method.
+        </p>
+        <p>
+            When Carbon is running in the standalone mode one could use the $CARBON_HOME/conf/transports.xml file to specify transport receiver
+            configurations. By default you will find the HTTP and HTTPS servlet transports configured in this file. The XML syntax to configure transports
+            in transports.xml file is similar to the syntax used in the axis2.xml file, with only difference being the &lt;transport&gt; element taking the
+            place of &lt;transportReceiver&gt; element. The default HTTP receiver configuration specified in the transports.xml file is given below.
+        </p>
+
+<pre xml:space="preserve">  &lt;transport name="http" class="org.wso2.carbon.server.transports.http.HttpTransport"&gt;
+      &lt;parameter name="port"&gt;9763&lt;/parameter&gt;
+      &lt;parameter name="maxHttpHeaderSize"&gt;8192&lt;/parameter&gt;
+      &lt;parameter name="maxThreads"&gt;150&lt;/parameter&gt;
+      &lt;parameter name="minSpareThreads"&gt;25&lt;/parameter&gt;
+      &lt;parameter name="maxSpareThreads"&gt;75&lt;/parameter&gt;
+      &lt;parameter name="enableLookups"&gt;false&lt;/parameter&gt;
+      &lt;parameter name="disableUploadTimeout"&gt;false&lt;/parameter&gt;
+      &lt;parameter name="clientAuth"&gt;false&lt;/parameter&gt;
+      &lt;parameter name="maxKeepAliveRequests"&gt;100&lt;/parameter&gt;
+      &lt;parameter name="acceptCount"&gt;100&lt;/parameter&gt;
+      &lt;parameter name="compression"&gt;force&lt;/parameter&gt;
+      &lt;parameter name="compressionMinSize"&gt;2048&lt;/parameter&gt;
+      &lt;parameter name="noCompressionUserAgents"&gt;gozilla, traviata&lt;/parameter&gt;
+      &lt;parameter name="compressableMimeType"&gt;
+          text/html,text/javascript,application/x-javascript,application/javascript,application/xml,text/css,application/xslt+xml,text/xsl,image/gif,image/jpg,image/jpeg
+      &lt;/parameter&gt;
+  &lt;/transport&gt;</pre>
+
+        <p>
+            However there is a fundamental difference between transports configured in axis2.xml and transports configured in transports.xml. Transport
+            receivers configured in transports.xml will be loaded through a special Transport Manager implementation in Carbon. Therefore the classes
+            specified in the &lt;transport&gt; element must implement the interface org.wso2.carbon.server.transports.Transport. Currently only the default
+            servlet transports of Carbon can be configured from the transports.xml file.
+        </p>
+
+        <h3 id="SvcTrp">Configuring Transports at Service Level</h3>
+
+        <p>
+            WSO2 Carbon and Carbon based products enable the user to configure transports at service level. Transports configured at the service level will
+            effect individual services and not all the services deployed on the Carbon instance. Some transport implementations such as JMS and FIX mandate
+            configuring certain transport parameters at service level.
+        </p>
+        <p>
+            Service level transport configuration is performed by editing the service.xml file associated with each service. When dealing with proxy services
+            (for example in WSO2 ESB) using the Carbon's proxyadmin component, service level transport parameters should be specified in the proxy service
+            configuration by using the provided proxy service management tools in the Carbon management console.
+        </p>
+
+        <h2 id="CarbonTrp">WSO2 Carbon Transports</h2>
+
+        <p>As of Carbon v2.0 the following transport implementations are supported.</p>
+
+        <ul>
+            <li><a href="#HttpTrp">HTTP</a></li>
+            <li><a href="#HttpsServletTrp">HTTPS</a></li>
+            <li><a href="#HttpNIOTrp">HTTP-NIO</a></li>
+            <li><a href="#HttpsNIOTrp">HTTPS-NIO</a></li>
+            <li><a href="#MailToTrp">Mail</a></li>
+            <li><a href="#JmsTrp">JMS</a></li>
+            <li><a href="#VfsTrp">VFS</a></li>
+            <li><a href="#TcpTrp">TCP</a></li>
+            <li><a href="#LocalTrp">Local</a></li>
+            <li><a href="#UdpTrp">UDP</a></li>
+            <li><a href="#FixTrp">FIX</a></li>
+        </ul>
+
+        <p>
+            The remainder of this document discusses these transport implementations in detail, highlighting the configuration parameters associated with them.
+        </p>
+
+
+        <h3 id="HttpTrp">HTTP Servlet Transport Implementation</h3>
+
+        <p>
+            The transport receiver implementation of the Carbon HTTP transport is available in the Carbon core component. The transport sender implementation
+            comes from the Apache Axis2 transport module. This transport is shipped with WSO2 Carbon and all WSO2 Carbon based products. All Carbon based products
+            except for WSO2 ESB use this transport as the default HTTP transport. The two classes which implement the listener and sender APIs are
+            <span style="font-family:monospace">org.wso2.carbon.core.transports.http.HttpTransportListener</span> and <span style="font-family:monospace">org.apache.axis2.transport.http.CommonsHTTPTransportSender</span> respectively.
+            It is important to note that this is a blocking HTTP transport implementation, meaning that I/O threads get blocked while received messages are
+            processed completely by the underlying Axis2 engine.
+        </p>
+
+        <p>Transport Receiver Parameters:</p>
+
+
+
+        <table border="1" width="75%">
+            <tbody>
+                <tr>
+                    <th style="width:20%">Parameter Name</th>
+                    <th style="width:20%">Description</th>
+                    <th style="width:20%">Requried</th>
+                    <th style="width:20%">Possible Values</th>
+                    <th style="width:20%">Default Value</th>
+                </tr>
+                <tr>
+                    <td>
+                        port
+                    </td>
+                    <td>
+                        The port number on which this transport receiver should listen for incoming messages.
+                    </td>
+                    <td>
+                        Yes
+
+                    </td>
+                    <td>
+                        A positive integer less than 65535
+                    </td>
+                    <td>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        proxyPort
+                    </td>
+                    <td>
+                        When used this transport listener will accept messages arriving through a HTTP proxy server which listenes on the specified proxy port. Apache mod_proxy should be enabled on the proxy server. All the WSDLs generated will contain the proxy port value as the listener port.
+                    </td>
+
+                    <td>
+                        No
+                    </td>
+                    <td>
+                        A positive integer less than 65535
+                    </td>
+                    <td>
+
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p>
+            When using org.wso2.carbon.core.transports.http.HttpTransportListener as the transport receiver implementation, HTTP servlet transport should be
+            configured in the $CARBON_HOME/conf/transports.xml file. The transport class that should be specified in the transports.xml file is
+            <span style="font-family:monospace">org.wso2.carbon.server.transports.http.HttpTransport</span>. This servlet transport implementation can be further tuned up using the following
+            parameters.
+        </p>
+
+        <table border="1" width="75%">
+            <tbody>
+                <tr>
+                    <th style="width:20%">Parameter Name</th>
+                    <th style="width:20%">Description</th>
+                    <th style="width:10%">Requried</th>
+                    <th style="width:20%">Possible Values</th>
+                    <th style="width:20%">Default Value</th>
+                </tr>
+                <tr>
+
+                    <td>
+                        port
+                    </td>
+                    <td>
+                        The port over which this transport receiver will listen for incoming messages.
+                    </td>
+                    <td>
+                        Yes
+
+                    </td>
+                    <td>
+                        A positive integer less than 65535
+                    </td>
+                    <td>
+
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        proxyPort
+                    </td>
+                    <td>
+                        When used this transport listener will accept messages arriving through a HTTP proxy server which listenes on the specified proxy port. Apache mod_proxy should be enabled on the proxy server. All the WSDLs generated will contain the proxy port value as the listener port.
+                    </td>
+                    <td>
+                        No
+
+                    </td>
+                    <td>
+                        A positive integer less than 65535
+                    </td>
+                    <td>
+
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        maxHttpHeaderSize
+                    </td>
+                    <td>
+                        The maximum size of the HTTP request and response header in bytes.
+                    </td>
+                    <td>
+                        No
+
+                    </td>
+                    <td>
+                        A positive integer
+                    </td>
+                    <td>
+                        4096
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        maxThreads
+                    </td>
+                    <td>
+                        The maximum number of worker threads created by the receiver to handle incoming requests. This parameter largely determines the number of concurrent connections that can be handled by the transport.
+                    </td>
+                    <td>
+
+                        No
+                    </td>
+                    <td>
+                        A positive integer
+                    </td>
+                    <td>
+                        40
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        enableLookups
+                    </td>
+                    <td>
+                        Use this parameter to enable DNS lookups in order to return the actual host name of the remote client. Disabling DNS lookups at transport level generally improves performance.
+                    </td>
+
+                    <td>
+                        No
+                    </td>
+                    <td>
+                        <i>true, false</i>
+                    </td>
+                    <td>
+                        true
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        disableUploadTimeout
+                    </td>
+                    <td>
+                        This flag allows the servlet container to use a different, longer connection timeout while a servlet is being executed, which in the end allows either the servlet a longer amount of time to complete its execution, or a longer timeout during data upload.
+                    </td>
+
+                    <td>
+                        No
+                    </td>
+                    <td>
+                        <i>true, false</i>
+                    </td>
+                    <td>
+                        true
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        clientAuth
+                    </td>
+                    <td>
+                        Set to true if you want the SSL stack to require a valid certificate chain from the client before accepting a connection. Set to want if you want the SSL stack to request a client Certificate, but not fail if one isn't presented. A false value (which is the default) will not require a certificate chain unless the client requests a resource protected by a security constraint that uses CLIENT-CERT authentication.
+                    </td>
+
+                    <td>
+                        No
+                    </td>
+                    <td>
+                        <i>true, false, want</i>
+                    </td>
+                    <td>
+                        false
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        maxKeepAliveRequests
+                    </td>
+                    <td>
+                        The maximum number of HTTP requests which can be pipelined until the connection is closed by the server. Setting this attribute to 1 will disable HTTP/1.0 keep-alive, as well as HTTP/1.1 keep-alive and pipelining. Setting this to -1 will allow an unlimited amount of pipelined or keep-alive HTTP requests.
+                    </td>
+                    <td>
+
+                        No
+                    </td>
+                    <td>
+                        -1 or any positive integer
+                    </td>
+                    <td>
+                        100
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        acceptCount
+                    </td>
+                    <td>
+                        The maximum queue length for incoming connection requests when all possible request processing threads are in use. Any requests received when the queue is full will be refused.
+                    </td>
+                    <td>
+
+                        No
+                    </td>
+                    <td>
+                        A positive integer
+                    </td>
+                    <td>
+                        10
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        compression
+                    </td>
+                    <td>
+                        Use this parameter to enable content compression and save server bandwidth.
+
+                    </td>
+                    <td>
+                        No
+                    </td>
+                    <td>
+                        <i>on, off, force</i>
+                    </td>
+                    <td>
+
+                        off
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        noCompressionUserAgents
+                    </td>
+                    <td>
+                        Indicate a list of regular expressions matching user-agents of HTTP clients for which compression should not be used, because these clients, although they do advertise support for the feature, have a broken implementation.
+                    </td>
+
+                    <td>
+                        No
+                    </td>
+                    <td>
+                        A comma separated list of regular expressions
+                    </td>
+                    <td>
+                        empty string
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        compressableMimeType
+                    </td>
+                    <td>
+                        Use this parameter to indicate a list of MIME types for which HTTP compression may be used.
+                    </td>
+
+                    <td>
+                        No
+                    </td>
+                    <td>
+                        A comma separated list of valid mime types
+                    </td>
+                    <td>
+                        text/html,text/xml,text/plain
+                    </td>
+
+                </tr>
+            </tbody>
+        </table>
+
+        <p>
+            This is only a subset of all the supported parameters. The servlet HTTP transport uses the <a href="http://tomcat.apache.org/tomcat-5.5-doc/catalina/docs/api/org/apache/catalina/connector/Connector.html">org.apache.catalina.connector.Connector</a>
+            implementation from Apache Tomcat. So the servlet HTTP transport actually accepts any parameter accepted by the connector implementation. Please
+            refer Apache Tomcat <a href="http://tomcat.apache.org/tomcat-5.5-doc/config/http.html">connector configuration reference</a> for more information
+            and a complete list of supported parameters.
+        </p>
+
+
+        <p>Transport Sender Parameters:</p>
+
+        <table border="1" width="75%">
+            <tbody>
+                <tr>
+                    <th style="width:20%">Parameter Name</th>
+                    <th style="width:20%">Description</th>
+                    <th style="width:10%">Requried</th>
+                    <th style="width:20%">Possible Values</th>
+                    <th style="width:20%">Default Value</th>
+                </tr>
+                <tr>
+                    <td>
+                        PROTOCOL
+                    </td>
+                    <td>
+                        The version of HTTP protocol to be used for outgoing messages.
+                    </td>
+
+                    <td>
+                        No
+                    </td>
+                    <td>
+                        <i>HTTP/1.0</i>, <i>HTTP/1.1</i>
+                    </td>
+                    <td>
+
+                        HTTP/1.1
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Transfer-Encoding
+                    </td>
+                    <td>
+
+                        Effective only when the HTTP version is 1.1 (ie the value of the PROTOCOL parameter should be HTTP/1.1). Use this parameter to enable chunking support for the transport sender.
+                    </td>
+                    <td>
+                        No
+                    </td>
+                    <td>
+                        <i>chunked</i>
+
+                    </td>
+                    <td>
+                        Not Chunked
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        SocketTimeout
+
+                    </td>
+                    <td>
+                        The socket timeout value in milliseconds, for out bound connections.
+                    </td>
+                    <td>
+                        No
+                    </td>
+                    <td>
+
+                        A positive integer
+                    </td>
+                    <td>
+                        60000 ms
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+
+                        ConnectionTimeout
+                    </td>
+                    <td>
+                        The connection timeout value in milliseconds, for out bound connections.
+                    </td>
+                    <td>
+                        No
+
+                    </td>
+                    <td>
+                        A positive integer
+                    </td>
+                    <td>
+                        60000 ms
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        OmitSOAP12Action
+                    </td>
+                    <td>
+                        Set this parameter to 'true' if you need to disable the soapaction for SOAP 1.2 messages.
+                    </td>
+                    <td>
+                        No
+
+                    </td>
+                    <td>
+                        <i>true</i>, <i>false</i>
+                    </td>
+                    <td>
+                        false
+                    </td>
+
+                </tr>
+            </tbody>
+        </table>
+
+
+        <h3 id="HttpsServletTrp">HTTPS Servlet Transport Implementation</h3>
+
+        <p>
+            Similar to the HTTP transport described above this transport too consists of a receiver implementation which comes from the Carbon
+            core component and a sender implementation which comes from the Apache Axis2 transport module. In fact this transport uses the exact
+            same transport sender implementation as the HTTP transport. So the two classes that should be specified in the configuration are
+            <span style="font-family:monospace">org.wso2.carbon.core.transports.http.HttpsTransportListener</span> and <span style="font-family:monospace">org.apache.axis2.transport.http.CommonsHTTPTransportSender</span>
+            for the receiver and sender in the specified order. The configuration parameters associated with the receiver and the sender are same
+            as in the case of HTTP transport. Note that this is also a blocking transport implementation.
+        </p>
+
+        <p>
+            However when using the org.wso2.carbon.core.transports.http.HttpsTransportListener class as the receiver implementation we need to specify
+            the servlet HTTPS transport configuration in the transports.xml file. The class that should be specified as the transport implementation is
+            <span style="font-family:monospace">org.wso2.carbon.server.transports.http.HttpsTransport</span>. In addition to the configuration parameters supported by the HTTP servlet
+            transport, HTTPS servlet transport supports the following configuration parameters.
+        </p>
+
+        <table border="1" width="75%">
+            <tbody>
+                <tr>
+                    <th style="width:20%">Parameter Name</th>
+                    <th style="width:20%">Description</th>
+                    <th style="width:10%">Requried</th>
+                    <th style="width:20%">Possible Values</th>
+                    <th style="width:20%">Default Value</th>
+                </tr>
+                <tr>
+                    <td>
+                        sslProtocol
+                    </td>
+                    <td>
+
+                        Transport level security protocol to be used
+                    </td>
+                    <td>
+                        No
+                    </td>
+                    <td>
+                        <i>TLS</i>, <i>SSL</i>
+
+                    </td>
+                    <td>
+                        TLS
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        keystore
+
+                    </td>
+                    <td>
+                        Path to the keystore which should be used for encryption/decryption
+                    </td>
+                    <td>
+                        Yes
+                    </td>
+                    <td>
+
+                        A valid file path to a keystore file
+                    </td>
+                    <td>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+
+                        keypass
+                    </td>
+                    <td>
+                        Password to access the specified keystore
+                    </td>
+                    <td>
+                        Yes
+
+                    </td>
+                    <td>
+                        A valid password
+                    </td>
+                    <td>
+
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+
+        <p>
+            Similar to the servlet HTTP transport, this transport is also based on Apache Tomcat's connector implementation. Please refer Tomcat
+            <a href="http://tomcat.apache.org/tomcat-5.5-doc/config/http.html">connector configuration reference</a> for a complete list of supported
+            parameters.
+        </p>
+
+
+        <h3 id="HttpNIOTrp">HTTP-NIO Transport Implementation</h3>
+
+        <p>
+            HTTP-NIO transport is actually a module of the Apache Synapse project. Apache Synapse as well as WSO2 ESB ship the HTTP-NIO transport as
+            the default HTTP transport implementation. The two classes that implement the receiver and sender APIs are <span style="font-family:monospace">org.apache.synapse.transport.nhttp.HttpCoreNIOListener</span>
+            and <span style="font-family:monospace">org.apache.synapse.transport.nhttp.HttpCoreNIOSender</span> respectively. These classes are available in the jar file named synapse-nhttp-transport.jar.
+            This non-blocking transport implementation is one of the secrets behind the blistering performance figures of Apache Synapse and WSO2 ESB.
+            The transport implementation is based on Apache HTTP Core - NIO and uses a configurable pool of non blocking worker threads to grab incoming
+            HTTP messages off the wire.
+        </p>
+
+
+        <p>Transport Receiver Parameters:</p>
+
+        <table border="1" width="75%">
+            <tbody>
+                <tr>
+                    <th style="width:20%">Parameter Name</th>
+                    <th style="width:20%">Description</th>
+                    <th style="width:10%">Requried</th>
+                    <th style="width:20%">Possible Values</th>
+                    <th style="width:20%">Default Value</th>
+                </tr>
+                <tr>
+                    <td>
+                        port
+                    </td>
+                    <td>
+
+                        The port on which this transport receiver should listen for incoming messages.
+                    </td>
+                    <td>
+                        No
+                    </td>
+                    <td>
+                        A positive integer less than 65535
+
+                    </td>
+                    <td>
+                        8280
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        non-blocking
+
+                    </td>
+                    <td>
+                        Setting this parameter to true is vital for reliable messaging and a number of other scenarios to work properly.
+                    </td>
+                    <td>
+                        Yes
+                    </td>
+                    <td>
+
+                        <i>true</i>
+                    </td>
+                    <td>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+
+                        bind-address
+                    </td>
+                    <td>
+                        The address of the interface to which the transport listener should bind.
+                    </td>
+                    <td>
+                        No
+
+                    </td>
+                    <td>
+                        A host name or an IP address
+                    </td>
+                    <td>
+                        127.0.0.1
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        hostname
+                    </td>
+                    <td>
+                        The host name of the server to be displayed in service EPRs, WSDLs etc. This parameter takes effect only when the WSDLEPRPrefix parameter is not set.
+                    </td>
+                    <td>
+
+                        No
+                    </td>
+                    <td>
+                        A host name or an IP address
+                    </td>
+                    <td>
+                        localhost
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        WSDLEPRPrefix
+                    </td>
+                    <td>
+                        A URL prefix which wil be added to all service EPRs and EPRs in WSDLs etc.
+
+                    </td>
+                    <td>
+                        No
+                    </td>
+                    <td>
+                        A URL of the form &lt;protocol&gt;://&lt;hostname&gt;:&lt;port&gt;/
+
+                    </td>
+                    <td>
+
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p>Transport Sender Parameters:</p>
+
+        <table border="1" width="75%">
+            <tbody>
+                <tr>
+                    <th style="width:20%">Parameter Name</th>
+                    <th style="width:20%">Description</th>
+                    <th style="width:10%">Requried</th>
+                    <th style="width:20%">Possible Values</th>
+                    <th style="width:20%">Default Value</th>
+                </tr>
+                <tr>
+                    <td>
+                        http.proxyHost
+                    </td>
+                    <td>
+                        If the outgoing messages should be sent through an HTTP proxy server use this parameter to specify the target proxy.
+                    </td>
+
+                    <td>
+                        No
+                    </td>
+                    <td>
+                        A host name or an IP address
+                    </td>
+                    <td>
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        http.proxyPort
+                    </td>
+                    <td>
+                        The port through which the target proxy accepts HTTP traffic.
+                    </td>
+
+                    <td>
+                        No
+                    </td>
+                    <td>
+                        A positive integer less than 65535
+                    </td>
+                    <td>
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        http.nonProxyHosts
+                    </td>
+                    <td>
+                        Tthe list of hosts to which the HTTP traffic should be sent directly without going through the proxy.
+                    </td>
+
+                    <td>
+                        No
+                    </td>
+                    <td>
+                        A list of host names or IP addresses separated by '|'
+                    </td>
+                    <td>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        non-blocking
+                    </td>
+                    <td>
+                        Setting this parameter to true is vital for reliable messaging and a number of other scenarios to work properly.
+                    </td>
+
+                    <td>
+                        Yes
+                    </td>
+                    <td>
+                        <i>true</i>
+                    </td>
+                    <td>
+
+
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3 id="HttpsNIOTrp">HTTPS-NIO Transport Implementation</h3>
+
+        <p>
+            HTTPS-NIO transport is also a module that comes from the Apache Synapse code base. The receiver class is named <span style="font-family:monospace">org.apache.synapse.transport.nhttp.HttpCoreNIOSSLListener</span>
+            whereas the sender class is named <span style="font-family:monospace">org.apache.synapse.transport.nhttp.HttpCoreNIOSSLSender</span>. As far as the actual implementation of
+            the transport is concerened these two classes simply extend the HTTP-NIO implementation by adding SSL support to it. Therefore they support
+            all the configuration parameters supported by the HTTP-NIO receiver and sender. In addition to that, both HTTPS-NIO listener and the HTTPS-NIO
+            sender support the following two parameters. The above mentioned classes are available in the synapse-nhttp-transport.jar bundle.
+        </p>
+
+
+        <p>Transport Prameters (Common to both receiver and the sender):</p>
+
+        <table border="1" width="75%">
+            <tbody>
+                <tr>
+                    <th style="width:20%">Parameter Name</th>
+                    <th style="width:20%">Description</th>
+                    <th style="width:10%">Requried</th>
+                    <th style="width:20%">Possible Values</th>
+                    <th style="width:20%">Default Value</th>
+                </tr>
+                <tr>
+                    <td>
+                        keystore
+                    </td>
+                    <td>
+                        The default keystore to be used by the receiver or the sender should be specified here along with its related parameters as an XML fragment. The path to the keystore file, its type and the passwords to access the keystore should be stated in the XML. The keystore would be used by the transport to initialize a set of key managers.
+
+                    </td>
+                    <td>
+                        Yes
+                    </td>
+                    <td>
+                        <pre>&lt;parameter name="keystore"&gt;
+    &lt;KeyStore&gt;
+        &lt;Location&gt;lib/identity.jks&lt;/Location&gt;
+        &lt;Type&gt;JKS&lt;/Type&gt;
+        &lt;Password&gt;password&lt;/Password&gt;
+        &lt;KeyPassword&gt;password&lt;/KeyPassword&gt;
+    &lt;/KeyStore&gt;
+&lt;/parameter&gt;</pre>
+                    </td>
+                    <td>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        truststore
+                    </td>
+                    <td>
+
+                        The default trust store to be used by the receiver or the sender should be specified here along with its related parameters as an XML fragment. The location of the trust store file, its type and the password should be stated in the XML body. The truststore is used by the transport to initialize a set of trust managers.
+                    </td>
+                    <td>
+                        Yes
+                    </td>
+                    <td>
+                        <pre>&lt;parameter name="truststore"&gt;
+    &lt;TrustStore&gt;
+        &lt;Location&gt;lib/identity.jks&lt;/Location&gt;
+        &lt;Type&gt;JKS&lt;/Type&gt;
+        &lt;Password&gt;password&lt;/Password&gt;
+    &lt;/TrustStore&gt;
+&lt;/parameter&gt;
+                        </pre>
+                    </td>
+                    <td>
+
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+
+        <p>
+            The HTTPS NIO transport sender supports the concept of custom SSL profiles. An SSL profile
+            is a user defined keystore-truststore pair. Such an SSL profile can be associated with one
+            or more target servers. When the HTTPS sender connects to a target server it will use the
+            SSL profile associated with the target server. If no custom SSL profiles are configured for
+            the target server, the default keystore-truststore pair will be used. Using this feature the
+            NIO HTTPS sender can connect to different target servers using different certificates and
+            identities. Following table shows how to configure custom SSL profiles. The given example only
+            contains a single SSL profile, but there can be as many profiles required.
+        </p>
+
+        <table border="1" width="75%">
+            <tbody>
+                <tr>
+                    <th style="width:20%">Parameter Name</th>
+                    <th style="width:20%">Description</th>
+                    <th style="width:10%">Requried</th>
+                    <th style="width:20%">Possible Values</th>
+                    <th style="width:20%">Default Value</th>
+                </tr>
+                <tr>
+                    <td>
+                        customSSLProfiles
+                    </td>
+                    <td>
+                        Define one or more custom SSL profiles and associate them with target servers.
+                        Each profile must be associated with at least one target server. If a profile
+                        should be associated with multiple target servers, the server list should be
+                        specified as a comma separated list. A target server is identified by a host-port
+                        pair.
+                    </td>
+                    <td>
+                        No
+                    </td>
+                    <td>
+                        <pre>&lt;parameter name="customSSLProfiles&gt;
+           &lt;profile&gt;
+               &lt;servers&gt;www.test.org:80, www.test2.com:9763&lt;/servers&gt;
+               &lt;KeyStore&gt;
+                   &lt;Location&gt;/path/to/identity/store&lt;/Location&gt;
+                   &lt;Type&gt;JKS&lt;/Type&gt;
+                   &lt;Password&gt;password&lt;/Password&gt;
+                   &lt;KeyPassword&gt;password&lt;/KeyPassword&gt;
+               &lt;/KeyStore&gt;
+               &lt;TrustStore&gt;
+                   &lt;Location&gt;path/to/trust/store&lt;/Location&gt;
+                   &lt;Type&gt;JKS&lt;/Type&gt;
+                   &lt;Password&gt;password&lt;/Password&gt;
+               &lt;/TrustStore&gt;
+           &lt;/profile&gt;
+      &lt;/parameter&gt;</pre>
+                    </td>
+                    <td>
+
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3 id="MailToTrp">MailTo Transport Implementation</h3>
+
+        <p>
+            The polling MailTo transport supports sending messages (E-Mail) over SMTP and receiving messages over POP3 or IMAP. This transport
+            implementation is available as a module of the WS-Commons Transports project. The receiver and sender classes that should be included
+            in the Carbon configuration to enable the MailTo transport are <span style="font-family:monospace">org.apache.axis2.transport.mail.MailTransportListener</span> and
+            <span style="font-family:monospace">org.apache.axis2.transport.mail.MailTransportSender</span> respectively. The jar consisting of the transport implementation is named
+            axis2-transport-mail.jar.
+        </p>
+
+        <p>
+            The mail transport receiver should be configured at service level. That is each service configuration should explicitly state the mail
+            transport receiver configuration. This is required to enable different services to receive mails over different mail accounts and
+            configurations. However transport sender is generally configured globally so that all services can share the same transport sender
+            configuration.
+        </p>
+
+
+        <p>Service Level Transport Receiver Parameters:</p>
+
+        <p>
+            The MailTo transport listener implementation can be configured by setting the parameters described in JavaMail API documentation. For IMAP
+            related properties refer the documentation for <a href="http://java.sun.com/products/javamail/javadocs/com/sun/mail/imap/package-summary.html">com.sum.mail.imap</a>
+            package. For POP3 properties please refer the documentation for <a href="http://java.sun.com/products/javamail/javadocs/com/sun/mail/pop3/package-summary.html">com.sun.mail.pop3</a>
+            package. Apart from the parameters describes in JavaMail API documentation, MailTo transport listener supports following transport parameters.
+        </p>
+
+        <table border="1" width="75%">
+            <tbody>
+                <tr>
+                    <th style="width:20%">Parameter Name</th>
+                    <th style="width:20%">Description</th>
+                    <th style="width:10%">Requried</th>
+                    <th style="width:20%">Possible Values</th>
+                    <th style="width:20%">Default Value</th>
+                </tr>
+                <tr>
+                    <td>
+
+                        transport.mail.Address
+                    </td>
+                    <td>
+                        The mail address from which this service should fetch incoming mails
+                    </td>
+                    <td>
+                        Yes
+
+                    </td>
+                    <td>
+                        A valid e-mail address
+                    </td>
+                    <td>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+
+                        transport.mail.Folder
+                    </td>
+                    <td>
+                        The mail folder in the server from which the listener should fetchincoming mails.
+                    </td>
+                    <td>
+                        No
+
+                    </td>
+                    <td>
+                        A valid mail folder name (eg: inbox)
+                    </td>
+                    <td>
+                        inbox folder if that is available or else the root folder
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        transport.mail.Protocol
+                    </td>
+                    <td>
+                        The mail protocol to be used to receive messages
+                    </td>
+                    <td>
+                        No
+                    </td>
+                    <td>
+                        <i>pop3, imap</i>
+                    </td>
+                    <td>
+                        imap
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        transport.mail.PreserveHeaders
+                    </td>
+                    <td>
+                        A comma separated list of mail header names that this receiver should preserve in all incoming messages.
+                    </td>
+                    <td>
+
+                        No
+                    </td>
+                    <td>
+                        A comma separated list
+                    </td>
+                    <td>
+
+                    </td>
+
+                </tr>
+                <tr>
+                    <td>
+                        transport.mail.RemoveHeaders
+                    </td>
+                    <td>
+                        A comma separated list of mail header names that this receiver should remove from incoming messages
+                    </td>
+
+                    <td>
+                        No
+                    </td>
+                    <td>
+                        A comma separated list
+                    </td>
+                    <td>
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        transport.mail.ActionAfterProcess
+                    </td>
+                    <td>
+                        Action to perform on the mails after processing them
+
+                    </td>
+                    <td>
+                        No
+                    </td>
+                    <td>
+                        <i>MOVE, DELETE</i>
+                    </td>
+                    <td>
+
+                        DELETE
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        transport.mail.ActionAfterFailure
+                    </td>
+                    <td>
+
+                        Action to perform on the mails after a failure occurs while processing them
+                    </td>
+                    <td>
+                        No
+                    </td>
+                    <td>
+                        <i>MOVE, DELETE</i>
+
+                    </td>
+                    <td>
+                        DELETE
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        transport.mail.MoveAfterProcess
+
+                    </td>
+                    <td>
+                        Folder to move the mails after processing them
+                    </td>
+                    <td>
+                        Required if ActionAfterProcess is MOVE
+                    </td>
+                    <td>
+
+                        A valid mail folder name
+                    </td>
+                    <td>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+
+                        transport.mail.MoveAfterFailure
+                    </td>
+                    <td>
+                        Folder to move the mails after encountering a failure
+                    </td>
+                    <td>
+                        Required if ActionAfterFailure is MOVE
+
+                    </td>
+                    <td>
+                        A valid mail folder name
+                    </td>
+                    <td>
+
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        transport.mail.ProcessInParallel
+                    </td>
+                    <td>
+                        Whether the receiver should incoming mails in parallel or not (works only if the mail protocol supports that - eg: IMAP)
+                    </td>
+                    <td>
+
+                        No
+                    </td>
+                    <td>
+                        <i>true, false</i>
+                    </td>
+                    <td>
+                        false
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        transport.ConcurrentPollingAllowed
+                    </td>
+                    <td>
+                        Whether the receiver should poll for multiple messages concurrently
+
+                    </td>
+                    <td>
+                        No
+                    </td>
+                    <td>
+                        true, false
+                    </td>
+                    <td>
+
+                        false
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        transport.mail.MaxRetryCount
+                    </td>
+                    <td>
+
+                        Maximum number of retry operations to be performed when fetching incoming mails
+                    </td>
+                    <td>
+                        Yes
+                    </td>
+                    <td>
+                        A positive integer
+
+                    </td>
+                    <td>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        transport.mail.ReconnectTimeout
+
+                    </td>
+                    <td>
+                        The reconnect timeout in milliseconds to be used when fetching incoming mails
+                    </td>
+                    <td>
+                        Yes
+                    </td>
+                    <td>
+
+                        A positive integer
+                    </td>
+                    <td>
+
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p>Global Transport Sender Parameters:</p>
+
+        <p>
+            For a list of parameters supported by the MailTo transport sender please refer the API documentation for JavaMail <a href="http://java.sun.com/products/javamail/javadocs/com/sun/mail/smtp/package-summary.html">com.sun.mail.smtp</a>
+            package. In addition to the parameters described there the MailTo transport sender supports following parameters.
+        </p>
+
+        <table border="1" width="75%">
+            <tbody>
+                <tr>
+                    <th style="width:20%">Parameter Name</th>
+                    <th style="width:20%">Description</th>
+                    <th style="width:10%">Requried</th>
+                    <th style="width:20%">Possible Values</th>
+                    <th style="width:20%">Default Value</th>
+                </tr>
+                <tr>
+
+                    <td>
+                        transport.mail.SMTPBccAddresses
+                    </td>
+                    <td>
+                        If one or more e-mail addresses need to be specified as BCC addresses for outgoing mails, this parameter can be used.
+                    </td>
+                    <td>
+                        No
+
+                    </td>
+                    <td>
+                        A comma separated list of e-mail addresses
+                    </td>
+                    <td>
+
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        transport.mail.Format
+                    </td>
+                    <td>
+                        Format of the outgoing mail
+                    </td>
+                    <td>
+
+                        No
+                    </td>
+                    <td>
+                        <i>Text</i>, <i>Multipart</i>
+                    </td>
+                    <td>
+                        Text
+
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+
+        <p>Please refer WSO2 ESB sample 256 on how to use the MailTo transport with ESB proxy services.</p>
+
+
+        <h3 id="JmsTrp">JMS Transport Implementation</h3>
+
+        <p>
+            JMS (Java Message Service) transport implementation also comes from the WS-Commons Transports project. All the relevant classes
+            are packed into the axis2-transport-jms-&lt;version&gt;.jar and the classes <span style="font-family:monospace">org.apache.axis2.transport.jms.JMSListener</span> and
+            <span style="font-family:monospace">org.apache.axis2.transport.jms.JMSSender</span> act as the transport receiver and the sender respectively. The JMS transport implementation
+            requires an active JMS server instance to be able to receive and send messages. We recommend using Apache ActiveMQ JMS server but other
+            implementations such as Apache Qpid and Tibco are also supported. You also need to put the cliet jars for your JMS server in Carbon classpath.
+            In case of Apache ActiveMQ you need to put the following jars in the classpath.
+        </p>
+
+        <ul>
+            <li>
+                activemq-core.jar
+            </li>
+
+            <li>
+                geronimo-j2ee-management_1.0_spec-1.0.jar
+            </li>
+            <li>
+                geronimo-jms_1.1_spec-1.1.1.jar
+            </li>
+        </ul>
+
+        <p>
+            These jar files can be obtained by downloading the latest version of Apache ActiveMQ (v5.2.0 recommended). Extract the downloaded archive
+            and find the required dependencies in the $ACTIVEMQ_HOME/lib directory. You need to copy these jar files over to
+            $CARBON_HOME/repository/components/lib directory for Carbon to be able to pick them up at runtime.
+        </p>
+
+        <p>
+            Configuration parameters for JMS receiver and the sender are XML fragments that represent JMS connection factories. A typical JMS parameter
+            configuration would look like this.
+        </p>
+
+<pre xml:space="preserve">  &lt;parameter name="myTopicConnectionFactory"&gt;
+      &lt;parameter name="java.naming.factory.initial"&gt;org.apache.activemq.jndi.ActiveMQInitialContextFactory&lt;/parameter&gt;
+      &lt;parameter name="java.naming.provider.url"&gt;tcp://localhost:61616&lt;/parameter&gt;
+      &lt;parameter name="transport.jms.ConnectionFactoryJNDIName"&gt;TopicConnectionFactory&lt;/parameter&gt;
+      &lt;parameter name="transport.jms.ConnectionFactoryType"&gt;topic&lt;/parameter&gt;
+  &lt;/parameter&gt;</pre>
+
+        <p>
+            This is a bare minimal JMS connection factory configuration which consists of four connection factory parameters. JMS connection factory
+            parameters are described in detail below.
+        </p>
+
+        <p>JMS Connection Factory Parameters:</p>
+
+        <table border="1" width="75%" id="jms-params">
+            <tbody>
+                <tr>
+                    <th style="width:20%">Parameter Name</th>
+                    <th style="width:20%">Description</th>
+                    <th style="width:10%">Requried</th>
+                    <th style="width:20%">Possible Values</th>
+                    <th style="width:20%">Default Value</th>
+                </tr>
+
+                <tr>
+                    <td>
+                        java.naming.factory.initial
+                    </td>
+                    <td>
+                        JNDI initial context factory class. The class must implement the java.naming.spi.InitialContextFactory interface.
+                    </td>
+                    <td>
+                        Yes
+                    </td>
+                    <td>
+                        A valid class name
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        java.naming.provider.url
+                    </td>
+                    <td>
+                        URL of the JNDI provider
+
+                    </td>
+                    <td>
+                        Yes
+                    </td>
+                    <td>
+                        A valid URL
+                    </td>
+                    <td>
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        java.naming.security.principal
+                    </td>
+                    <td>
+
+                        JNDI Username
+                    </td>
+                    <td>
+                        No
+                    </td>
+                    <td>
+
+                    </td>
+
+                    <td>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        java.naming.security.credentials
+                    </td>
+
+                    <td>
+                        JNDI password
+                    </td>
+                    <td>
+                        No
+                    </td>
+                    <td>
+
+
+                    </td>
+                    <td>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        transport.Transactionality
+
+                    </td>
+                    <td>
+                        Desired mode of transactionality
+                    </td>
+                    <td>
+                        No
+                    </td>
+                    <td>
+
+                        <i>none, local, jta</i>
+                    </td>
+                    <td>
+                        none
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+
+                        transport.UserTxnJNDIName
+                    </td>
+                    <td>
+                        JNDI name to be used to require user transaction
+                    </td>
+                    <td>
+                        No
+                    </td>
+
+                    <td>
+
+                    </td>
+                    <td>
+                        java:comp/UserTransaction
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+
+                        transport.CacheUserTxn
+                    </td>
+                    <td>
+                        Whether caching for user transactions should be enabled or not
+                    </td>
+                    <td>
+                        No
+                    </td>
+
+                    <td>
+                        <i>true, false</i>
+                    </td>
+                    <td>
+                        true
+                    </td>
+                </tr>
+                <tr>
+
+                    <td>
+                        transport.jms.SessionTransacted
+                    </td>
+                    <td>
+                        Whether the JMS session be transacted or not
+                    </td>
+                    <td>
+                        No
+
+                    </td>
+                    <td>
+                        <i>true, false</i>
+                    </td>
+                    <td>
+                        true if transactionality is 'local'
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        transport.jms.SessionAcknowledgement
+                    </td>
+                    <td>
+                        JMS session acknowledgement mode
+                    </td>
+                    <td>
+                        No
+
+                    </td>
+                    <td>
+                        <i>AUTO_ACKNOWLEDGE, CLIENT_ACKNOWLEDGE, DUPS_OK_ACKNOWLEDGE, SESSION_TRANSACTED</i>
+                    </td>
+                    <td>
+                        AUTO_ACKNOWLEDGE
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        transport.jms.ConnectionFactoryJNDIName
+                    </td>
+                    <td>
+                        The JNDI name of the connection factory
+                    </td>
+                    <td>
+                        Yes
+
+                    </td>
+                    <td>
+
+                    </td>
+                    <td>
+
+                    </td>
+                </tr>
+                <tr>
+
+                    <td>
+                        transport.jms.ConnectionFactoryType
+                    </td>
+                    <td>
+                        Type of the connection factory
+                    </td>
+                    <td>
+                        No
+
+                    </td>
+                    <td>
+                        <i>queue, topic</i>
+                    </td>
+                    <td>
+                        queue
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        transport.jms.JMSSpecVersion
+                    </td>
+                    <td>
+                        JMS API version
+                    </td>
+                    <td>
+                        No
+
+                    </td>
+                    <td>
+                        <i>1.1, 1.0.2b</i>
+                    </td>
+                    <td>
+                        1.1
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        transport.jms.UserName
+                    </td>
+                    <td>
+                        The JMS connection username
+                    </td>
+                    <td>
+                        No
+
+                    </td>
+                    <td>
+
+                    </td>
+                    <td>
+
+                    </td>
+                </tr>
+                <tr>
+
+                    <td>
+                        transport.jms.Password
+                    </td>
+                    <td>
+                        The JMS connection password
+                    </td>
+                    <td>
+                        No
+
+                    </td>
+                    <td>
+
+                    </td>
+                    <td>
+
+                    </td>
+                </tr>
+                <tr>
+
+                    <td>
+                        transport.jms.Destination
+                    </td>
+                    <td>
+                        The JNDI name of the destination
+                    </td>
+                    <td>
+                        No
+
+                    </td>
+                    <td>
+
+                    </td>
+                    <td>
+                        Defaults to service name
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        transport.jms.DestinationType
+                    </td>
+                    <td>
+                        Type of the destination
+                    </td>
+                    <td>
+                        No
+
+                    </td>
+                    <td>
+                        <i>queue, topic</i>
+                    </td>
+                    <td>
+                        queue
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        transport.jms.DefaultReplyDestination
+                    </td>
+                    <td>
+                        JNDI name of the default reply destination
+                    </td>
+                    <td>
+                        No
+
+                    </td>
+                    <td>
+
+                    </td>
+                    <td>
+
+                    </td>
+                </tr>
+                <tr>
+
+                    <td>
+                        transport.jms.DefaultReplyDestinationType
+                    </td>
+                    <td>
+                        Type of the reply destination
+                    </td>
+                    <td>
+                        No
+
+                    </td>
+                    <td>
+                        <i>queue, topic</i>
+                    </td>
+                    <td>
+                        Defaults to the type of the destination
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        transport.jms.MessageSelector
+                    </td>
+                    <td>
+                        Message selector implementation
+                    </td>
+                    <td>
+
+                        No
+                    </td>
+                    <td>
+
+                    </td>
+                    <td>
+
+                    </td>
+
+                </tr>
+                <tr>
+                    <td>
+                        transport.jms.SubscriptionDurable
+                    </td>
+                    <td>
+                        Whether the connection factory is subscription durable or not
+                    </td>
+                    <td>
+
+                        No
+                    </td>
+                    <td>
+                        <i>true, false</i>
+                    </td>
+                    <td>
+                        false
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        transport.jms.DurableSubscriberClientID
+                    </td>
+                    <td>
+                        The ClientId parameter when using durable subscriptions
+                    </td>
+                    <td>
+
+                        Yes if the subscription durable is turned on
+                    </td>
+                    <td>
+                        <i>true, false</i>
+                    </td>
+                    <td>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        transport.jms.DurableSubscriberName
+                    </td>
+                    <td>
+                        Name of the durable subscriber
+                    </td>
+
+                    <td>
+                        Yes if the subscription durable is turned on
+                    </td>
+                    <td>
+
+                    </td>
+                    <td>
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        transport.jms.PubSubNoLocal
+                    </td>
+                    <td>
+                        Whether the messages should be published by the same connection they were received
+                    </td>
+
+                    <td>
+                        No
+                    </td>
+                    <td>
+                        <i>true, false</i>
+                    </td>
+                    <td>
+                        false
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        transport.jms.CacheLevel
+                    </td>
+                    <td>
+                        JMS resource cache level
+                    </td>
+
+                    <td>
+                        No
+                    </td>
+                    <td>
+                        none, connection, session, consumer, producer, auto
+                    </td>
+                    <td>
+                        auto
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        transport.jms.ReceiveTimeout
+                    </td>
+                    <td>
+                        Time to wait for a JMS message during polling. Set this parameter value to a negative integer to wait indefinitely. Set to zero to prevent waiting.
+                    </td>
+
+                    <td>
+                        No
+                    </td>
+                    <td>
+                        Number of milliseconds to wait
+                    </td>
+                    <td>
+                        1000 ms
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        transport.jms.ConcurrentConsumers
+                    </td>
+                    <td>
+                        Number of concurrent threads to be started to consume messages when polling.
+                    </td>
+
+                    <td>
+                        No
+                    </td>
+                    <td>
+                        Any positive integer - For topics this must be always 1
+                    </td>
+                    <td>
+                        1
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        transport.jms.MaxConcurrentConsumers
+                    </td>
+                    <td>
+                        Maximum number of concurrent threads to use during polling.
+                    </td>
+
+                    <td>
+                        No
+                    </td>
+                    <td>
+                        Any positive integer - For topics this must be always 1
+                    </td>
+                    <td>
+                        1
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        transport.jms.IdleTaskLimit
+                    </td>
+                    <td>
+                        The number of idle runs per thread before it dies out
+                    </td>
+
+                    <td>
+                        No
+                    </td>
+                    <td>
+                        Any positive integer
+                    </td>
+                    <td>
+                        10
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        transport.jms.MaxMessagesPerTask
+                    </td>
+                    <td>
+                        The maximum number of successful message receipts per thread
+                    </td>
+
+                    <td>
+                        No
+                    </td>
+                    <td>
+                        Any positive integer - Use -1 to indicate infinity
+                    </td>
+                    <td>
+                        -1
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        transport.jms.InitialReconnectDuration
+                    </td>
+                    <td>
+                        Initial reconnection attempts duration in milliseconds
+
+                    </td>
+                    <td>
+                        No
+                    </td>
+                    <td>
+                        Any positive integer
+                    </td>
+                    <td>
+
+                        10000 ms
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        transport.jms.ReconnectProgressFactor
+                    </td>
+                    <td>
+                        Factor by which the reconnection duration will be increased
+
+                    </td>
+                    <td>
+                        No
+                    </td>
+                    <td>
+                        Any positive integer
+                    </td>
+                    <td>
+
+                        2
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        transport.jms.MaxReconnectDuration
+                    </td>
+                    <td>
+                        Maximum reconnection duration in milliseconds
+
+                    </td>
+                    <td>
+                        No
+                    </td>
+                    <td>
+
+                    </td>
+                    <td>
+
+                        3600000 ms (1 hr)
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+
+        <p>
+            JMS transport implementation has some parameters that should be configured at service level, ie in service.xml files of individual services.
+        </p>
+
+
+        <p>Service Level JMS Configuration Parameters:</p>
+
+        <table border="1" width="75%">
+            <tbody>
+                <tr>
+                    <th style="width:20%">Parameter Name</th>
+                    <th style="width:20%">Description</th>
+                    <th style="width:10%">Requried</th>
+                    <th style="width:20%">Possible Values</th>
+                    <th style="width:20%">Default Value</th>
+                </tr>
+                <tr>
+                    <td>
+                        transport.jms.ConnectionFactory
+                    </td>
+                    <td>
+                        Name of the JMS connection factory the service should use
+                    </td>
+
+                    <td>
+                        No
+                    </td>
+                    <td>
+                        A name of an already defined connection factory
+                    </td>
+                    <td>
+                        default
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        transport.jms.PublishEPR
+                    </td>
+                    <td>
+                        JMS EPR to be published in the WSDL
+                    </td>
+
+                    <td>
+                        No
+                    </td>
+                    <td>
+                        A JMS EPR
+                    </td>
+                    <td>
+
+
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p>
+            Please refer WSO2 ESB samples 250, 251, 252 and 253 on using the JMS transport in a number of very useful scenarios.
+        </p>
+
+        <h3 id="VfsTrp">VFS Transport Implementation</h3>
+
+        <p>
+            VFS (Virtual File System) transport implementation is a module which belongs to the Apache Synapse project. Classes
+            <span style="font-family:monospace">org.apache.synapse.transport.vfs.VFSTransportListener</span> and <span style="font-family:monospace">org.apache.synapse.transport.vfs.VFSTransportSender</span> implement
+            the listener and sender APIs and the necessary classes can be found in the synapse-vfs-transport.jar file. Unlike the transports described
+            previously, VFS transport does not have any global parameters to be configured. Rather, it has a set of service level parameters that needs
+            to be specified for each service. VFS transport implementation is mainly used and mostly effective in WSO2 ESB.
+        </p>
+
+        <p>
+            The VFS transport implementation is based on Apache Commons VFS implementation. Therefore commons-vfs.jar file should be included in the
+            Carbon classpath to enable the VFS transport.
+        </p>
+
+        <p>
+            Since VFS transport deals with file operations there are certain time that these can fail due to unavailability of some resource. In such case VFS
+            transport is equipped with the following fault handling mechanism.
+        </p>
+
+        <p>
+            When a failure occurs in a file object, that will be marked as a fail record and will be moved to location
+            (configured by the user) where move error file objects are kept. The failed record will be maintain inside
+            a text file ( file name is configurable) and the location of that file will be provided by the user.
+            When the next polling iteration is going on it'll check the file against the failed record and if the
+            file is a failed record it will skip processing and schedule a move task to move that file(the retry duration
+            of the file move task can be configured). This is handle this way because this is random failure
+            in move operation.
+        </p>
+
+        <p>VFS Service Level Parameters:</p>
+
+        <table border="1" width="75%">
+            <tbody>
+                <tr>
+                    <th style="width:20%">Parameter Name</th>
+                    <th style="width:20%">Description</th>
+                    <th style="width:10%">Requried</th>
+                    <th style="width:20%">Possible Values</th>
+                    <th style="width:20%">Default Value</th>
+                </tr>
+                <tr>
+                    <td>
+                        transport.vfs.FileURI
+                    </td>
+                    <td>
+
+                        The file URL from where the input files should be fetched
+                    </td>
+                    <td>
+                        Yes
+                    </td>
+                    <td>
+                        A valid file URL of the form file://&lt;path&gt;
+
+                    </td>
+                    <td>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        transport.vfs.ContentType
+
+                    </td>
+                    <td>
+                        Content type of the files transferred over the transport
+                    </td>
+                    <td>
+                        Yes
+                    </td>
+                    <td>
+
+                        A valid content type for the files (eg: text/xml)
+                    </td>
+                    <td>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+
+                        transport.vfs.FileNamePattern
+                    </td>
+                    <td>
+                        If the VFS listener should read only a subset of all the files available in the specified file URI location this parameter can be used to select those files by name using a regular expression
+                    </td>
+                    <td>
+                        No
+
+                    </td>
+                    <td>
+                        A regular expression to select files by name (eg:.*\.xml)
+                    </td>
+                    <td>
+
+                    </td>
+                </tr>
+                <tr>
+
+                    <td>
+                        transport.PollInterval
+                    </td>
+                    <td>
+                        The polling interval in milliseconds for the transport receiver to poll the file URI location
+                    </td>
+                    <td>
+                        No
+
+                    </td>
+                    <td>
+                        A positive integer
+                    </td>
+                    <td>
+
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        transport.vfs.ActionAfterProcess
+                    </td>
+                    <td>
+                        Action to perform over the files after processed by the transport
+                    </td>
+
+                    <td>
+                        No
+                    </td>
+                    <td>
+                        <i>MOVE</i>, <i>DELETE</i>
+                    </td>
+                    <td>
+
+                        DELETE
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        transport.vfs.ActionAfterFailure
+                    </td>
+                    <td>
+
+                        Action to perform over the files after processed by the transport
+                    </td>
+                    <td>
+                        No
+                    </td>
+                    <td>
+                        <i>MOVE</i>, <i>DELETE</i>
+
+                    </td>
+                    <td>
+                        DELETE
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        transport.vfs.MoveAfterProcess
+
+                    </td>
+                    <td>
+                        The location to move the files after processing
+                    </td>
+                    <td>
+                        Required if ActionAfterProcess is MOVE
+                    </td>
+                    <td>
+
+                        A valid file URI
+                    </td>
+                    <td>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+
+                        transport.vfs.MoveAfterFailure
+                    </td>
+                    <td>
+                        The location to move the files after a failure occurs
+                    </td>
+                    <td>
+                        Required if ActionAfterFailure is MOVE
+
+                    </td>
+                    <td>
+                        A valid file URI
+                    </td>
+                    <td>
+
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        transport.vfs.ReplyFileURI
+                    </td>
+                    <td>
+                        The location to which reply files should be written by the transport
+                    </td>
+                    <td>
+                        No
+
+                    </td>
+                    <td>
+                        A valid file URI
+                    </td>
+                    <td>
+
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        transport.vfs.ReplyFileName
+                    </td>
+                    <td>
+                        The name for reply files written by the transport
+                    </td>
+                    <td>
+                        No
+
+                    </td>
+                    <td>
+                        A valid file name
+                    </td>
+                    <td>
+                        response.xml
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        transport.vfs.MoveTimestampFormat
+                    </td>
+                    <td>
+                        The pattern/format of the timestamps added to file names as prefixes when moving files (See the API documentation of java.text.SimpleDateFormat for details)
+                    </td>
+                    <td>
+                        No
+
+                    </td>
+                    <td>
+                        A valid timestamp pattern (eg: yyyy-MM-dd'T'HH:mm:ss.SSSZ)
+                    </td>
+                    <td>
+
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        transport.vfs.Streaming
+                    </td>
+                    <td>
+                        If files should be transferred in streaming mode or not
+                    </td>
+                    <td>
+                        No
+
+                    </td>
+                    <td>
+                        <i>true, false</i>
+                    </td>
+                    <td>
+                        false
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        transport.vfs.ReconnectTimeout
+                    </td>
+                    <td>
+                        Reconnect timeout value in seconds to be used in case of an error when transferring files
+                    </td>
+                    <td>
+                        No
+
+                    </td>
+                    <td>
+                        A positive integer
+                    </td>
+                    <td>
+                        30 seconds
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        transport.vfs.MaxRetryCount
+                    </td>
+                    <td>
+                        Maximum number of retry attempts to carry out in case of errors
+                    </td>
+                    <td>
+                        No
+
+                    </td>
+                    <td>
+                        A positive integer
+                    </td>
+                    <td>
+                        3
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        transport.vfs.Append
+                    </td>
+                    <td>
+                        When writing the response to a file, if the response should be appended to the response file this parameter should be set to true. By default the response file will be completely overwritten.
+                    </td>
+                    <td>
+                        No
+
+                    </td>
+                    <td>
+                        true, false
+                    </td>
+                    <td>
+                        false
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        transport.vfs.MoveAfterFailedMove
+                    </td>
+                    <td>
+                        New destination to move the failed file.
+                    </td>
+                    <td>
+                       No 
+
+                    </td>
+                    <td>
+                        A valid file URI
+                    </td>
+                    <td>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        transport.vfs.FailedRecordsFileName
+                    </td>
+                    <td>
+                        The file name to maintain the list of failure files
+                    </td>
+                    <td>
+                        No
+                    </td>
+                    <td>
+                        A valid file name
+                    </td>
+                    <td>
+                        vfs-move-failed-records.properties
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                         transport.vfs.FailedRecordsFileDestination
+                    </td>
+                    <td>
+                        The destination of the failed file.
+                    </td>
+                    <td>
+                        No
+                    </td>
+                    <td>
+                        A folder URI
+                    </td>
+                    <td>
+                        repository/conf/
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        transport.vfs.MoveFailedRecordTimestampFormat
+                    </td>
+                    <td>
+                        When adding record to the failed file entries is logged the as: file_name time_stamp. This will configure the time stamp format
+                    </td>
+                    <td>
+                        No
+                    </td>
+                    <td>
+                        A valid timestamp pattern (eg: yyyy-MM-dd'T'HH:mm:ss.SSSZ)
+                    </td>
+                    <td>
+                        dd-MM-yyyy HH:mm:ss
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        transport.vfs.FailedRecordNextRetryDuration
+                    </td>
+                    <td>
+                        The time in millisecond for the move task to wait until next re-try
+                    </td>
+                    <td>
+                        No
+                    </td>
+                    <td>
+                        A positive integer
+                    </td>
+                    <td>
+                        3000 milliseconds
+                    </td>
+                </tr>
+
+
+            </tbody>
+        </table>
+
+        <p>Please refer WSO2 ESB sample 254 on how to use the VFS transport in real world applications.</p>
+
+
+        <h3 id="TcpTrp">TCP Transport Implementation</h3>
+
+        <p>
+            The TCP transport implementation is a fairly new addition to the Apache WS-Commons Transports project. Even though this transport is
+            still in its early days, it is good enough to be used in production environments. The two classes that act as the transport listener
+            and the sender are org.apache.axis2.transport.tcp.TCPServer and org.apache.axis2.transport.tcp.TCPTransportSender respectively. In order
+            to use the transport axis2-transport-tcp.jar should be added to the Carbon classpath.
+        </p>
+
+        <p>Transport Receiver Parameters:</p>
+
+
+        <table border="1" width="75%">
+            <tbody>
+                <tr>
+                    <th style="width:20%">Parameter Name</th>
+                    <th style="width:20%">Description</th>
+                    <th style="width:10%">Requried</th>
+                    <th style="width:20%">Possible Values</th>
+                    <th style="width:20%">Default Value</th>
+                </tr>
+                <tr>
+                    <td>
+                        port
+                    </td>
+                    <td>
+                        The port on which the TCP server should listen for incoming messages
+                    </td>
+
+                    <td>
+                        No
+                    </td>
+                    <td>
+                        A positive integer less than 65535
+                    </td>
+                    <td>
+                        8000
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        hostname
+                    </td>
+                    <td>
+                        The host name of the server to be displayed in WSDLs etc
+
+                    </td>
+                    <td>
+                        No
+                    </td>
+                    <td>
+                        A valid host name or an IP address
+                    </td>
+                    <td>
+
+
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+
+        <p>Transport Sender Parameters:</p>
+
+        <p>The TCP transport sender does not accept any configuration parameters as of now.</p>
+
+
+
+        <h3 id="LocalTrp">Local Transport Implementation</h3>
+
+        <p>
+            Apache Axis2's local transport implementation is used to make internal service calls and transfer data within the Axis2 instance.
+            The class <span style="font-family:monospace">org.apache.axis2.transport.local.LocalTransportSender</span> implements the sender API and the transport does not have a receiver
+            implementation as of now. Local transport does not accept any configuration parameters as of now.
+        </p>
+
+
+        <h3 id="NBLocalTrp">Non Blocking Local Transport Implementation</h3>
+
+        <p>
+            Apache Axis2's non blocking local transport implementation is used to make internal service calls and transfer data within proxy services.
+            The class <span style="font-family:monospace">org.apache.axis2.transport.local.NonBlockingLocalTransportSender</span> implements the sender API and the transport does not have a receiver
+            implementation as of now. Local transport does not accept any configuration parameters as of now. This transport will work seamlessly against the ESB's Nhttp transport.
+        </p>
+
+
+        <h3 id="UdpTrp">UDP Transport Implementation</h3>
+
+        <p>
+            The UDP transport implementation is also a rather newly added component to the Apache WS-Commons Transports project. Classes
+            <span style="font-family:monospace">org.apache.axis2.transport.udp.UDPListener</span> and <span style="font-family:monospace">org.apache.axis2.transport.udp.UDPSender</span> implement the Axis2 transport listener
+            and sender APIs respectively. The axis2-transport-udp.jar archive file contains these implementation classes.
+        </p>
+
+
+        <h3 id="FixTrp">FIX Transport Implementation</h3>
+
+
+        <p>
+            FIX (Financial Information eXchang) transport implementation is a module developed under the Apache Synapse project. This transport is mainly
+            used with WSO2 ESB in conjunction with proxy services. Class <span style="font-family:monospace">org.apache.synapse.transport.fix.FIXTransportListener</span> acts as the transport receiver
+            whereas the <span style="font-family:monospace">org.apache.synapse.transport.fix.FIXTransportSender</span> acts as the transport sender implementation. These classes can be found in the
+            synapse-fix-transport.jar file. The transport implementation is based on Quickfix/J open source FIX engine and hence the following additional
+            dependencies are required to enable the FIX transport.
+        </p>
+
+        <ul>
+            <li>mina-core.jar</li>
+            <li>quickfixj-core.jar</li>
+            <li>quickfixj-msg-fix40.jar</li>
+            <li>quickfixj-msg-fix41.jar</li>
+            <li>quickfixj-msg-fix42.jar</li>
+            <li>quickfixj-msg-fix43.jar</li>
+            <li>quickfixj-msg-fix44.jar</li>
+            <li>slf4j-api.jar</li>
+            <li>slf4j-log4j12.jar</li>
+        </ul>
+
+        <p>
+            Download Quickfix/J from <a href="http://www.quickfixj.com/downloads">here</a> and in the distribution archive you will find all the dependencies listed above. Also please refer
+            to Quickfix/J documentation on configuring FIX acceptors and initiators.
+        </p>
+
+        <p>
+            FIX transport does not support any global parameters. All the FIX configuration parameters should be specified at service level.
+        </p>
+
+        <p>Service Level FIX Parameters:</p>
+
+        <table border="1" width="75%">
+            <tbody>
+                <tr>
+                    <th style="width:20%">Parameter Name</th>
+                    <th style="width:20%">Description</th>
+                    <th style="width:10%">Requried</th>
+                    <th style="width:20%">Possible Values</th>
+                    <th style="width:20%">Default Value</th>
+                </tr>
+                <tr>
+                    <td>
+
+                        transport.fix.AcceptorConfigURL
+                    </td>
+                    <td>
+                        URL to the Quickfix/J acceptor configuration file (see notes below)
+                    </td>
+                    <td>
+                        Required for receiving messages over FIX
+                    </td>
+
+                    <td>
+                        A valid URL
+                    </td>
+                    <td>
+
+                    </td>
+                </tr>
+                <tr>
+
+                    <td>
+                        transport.fix.InitiatorConfigURL
+                    </td>
+                    <td>
+                        URL to the Quickfix/J initiator configuration file (see notes below)
+                    </td>
+                    <td>
+                        Required for sending messages over FIX
+
+                    </td>
+                    <td>
+                        A valid URL
+                    </td>
+                    <td>
+
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        transport.fix.AcceptorLogFactory
+                    </td>
+                    <td>
+                        Log factory implementation to be used for the FIX acceptor (Determines how logging is done at the acceptor level)
+                    </td>
+                    <td>
+                        No
+
+                    </td>
+                    <td>
+                        <i>console, file, jdbc</i>
+                    </td>
+                    <td>
+                        Logging disabled
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        transport.fix.InitiatorLogFactory
+                    </td>
+                    <td>
+                        Log factory implementation to be used for the FIX acceptor (Determines how logging is done at the acceptor level)
+                    </td>
+                    <td>
+                        No
+
+                    </td>
+                    <td>
+                        <i>console, file, jdbc</i>
+                    </td>
+                    <td>
+                        Logging disabled
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        transport.fix.AcceptorMessageStore
+                    </td>
+                    <td>
+                        Message store mechanism to be used with the acceptor (Determines how the FIX message store is maintained)
+                    </td>
+                    <td>
+                        No
+
+                    </td>
+                    <td>
+                        <i>memory, file, sleepycat, jdbc</i>
+                    </td>
+                    <td>
+                        memory
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        transport.fix.InitiatorMessageStore
+                    </td>
+                    <td>
+                        Message store mechanism to be used with the initiator (Determines how the FIX message store is maintained)
+                    </td>
+                    <td>
+                        No
+
+                    </td>
+                    <td>
+                        <i>memory, file, sleepycat, jdbc</i>
+                    </td>
+                    <td>
+                        memory
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        transport.fix.ResponseDeliverToCompID
+                    </td>
+                    <td>
+                        If the reponse FIX messages should be delivered to a location different from the location the request was originated use this property to set the DeliverToCompID field of the FIX messages.
+                    </td>
+                    <td>
+                        No
+
+                    </td>
+                    <td>
+
+                    </td>
+                    <td>
+
+                    </td>
+                </tr>
+                <tr>
+
+                    <td>
+                        transport.fix.ResponseDeliverToSubID
+                    </td>
+                    <td>
+                        If the reponse FIX messages should be delivered to a location different from the location the request was originated use this property to set the DeliverToSubID field of the FIX messages.
+                    </td>
+                    <td>
+                        No
+                    </td>
+
+                    <td>
+
+                    </td>
+                    <td>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+
+                        transport.fix.ResponseDeliverToLocationID
+                    </td>
+                    <td>
+                        If the reponse FIX messages should be delivered to a location different from the location the request was originated use this property to set the DeliverToLocationID field of the FIX messages.
+                    </td>
+                    <td>
+                        No
+                    </td>
+                    <td>
+
+
+                    </td>
+                    <td>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        transport.fix.SendAllToInSequence
+                    </td>
+
+                    <td>
+                        By default all received FIX messages (including responses) will be directed to the in sequence of the proxy service. Use this property to override that behavior.
+                    </td>
+                    <td>
+                        No
+                    </td>
+                    <td>
+                        <i>true, false</i>
+
+                    </td>
+                    <td>
+                        true
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        transport.fix.BeginStringValidation
+                    </td>
+
+                    <td>
+                        Whether the transport should validate BeginString values when forwrding FIX messages across sessions.
+                    </td>
+                    <td>
+                        No
+                    </td>
+                    <td>
+                        <i>true, false </i>
+
+                    </td>
+                    <td>
+                        true
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        transport.fix.DropExtraResponses
+                    </td>
+
+                    <td>
+                        In situation where the FIX recipient sends multiple responses per request use this parameter to drop excessive responses and use only the first one.
+                    </td>
+                    <td>
+                        No
+                    </td>
+                    <td>
+                        <i>true, false</i>
+
+                    </td>
+                    <td>
+                        false
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+
+
+        <p>Please refer WSO2 ESB samples 257 and 258 for more details on using the FIX transport in practice.</p>
+
+
+        <h2 id="Future">Future Work</h2>
+
+        <p>
+            Currently there is an effort to develop an SMS transport for Apache Axis2. Once this is completed and constributed to WS-Commons Transports
+            it will be available for all WSO2 Carbon based products.
+        </p>
+    </body>
+</html>

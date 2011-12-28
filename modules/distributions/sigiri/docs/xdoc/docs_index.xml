@@ -1,0 +1,50 @@
+<!--
+  ~ Copyright 2005-2007 WSO2, Inc. (http://wso2.com)
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+       "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<body>
+<h1>WSO2 Carbon Documentation Index</h1>
+
+<h3>Getting Started</h3>
+<ul>
+  <li><a href="index.html">Introduction</a> - Provides an overview of WSO2 Carbon</li>
+  <li><a href="installation_guide.html">Installation Guide</a> - Gives basic steps on how to download, install,
+      and run WSO2 Carbon using the binary distribution, and how to build WSO2 Carbon using the source distribution. </li>
+  <li><a href="user_guide.html">User Guide</a> - A manual on how to run and configure the WSO2 Carbon through
+      the management console</li>
+</ul>
+    
+<h3>Administration Guides</h3>
+<ul>
+  <li><a href="admin_guide.html">Adminstration Guide</a> - A manual on how to administrate and configure the WSO2 Carbon</li>
+  <li><a href="user/docs/userguide.html">Managing Users and Roles</a> - A manual on how to manage users and roles in the system</li>
+  <li><a href="carbon-core/user.core/admin_guide.html">Configuring User Stores</a> - A manual on how to configures external user stores
+      with WSO2 Carbon</li>
+  <li><a href="component-mgt/docs/userguide.html">Provisioning Guide</a> - A manual on how to user Feature Manager to provision
+      WSO2 Carbon</li>
+  <li><a href="secure_vault.html">Carbon Secure Vault Guide</a> - A manual on how to configure secure vault for securing password in carbon configuration files</li>    
+</ul>
+
+<h3>Tools</h3>
+<ul>
+  <li><a href="carbon-core/tools/carbondump.html">carbondump</a> - A tool for capturing the state of the system at the time of an error</li>
+  <li><a href="carbon-core/tools/chpasswd.html">chpasswd</a> - Utiliy for changing the passwords of users registered in the CARBON user database</li>
+  <li><a href="carbon-core/tools/ciphertool.html">ciphertool</a> - Utiliy to encrypt and decrypt simple texts.</li>    
+  <li><a href="carbon-core/tools/tcpmon.html">tcpmon</a> - Utility that allows the messages to be viewed and resent.</li>
+</ul>
+</body>
+</html>

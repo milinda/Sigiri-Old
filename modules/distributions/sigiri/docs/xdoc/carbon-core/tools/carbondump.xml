@@ -1,0 +1,85 @@
+<!--
+  ~ Copyright 2005-2007 WSO2, Inc. (http://wso2.com)
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+       "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<body>
+<p>WSO2 Carbon - carbondump Tool [<a href="../../docs_index.html"> Documentation Index </a>]</p>
+
+<h1>
+    carbondump - Captures the State of the System in Error Situations.
+</h1>
+
+<h2>Introduction</h2>
+
+<p>carbondump is a tool for collecting all the necessary data from a running Carbon instance at the time of an error.
+   This data helps to capture state of the running system and it aids in the problem determination. carbondump generates a
+   zip archive with the collected data. This dump file(zip file) helps us, the WSO2 support team to analyze your system
+   well and get an idea about the state of the system when the error happened. Therefore, as a best practise run this tool
+    as soon as possible at the time of an error.
+</p>
+
+<p>carbondump captures various information of your running Carbon instance, including information about the memory of the
+    Java process, a complete thread dump, checksum values of all the files inside the directory where the product file resides(say CARBON_HOME),
+    JAVA_HOME, CARBON_HOME, etc. It copies all the configuration files, log files found inside the CARBON_HOME. It also captures
+    certain information about your operation system, kernel information, list of installed modules and their information.
+    
+</p>
+
+<h2>Usage of carbondump</h2>
+
+<p>You need to provide the process ID(pid) of the Carbon instance and the CARBON_HOME. CARBON_HOME is the directory path
+of the directory where your unzipped Carbon distribution resides in the file system.</p>
+
+<p>sh carbondump.sh [-carbonHome path] [-pid of the carbon instance]</p>
+    <p><i>e.g. (Linux) sh carbondump.sh -carbonHome /home/user/wso2carbon-3.0.0/ -pid 5151</i></p>
+    <p><i>e.g. (Windows) carbondump.bat -carbonHome c:\wso2carbon-3.0.0\ -pid 5151</i></p>
+
+<h2>Captured Information of the System</h2>
+
+<ul>
+    <li>Operating system information
+        <ul>
+            <li>OS(kernel) version</li>
+            <li>Installed modules list and their information</li>
+            <li>List of running tasks in the system</li>
+        </ul>
+    </li>
+    <li>Memory information of the Java process
+        <ul>
+            <li>Java heap memory dump</li>
+            <li>Histogram of the heap</li>
+            <li>Objects waiting for finalization</li>
+            <li>Java heap summary. GC algo used, etc.</li>
+            <li>Statistics on permgen space of Java heap</li>
+        </ul>
+    </li>
+    <li>Information about the running Carbon instance
+        <ul>
+            <li>Product name and version</li>
+            <li>Carbon framework version(This includes the patched version)</li>
+            <li>CARBON_HOME, JAVA_HOME</li>
+            <li>configuration files.</li>
+            <li>log files</li>
+            <li>H2 database files</li>            
+        </ul>
+    </li>
+    <li>Thred dump</li>
+    <li>Checksum values of all the files found in the $CARBON_HOME</li>    
+</ul>
+
+</body>
+</html>
