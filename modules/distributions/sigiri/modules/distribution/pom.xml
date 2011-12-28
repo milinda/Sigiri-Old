@@ -21,9 +21,9 @@
 
     <parent>
         <groupId>org.wso2.carbon</groupId>
-        <artifactId>wso2carbon-release-parent</artifactId>
+        <artifactId>sigiri-distribution-parent</artifactId>
         <version>3.2.2</version>
-        <relativePath>../../pom.xml</relativePath>
+        <relativePath>../../../pom.xml</relativePath>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
@@ -31,7 +31,13 @@
     <packaging>jar</packaging>
     <name>WSO2 Carbon - Distribution</name>
     <description>WSO2 Carbon Distribution</description>
-
+      <dependencies>
+          <dependency>
+              <groupId>edu.indiana.extreme.sigiri</groupId>
+              <artifactId>sigiri.service</artifactId>
+              <version>1.0.0</version>
+          </dependency>
+      </dependencies>
      <build>
         <plugins>
 
@@ -185,19 +191,7 @@
                 </executions>
             </plugin>
 
-           <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-site-plugin</artifactId>
-                <version>2.0</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>site</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -232,7 +226,6 @@
                             </filters>
                             <descriptors>
                                 <descriptor>${basedir}/src/assembly/bin.xml</descriptor>
-			                    <descriptor>${basedir}/src/assembly/docs.xml</descriptor>
                             </descriptors>
                         </configuration>
                     </execution>

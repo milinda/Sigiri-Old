@@ -76,6 +76,18 @@
             <fileMode>644</fileMode>
         </file>
         <file>
+            <source>conf/sigiri.conf</source>
+            <outputDirectory>wso2carbon-${carbon.product.version}/repository/conf</outputDirectory>
+            <filtered>true</filtered>
+            <fileMode>644</fileMode>
+        </file>
+        <file>
+            <source>conf/datasources.properties</source>
+            <outputDirectory>wso2carbon-${carbon.product.version}/repository/conf</outputDirectory>
+            <filtered>true</filtered>
+            <fileMode>644</fileMode>
+        </file>
+        <file>
             <source>README.txt</source>
             <outputDirectory>wso2carbon-${carbon.product.version}</outputDirectory>
             <filtered>true</filtered>

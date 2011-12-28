@@ -25,22 +25,22 @@
         <version>3.2.2</version>
         <relativePath>../../../pom.xml</relativePath>
     </parent>
-    
+
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>org.wso2.carbon.styles.feature</artifactId>
+    <artifactId>sigiri.service.feature</artifactId>
     <packaging>pom</packaging>
-    <name>WSO2 Carbon - Style Feature</name>
+    <name>Sigiri Service Feature</name>
     <url>http://wso2.org</url>
 
     <dependencies>
         <dependency>
-            <groupId>org.wso2.carbon</groupId>
-            <artifactId>org.wso2.carbon.styles</artifactId>
-	    <version>${carbon.product.version}</version>
+            <groupId>edu.indiana.extreme.sigiri</groupId>
+            <artifactId>sigiri.service</artifactId>
+            <version>1.0.0</version>
         </dependency>
     </dependencies>
 
-   <build>
+    <build>
         <plugins>
             <plugin>
                 <groupId>org.wso2.maven</groupId>
@@ -54,19 +54,23 @@
                             <goal>p2-feature-gen</goal>
                         </goals>
                         <configuration>
-                            <id>org.wso2.carbon.styles</id>
+                            <id>sigiri.service</id>
                             <propertiesFile>../etc/feature.properties</propertiesFile>
                             <adviceFile>
                                 <properties>
-                                    <propertyDef>org.wso2.carbon.p2.category.type:console</propertyDef>
+                                    <propertyDef>org.wso2.carbon.p2.category.type:server</propertyDef>
                                 </properties>
                             </adviceFile>
                             <bundles>
-                                <bundleDef>org.wso2.carbon:org.wso2.carbon.styles:${carbon.product.version}</bundleDef>
+                                <bundleDef>edu.indiana.extreme.sigiri:sigiri.service:1.0.0</bundleDef>
                             </bundles>
                             <importFeatures>
-                                <importFeatureDef>org.wso2.carbon.core.ui:${carbon.platform.version}</importFeatureDef>
+                                <importFeatureDef>org.wso2.carbon.core.server:3.2.2</importFeatureDef>
+                                <importFeatureDef>org.wso2.carbon.datasource.server:3.2.2</importFeatureDef>
+                                <importFeatureDef>org.wso2.carbon.service.mgt.server:3.2.2</importFeatureDef>
+                                <importFeatureDef>org.wso2.carbon.system.statistics.server:3.2.2</importFeatureDef>
                             </importFeatures>
+
                         </configuration>
                     </execution>
                 </executions>

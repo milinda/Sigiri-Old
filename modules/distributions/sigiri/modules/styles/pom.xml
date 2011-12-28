@@ -21,7 +21,7 @@
 
     <parent>
         <groupId>org.wso2.carbon</groupId>
-        <artifactId>wso2carbon-release-parent</artifactId>
+        <artifactId>sigiri-distribution-parent</artifactId>
         <version>3.2.2</version>
     </parent>
 
